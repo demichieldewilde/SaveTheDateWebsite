@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Italiana&family=Jost:wght@400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -24,8 +25,8 @@
   <main>
     <!-- ============ INTRO ============ -->
     <section id="intro" class="scherm actief" aria-labelledby="intro-titel">
+      <figure class="intro-foto"><img id="intro-foto" alt=""></figure>
       <div class="intro-inhoud">
-        <p class="label" data-t="introKicker"></p>
         <h1 id="intro-titel" class="intro-titel" data-t-html="introTitel"></h1>
         <div class="krans" data-bot="krans:3"></div>
         <p class="intro-tekst" data-t="introTekst"></p>
@@ -40,10 +41,14 @@
       <div class="vraag-inhoud">
         <p class="label" id="vraag-nr"></p>
         <h2 class="vraag" id="vraag-tekst" tabindex="-1"></h2>
+        <p class="vraag-hint" id="vraag-hint"></p>
         <div class="antwoorden" id="antwoorden"></div>
+        <button class="knop knop-breed" id="toon-antwoord" disabled></button>
         <div class="feedback" id="feedback" hidden>
           <p class="feedback-titel" id="feedback-titel"></p>
           <p class="feedback-tekst" id="feedback-tekst"></p>
+          <figure class="feedback-foto" id="feedback-foto" hidden><img alt=""><figcaption></figcaption></figure>
+          <div class="pin-info" id="pin-info" hidden></div>
           <button class="knop" id="volgende"></button>
         </div>
       </div>
@@ -147,6 +152,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/teksten.js"></script>
   <script src="js/botanisch.js"></script>

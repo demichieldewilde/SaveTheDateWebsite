@@ -40,7 +40,8 @@
   function t(sleutel, vars = {}) {
     const s = TEKSTEN[taal]?.[sleutel] ?? TEKSTEN.nl[sleutel] ?? sleutel;
     if (typeof s !== "string") return s;
-    return s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : k === "namen" ? namen : m));
+    const standaard = { namen, een: SITE.namen.een, twee: SITE.namen.twee };
+    return s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : standaard[k] ?? m));
   }
 
   // vertaal een { nl, fr, en, de }-object uit de config
@@ -112,6 +113,7 @@
 
   function toonScherm(id) {
     document.querySelectorAll(".scherm").forEach((s) => s.classList.toggle("actief", s.id === id));
+    if (id !== "quiz") document.querySelectorAll(".vraag-beeld video").forEach((v) => v.pause());
     $("#voortgang").hidden = id !== "quiz";
     window.scrollTo({ top: 0, behavior: "instant" });
   }
@@ -119,8 +121,31 @@
   /* ---------- quiz ---------- */
 
   const LETTERS = "ABCDEFGHIJ";
-  const juisteAntwoorden = (q) => [].concat(q.juist);
-  const isJuist = (q, keuze) => q.juist == null || q.juist === "alle" || juisteAntwoorden(q).includes(keuze);
+  let selectie = new Set();   // aangeduide antwoorden bij de huidige vraag, nog niet getoond
+  let kaart = null;           // Leaflet-kaart bij een kaartvraag
+  let pinnen = [];            // markers op die kaart
+
+  const keuzeLijst = (q) => (q.kaart ? q.kaart.pinnen : q.antwoorden);
+  const alleGoed = (q) => !q.kaart && (q.juist == null || q.juist === "alle");
+  const juisteSet = (q) =>
+    q.kaart
+      ? q.kaart.pinnen.flatMap((p, i) => (p.juist ? [i] : []))
+      : [].concat(q.juist);
+
+  // juist = precies de juiste antwoorden aangeduid, niet meer en niet minder
+  function isJuist(q, gekozen) {
+    if (alleGoed(q)) return gekozen.length > 0;
+    const juist = juisteSet(q);
+    return gekozen.length === juist.length && juist.every((i) => gekozen.includes(i));
+  }
+
+  function status(q, i, gekozen) {
+    const aangeduid = gekozen.includes(i);
+    if (alleGoed(q)) return aangeduid ? "juist" : "";
+    const hoort = juisteSet(q).includes(i);
+    if (hoort) return aangeduid ? "juist" : "gemist";
+    return aangeduid ? "fout" : "";
+  }
 
   function startQuiz() {
     huidige = 0;
@@ -132,10 +157,13 @@
 
   function toonVraag(nieuw) {
     const q = QUIZ[huidige];
+    const getoond = keuzes[huidige] !== undefined;
     $("#vraag-nr").textContent = t("vraagNr", { n: huidige + 1, t: QUIZ.length });
     $("#vraag-tekst").textContent = vt(q.vraag);
+    $("#vraag-hint").textContent = getoond ? "" : t(q.kaart ? "kaartHint" : "meerdereHint");
 
     if (nieuw) {
+      selectie = new Set();
       bouwBeeld(q);
       $(".vraag-inhoud").classList.remove("verschijn");
       void $(".vraag-inhoud").offsetWidth;
@@ -145,34 +173,39 @@
     const box = $("#antwoorden");
     box.replaceChildren();
     box.className = "antwoorden";
-    box.classList.toggle("antwoorden-fotos", q.antwoorden.some((a) => a.foto));
-    box.classList.toggle("antwoorden-veel", q.antwoorden.length > 4);
-
-    q.antwoorden.forEach((a, i) => {
-      const knop = document.createElement("button");
-      knop.type = "button";
-      knop.className = "antwoord";
-      const letter = document.createElement("span");
-      letter.className = "letter";
-      letter.textContent = LETTERS[i];
-      knop.append(letter);
-      if (a.foto) {
-        const img = document.createElement("img");
-        img.src = a.foto;
-        img.alt = vt(a.alt);
-        knop.append(img);
-      } else {
-        const tekst = document.createElement("span");
-        tekst.textContent = vt(a);
-        knop.append(tekst);
-      }
-      knop.addEventListener("click", () => beantwoord(i));
-      box.append(knop);
-    });
+    if (q.kaart) {
+      box.classList.add("antwoorden-kaart");
+      pinnen.forEach((m, i) => m.setTooltipContent(vt(q.kaart.pinnen[i].naam)));
+    } else {
+      box.classList.toggle("antwoorden-fotos", q.antwoorden.some((a) => a.foto));
+      box.classList.toggle("antwoorden-veel", q.antwoorden.length > 4);
+      q.antwoorden.forEach((a, i) => {
+        const knop = document.createElement("button");
+        knop.type = "button";
+        knop.className = "antwoord";
+        const letter = document.createElement("span");
+        letter.className = "letter";
+        letter.textContent = LETTERS[i];
+        knop.append(letter);
+        if (a.foto) {
+          const img = document.createElement("img");
+          img.src = a.foto;
+          img.alt = vt(a.alt);
+          knop.append(img);
+        } else {
+          const tekst = document.createElement("span");
+          tekst.textContent = vt(a);
+          knop.append(tekst);
+        }
+        knop.addEventListener("click", () => wissel(i));
+        box.append(knop);
+      });
+    }
 
     $("#feedback").hidden = true;
+    zetSelectie();
     zetVoortgang();
-    if (keuzes[huidige] !== undefined) toonResultaat(false);
+    if (getoond) toonResultaat(false);
     else if (nieuw) $("#vraag-tekst").focus({ preventScroll: true });
   }
 
@@ -183,6 +216,28 @@
     binnen.className = "beeld-binnen";
     beeld.className = "vraag-beeld";
     beeld.replaceChildren(binnen);
+    if (kaart) { kaart.remove(); kaart = null; pinnen = []; }
+
+    if (q.kaart) {
+      beeld.classList.add("beeld-kaart");
+      bouwKaart(q, binnen);
+      return;
+    }
+    if (q.video) {
+      beeld.classList.add("beeld-een");
+      const fig = document.createElement("figure");
+      const video = Object.assign(document.createElement("video"), {
+        src: q.video, controls: true, playsInline: true, loop: true, preload: "auto",
+      });
+      fig.append(video);
+      binnen.append(fig);
+      // met geluid starten; lukt dat niet (strenge browser), dan zonder geluid
+      video.play().catch(() => {
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+      return;
+    }
     if (!fotos.length) {
       beeld.classList.add("beeld-illustratie");
       binnen.innerHTML = window.Botanisch.stengels(huidige + 4);
@@ -199,41 +254,170 @@
     });
   }
 
+  function bouwKaart(q, doel) {
+    const vak = document.createElement("div");
+    vak.className = "kaart-vak";
+    doel.append(vak);
+    kaart = L.map(vak, { scrollWheelZoom: false, zoomSnap: 0.25 });
+    const esri = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_";
+    L.tileLayer(`${esri}Base/MapServer/tile/{z}/{y}/{x}`, {
+      attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+      maxZoom: 16,
+    }).addTo(kaart);
+    L.tileLayer(`${esri}Reference/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 16 }).addTo(kaart);
+    if (q.kaart.route) {
+      L.polyline(q.kaart.route, { className: "kaart-route", interactive: false }).addTo(kaart);
+    }
+    pinnen = q.kaart.pinnen.map((p, i) => {
+      const m = L.marker([p.lat, p.lon], {
+        icon: L.divIcon({ className: "pin", html: "<span></span>", iconSize: [22, 22] }),
+        keyboard: true,
+        title: vt(p.naam),
+      });
+      m.bindTooltip(vt(p.naam), { direction: "top", offset: [0, -10] });
+      m.on("click", () => (keuzes[huidige] !== undefined ? toonPinInfo(i) : wissel(i)));
+      return m.addTo(kaart);
+    });
+    const punten = [...q.kaart.pinnen.map((p) => [p.lat, p.lon]), ...(q.kaart.route || [])];
+    kaart.fitBounds(L.latLngBounds(punten), { padding: [24, 24] });
+    requestAnimationFrame(() => kaart && kaart.invalidateSize());
+  }
+
+  function wissel(i) {
+    if (keuzes[huidige] !== undefined) return;
+    if (selectie.has(i)) selectie.delete(i);
+    else selectie.add(i);
+    zetSelectie();
+  }
+
+  function zetSelectie() {
+    const q = QUIZ[huidige];
+    const getoond = keuzes[huidige] !== undefined;
+    if (q.kaart) {
+      pinnen.forEach((m, i) => m.getElement()?.classList.toggle("aangeduid", selectie.has(i)));
+      const box = $("#antwoorden");
+      box.replaceChildren();
+      if (!getoond) {
+        const lijst = [...selectie].sort((a, b) => a - b).map((i) => vt(q.kaart.pinnen[i].naam));
+        const p = document.createElement("p");
+        p.className = "kaart-gekozen";
+        p.textContent = lijst.length ? `${t("aangeduid")} ${lijst.join(", ")}` : "";
+        box.append(p);
+      }
+    } else {
+      [...$("#antwoorden").children].forEach((k, i) => k.setAttribute("aria-pressed", selectie.has(i)));
+    }
+    const toon = $("#toon-antwoord");
+    toon.hidden = getoond;
+    toon.disabled = selectie.size === 0;
+    toon.textContent = t("toonAntwoord");
+  }
+
+  $("#toon-antwoord").addEventListener("click", () => {
+    if (!selectie.size || keuzes[huidige] !== undefined) return;
+    keuzes[huidige] = [...selectie].sort((a, b) => a - b);
+    titels[huidige] = Math.floor(Math.random() * 3);
+    toonResultaat(true);
+  });
+
   function zetVoortgang() {
     const klaar = keuzes.filter((k) => k !== undefined).length;
     $("#voortgang i").style.width = `${(klaar / QUIZ.length) * 100}%`;
   }
 
-  function beantwoord(keuze) {
-    if (keuzes[huidige] !== undefined) return;
-    keuzes[huidige] = keuze;
-    titels[huidige] = Math.floor(Math.random() * 3);
-    toonResultaat(true);
-  }
-
   function toonResultaat(animeer) {
     const q = QUIZ[huidige];
-    const keuze = keuzes[huidige];
-    const goed = isJuist(q, keuze);
-    const alleGoed = q.juist == null || q.juist === "alle";
+    const gekozen = keuzes[huidige];
+    const goed = isJuist(q, gekozen);
 
+    $("#vraag-hint").textContent = "";
+    $("#toon-antwoord").hidden = true;
     const box = $("#antwoorden");
     box.classList.add("beantwoord");
     if (!animeer) box.classList.add("zonder-animatie");
-    [...box.children].forEach((k, i) => {
-      k.disabled = true;
-      if (i === keuze) k.classList.add("gekozen", goed ? "juist" : "fout");
-      if (!alleGoed && juisteAntwoorden(q).includes(i)) k.classList.add("juist");
-    });
+
+    if (q.kaart) {
+      box.replaceChildren();
+      pinnen.forEach((m, i) => {
+        const el = m.getElement();
+        if (!el) return;
+        el.classList.remove("aangeduid", "juist", "gemist", "fout");
+        const s = status(q, i, gekozen);
+        if (s) el.classList.add(s);
+        el.classList.add("getoond");
+      });
+      const juist = juisteSet(q);
+      const gevonden = juist.filter((i) => gekozen.includes(i)).length;
+      const teVeel = gekozen.filter((i) => !juist.includes(i)).length;
+      if (juist.length > 1) {
+        const p = document.createElement("p");
+        p.className = "kaart-gekozen";
+        p.textContent = t("kaartScore", { g: gevonden, t: juist.length, f: teVeel });
+        box.append(p);
+      }
+    } else {
+      [...box.children].forEach((k, i) => {
+        k.disabled = true;
+        k.removeAttribute("aria-pressed");
+        const s = status(q, i, gekozen);
+        if (s) k.classList.add(s);
+      });
+    }
 
     const fb = $("#feedback");
     fb.className = `feedback ${goed ? "is-juist" : "is-fout"}`;
     $("#feedback-titel").textContent = t(goed ? "juist" : "fout")[titels[huidige] || 0];
     $("#feedback-tekst").textContent = goed ? vt(q.bravo) : vt(q.uitleg);
+
+    // foto of kaartje dat pas na het antwoorden verschijnt
+    const fbFoto = $("#feedback-foto");
+    fbFoto.hidden = !q.fotoNa;
+    if (q.fotoNa) {
+      fbFoto.querySelector("img").src = q.fotoNa.foto;
+      fbFoto.querySelector("img").alt = vt(q.fotoNa.alt);
+      fbFoto.querySelector("figcaption").textContent = vt(q.fotoNa.bijschrift);
+    }
+
+    const info = $("#pin-info");
+    info.hidden = !q.kaart;
+    if (q.kaart) toonPinInfo(null);
+
     $("#volgende").textContent = huidige === QUIZ.length - 1 ? t("laatste") : t("volgende");
     fb.hidden = false;
     zetVoortgang();
     if (animeer) setTimeout(() => fb.scrollIntoView({ behavior: "smooth", block: "nearest" }), 60);
+  }
+
+  // na het tonen: klik op een pin om te zien wat we daar deden
+  function toonPinInfo(i) {
+    const q = QUIZ[huidige];
+    const info = $("#pin-info");
+    info.replaceChildren();
+    if (i == null) {
+      const p = document.createElement("p");
+      p.className = "pin-hint";
+      p.textContent = t("kaartKlik");
+      info.append(p);
+      return;
+    }
+    const pin = q.kaart.pinnen[i];
+    const h = document.createElement("h3");
+    h.textContent = vt(pin.naam);
+    info.append(h);
+    const p = document.createElement("p");
+    p.textContent = vt(pin.tekst) || (pin.juist ? "" : t("nogNiet"));
+    info.append(p);
+    if (pin.fotos?.length) {
+      const rij = document.createElement("div");
+      rij.className = "pin-fotos";
+      pin.fotos.forEach((src) => {
+        const img = Object.assign(document.createElement("img"), { src, alt: "", loading: "lazy" });
+        rij.append(img);
+      });
+      info.append(rij);
+    }
+    pinnen.forEach((m, j) => m.getElement()?.classList.toggle("open", j === i));
+    info.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   $("#volgende").addEventListener("click", () => {
@@ -444,6 +628,7 @@
   });
   $("#std-namen").append(...naamDelen);
   $("#kaart-foto").src = SITE.fotoKaart;
+  $("#intro-foto").src = SITE.fotoIntro;
 
   bouwTaalknoppen();
   bouwFormulier();
@@ -460,6 +645,6 @@
 
   $("#start").addEventListener("click", startQuiz);
   $("#overslaan").addEventListener("click", () => onthul());
-  $("#opnieuw").addEventListener("click", startQuiz);
+  $("#opnieuw").addEventListener("click", () => toonScherm("intro"));
   $("#overslaan").hidden = !opslag.lees().klaar;
 })();

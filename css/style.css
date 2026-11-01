@@ -607,7 +607,28 @@ button, input, textarea { font: inherit; color: inherit; }
 .feedback-foto figcaption:empty { display: none; }
 
 /* ---------- kaartvragen ---------- */
-.beeld-kaart .beeld-binnen { display: block; }
+/* kaartvraag: de kaart staat onder de vraag, info ernaast of eronder */
+#quiz.actief.is-kaartvraag { grid-template-rows: none; grid-template-columns: none; }
+.is-kaartvraag .vraag-beeld { display: none; }
+.is-kaartvraag .vraag-inhoud { max-width: 1120px; }
+.kaart-rij { display: grid; gap: 18px; margin-bottom: 18px; }
+.kaart-plek { height: 58vh; min-height: 320px; }
+.pin-info { margin: 0; }
+@media (min-width: 900px) {
+  .kaart-rij { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); align-items: start; }
+  .kaart-plek { height: 66vh; }
+  .kaart-rij .pin-info { max-height: 66vh; overflow-y: auto; padding-top: 0; border-top: 0; }
+  .is-kaartvraag .vraag-inhoud { align-self: start; padding: 100px 48px 72px; }
+}
+.pin-naam {
+  padding: 1px 6px;
+  border: 0;
+  border-radius: 3px;
+  background: rgba(255, 253, 247, .92);
+  box-shadow: none;
+  font-weight: 600;
+}
+.pin-naam::before { display: none; }
 .kaart-vak {
   width: 100%;
   height: 100%;
@@ -650,7 +671,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .pin.fout span::after { content: "✕"; }
 .pin.open span { transform: scale(1.3); }
 
-.pin-info { margin: 0 0 24px; padding: 16px 0; border-top: 1px solid var(--lijn); border-bottom: 1px solid var(--lijn); }
+.pin-info { padding: 14px 0; border-top: 1px solid var(--lijn); border-bottom: 1px solid var(--lijn); }
 .pin-info h3 { margin: 0 0 4px; font: var(--display-gewicht) 24px/1.2 var(--f-display); color: var(--accent); }
 .pin-info p { margin: 0; }
 .pin-hint { font-style: italic; color: var(--inkt-zacht); }

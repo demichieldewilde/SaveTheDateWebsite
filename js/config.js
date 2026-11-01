@@ -59,7 +59,7 @@ window.SITE = {
   stijlKiezer: true,
 
   fotoIntro: "fotos/selfie-heuvels.jpg",
-  fotoKaart: "fotos/selfie-close-up.jpg",
+  fotoKaart: "fotos/zonnebrillen-jeep.jpg",
 };
 
 /*
@@ -69,6 +69,8 @@ window.SITE = {
  * - fotoNa:     (optioneel) foto of kaartje dat pas na het antwoorden verschijnt
  * - kaart:      (optioneel) een kaart met pinnen in plaats van antwoorden.
  *               Elke pin: naam, lat, lon, juist: true (anders fout), tekst en fotos die na het tonen verschijnen.
+ *               direct: true  -> een pin toont meteen of hij juist is (en de info) zodra je hem aantikt.
+ *               namenTonen: true -> de namen staan altijd bij de pinnen.
  * Bezoekers mogen altijd meerdere antwoorden aanduiden; juist = precies de juiste aangeduid.
  * - antwoorden: tekst  -> { nl: "...", fr: "...", ... }
  *               foto   -> { foto: "fotos/...", alt: { nl: "..." } }
@@ -80,10 +82,10 @@ window.SITE = {
 window.QUIZ = [
   {
     vraag: {
-      nl: "Waar at Michiel zijn allereerste Bretoense galette, in een Asterix-restaurant?",
-      fr: "Où Michiel a-t-il mangé sa toute première galette bretonne, dans un restaurant Astérix ?",
-      en: "Where did Michiel eat his very first Breton galette, in an Asterix restaurant?",
-      de: "Wo hat Michiel seine allererste bretonische Galette gegessen, in einem Asterix-Restaurant?",
+      nl: "Amélies familie komt gedeeltelijk uit Bretagne, waar het traditie is om Bretoense galettes te eten. Waar at Michiel zijn allereerste Bretoense galette, in een Asterix-restaurant?",
+      fr: "La famille d'Amélie vient en partie de Bretagne, où la tradition est de manger des galettes bretonnes. Où Michiel a-t-il mangé sa toute première galette bretonne, dans un restaurant Astérix ?",
+      en: "Part of Amélie's family comes from Brittany, where eating Breton galettes is a tradition. Where did Michiel eat his very first Breton galette, in an Asterix restaurant?",
+      de: "Amélies Familie stammt zum Teil aus der Bretagne, wo es Tradition ist, bretonische Galettes zu essen. Wo hat Michiel seine allererste bretonische Galette gegessen, in einem Asterix-Restaurant?",
     },
     fotos: ["fotos/galettes-eten.jpg", "fotos/bord-la-galette.jpg"],
     antwoorden: [
@@ -91,11 +93,10 @@ window.QUIZ = [
       { nl: "Saint-Malo" },
       { nl: "Parijs", fr: "Paris", en: "Paris", de: "Paris" },
       { nl: "Brussel", fr: "Bruxelles", en: "Brussels", de: "Brüssel" },
-      { nl: "Londen", fr: "Londres", en: "London", de: "London" },
       { nl: "Kopenhagen", fr: "Copenhague", en: "Copenhagen", de: "Kopenhagen" },
       { nl: "Amsterdam" },
     ],
-    juist: 5,
+    juist: 4,
     uitleg: {
       nl: "Niet in Bretagne, maar in Kopenhagen, onder het waakzame oog van Asterix.",
       fr: "Pas en Bretagne, mais à Copenhague, sous l'œil vigilant d'Astérix.",
@@ -246,7 +247,7 @@ window.QUIZ = [
     antwoorden: [
       { nl: "Decathlon" },
       { nl: "IKEA" },
-      { nl: "Action" },
+      { nl: "Dille & Kamille" },
       { nl: "HEMA" },
     ],
     juist: 0,
@@ -406,6 +407,7 @@ window.QUIZ = [
       de: "Wo waren wir schon zusammen? Wähle alle Länder aus, aber Vorsicht bei den Pins, wo wir noch nicht waren!",
     },
     kaart: {
+      direct: true,
       pinnen: [
         {
           naam: { nl: "Duitsland", fr: "Allemagne", en: "Germany", de: "Deutschland" },
@@ -545,12 +547,13 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Op de Juliana Trail in Slovenië werd het huwelijksaanzoek gedaan. In welk dorpje?",
-      fr: "La demande en mariage a eu lieu sur le Juliana Trail, en Slovénie. Dans quel village ?",
-      en: "The proposal happened on the Juliana Trail in Slovenia. In which village?",
-      de: "Der Heiratsantrag fand auf dem Juliana Trail in Slowenien statt. In welchem Dorf?",
+      nl: "Michiel heeft Amélie ten huwelijk gevraagd op de Juliana Trail in Slovenië. In welk dorpje gebeurde dat?",
+      fr: "Michiel a demandé Amélie en mariage sur le Juliana Trail, en Slovénie. Dans quel village était-ce ?",
+      en: "Michiel proposed to Amélie on the Juliana Trail in Slovenia. In which village did it happen?",
+      de: "Michiel hat Amélie auf dem Juliana Trail in Slowenien einen Heiratsantrag gemacht. In welchem Dorf war das?",
     },
     kaart: {
+      namenTonen: true,
       // ruwe lijn van de Juliana Trail (rondwandeling rond de Julische Alpen)
       route: [
         [46.484, 13.785], [46.461, 13.937], [46.436, 14.053], [46.404, 14.140], [46.344, 14.174],

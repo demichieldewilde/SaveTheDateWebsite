@@ -124,6 +124,7 @@
   let selectie = new Set();   // aangeduide antwoorden bij de huidige vraag, nog niet getoond
   let kaart = null;           // Leaflet-kaart bij een kaartvraag
   let pinnen = [];            // markers op die kaart
+  let openPin = null;         // pin waarvan de info getoond wordt
 
   const keuzeLijst = (q) => (q.kaart ? q.kaart.pinnen : q.antwoorden);
   const alleGoed = (q) => !q.kaart && (q.juist == null || q.juist === "alle");
@@ -217,10 +218,12 @@
     beeld.className = "vraag-beeld";
     beeld.replaceChildren(binnen);
     if (kaart) { kaart.remove(); kaart = null; pinnen = []; }
+    openPin = null;
+    $("#quiz").classList.toggle("is-kaartvraag", Boolean(q.kaart));
+    $("#kaart-rij").hidden = !q.kaart;
 
     if (q.kaart) {
-      beeld.classList.add("beeld-kaart");
-      bouwKaart(q, binnen);
+      bouwKaart(q, $("#kaart-plek"));
       return;
     }
     if (q.video) {
@@ -257,7 +260,7 @@
   function bouwKaart(q, doel) {
     const vak = document.createElement("div");
     vak.className = "kaart-vak";
-    doel.append(vak);
+    doel.replaceChildren(vak);
     kaart = L.map(vak, { scrollWheelZoom: false, zoomSnap: 0.25 });
     const esri = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_";
     L.tileLayer(`${esri}Base/MapServer/tile/{z}/{y}/{x}`, {
@@ -274,13 +277,29 @@
         keyboard: true,
         title: vt(p.naam),
       });
-      m.bindTooltip(vt(p.naam), { direction: "top", offset: [0, -10] });
-      m.on("click", () => (keuzes[huidige] !== undefined ? toonPinInfo(i) : wissel(i)));
+      const vast = Boolean(q.kaart.namenTonen);
+      m.bindTooltip(vt(p.naam), {
+        permanent: vast, direction: vast ? "right" : "top", offset: vast ? [10, 0] : [0, -10], className: vast ? "pin-naam" : "",
+      });
+      m.on("click", () => klikPin(i));
       return m.addTo(kaart);
     });
     const punten = [...q.kaart.pinnen.map((p) => [p.lat, p.lon]), ...(q.kaart.route || [])];
     kaart.fitBounds(L.latLngBounds(punten), { padding: [24, 24] });
     requestAnimationFrame(() => kaart && kaart.invalidateSize());
+  }
+
+  function klikPin(i) {
+    const q = QUIZ[huidige];
+    if (keuzes[huidige] !== undefined) return toonPinInfo(i);
+    if (q.kaart.direct) {
+      // meteen tonen of we daar waren; aangetikt blijft aangetikt
+      selectie.add(i);
+      zetSelectie();
+      toonPinInfo(i);
+      return;
+    }
+    wissel(i);
   }
 
   function wissel(i) {
@@ -294,10 +313,19 @@
     const q = QUIZ[huidige];
     const getoond = keuzes[huidige] !== undefined;
     if (q.kaart) {
-      pinnen.forEach((m, i) => m.getElement()?.classList.toggle("aangeduid", selectie.has(i)));
+      pinnen.forEach((m, i) => {
+        const el = m.getElement();
+        if (!el || getoond) return;
+        const aan = selectie.has(i);
+        el.classList.toggle("aangeduid", aan && !q.kaart.direct);
+        if (q.kaart.direct && aan) el.classList.add(q.kaart.pinnen[i].juist ? "juist" : "fout");
+      });
+      const info = $("#pin-info");
+      info.hidden = !(q.kaart.direct || getoond);
+      if (!info.hidden) toonPinInfo(openPin);
       const box = $("#antwoorden");
       box.replaceChildren();
-      if (!getoond) {
+      if (!getoond && !q.kaart.direct) {
         const lijst = [...selectie].sort((a, b) => a - b).map((i) => vt(q.kaart.pinnen[i].naam));
         const p = document.createElement("p");
         p.className = "kaart-gekozen";
@@ -335,6 +363,9 @@
     const box = $("#antwoorden");
     box.classList.add("beantwoord");
     if (!animeer) box.classList.add("zonder-animatie");
+    const juist = alleGoed(q) ? [] : juisteSet(q);
+    const gevonden = juist.filter((i) => gekozen.includes(i)).length;
+    const teVeel = gekozen.filter((i) => !juist.includes(i)).length;
 
     if (q.kaart) {
       box.replaceChildren();
@@ -346,9 +377,6 @@
         if (s) el.classList.add(s);
         el.classList.add("getoond");
       });
-      const juist = juisteSet(q);
-      const gevonden = juist.filter((i) => gekozen.includes(i)).length;
-      const teVeel = gekozen.filter((i) => !juist.includes(i)).length;
       if (juist.length > 1) {
         const p = document.createElement("p");
         p.className = "kaart-gekozen";
@@ -366,7 +394,10 @@
 
     const fb = $("#feedback");
     fb.className = `feedback ${goed ? "is-juist" : "is-fout"}`;
-    $("#feedback-titel").textContent = t(goed ? "juist" : "fout")[titels[huidige] || 0];
+    // bij meerdere juiste antwoorden: zeg hoeveel er juist waren
+    $("#feedback-titel").textContent = !goed && juist.length > 1
+      ? t("deelsJuist", { g: gevonden, t: juist.length })
+      : t(goed ? "juist" : "fout")[titels[huidige] || 0];
     $("#feedback-tekst").textContent = goed ? vt(q.bravo) : vt(q.uitleg);
 
     // foto of kaartje dat pas na het antwoorden verschijnt
@@ -380,7 +411,7 @@
 
     const info = $("#pin-info");
     info.hidden = !q.kaart;
-    if (q.kaart) toonPinInfo(null);
+    if (q.kaart) toonPinInfo(openPin);
 
     $("#volgende").textContent = huidige === QUIZ.length - 1 ? t("laatste") : t("volgende");
     fb.hidden = false;
@@ -392,11 +423,12 @@
   function toonPinInfo(i) {
     const q = QUIZ[huidige];
     const info = $("#pin-info");
+    openPin = i;
     info.replaceChildren();
     if (i == null) {
       const p = document.createElement("p");
       p.className = "pin-hint";
-      p.textContent = t("kaartKlik");
+      p.textContent = t(keuzes[huidige] !== undefined ? "kaartKlik" : "kaartDirect");
       info.append(p);
       return;
     }
@@ -417,7 +449,6 @@
       info.append(rij);
     }
     pinnen.forEach((m, j) => m.getElement()?.classList.toggle("open", j === i));
-    info.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   $("#volgende").addEventListener("click", () => {

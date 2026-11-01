@@ -18,7 +18,7 @@ for path in sorted(SRC.iterdir()):
     if path.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"}:
         continue
     with Image.open(path) as im:
-        if max(im.size) <= MAX_SIDE and path.stat().st_size < 400_000:
+        if max(im.size) <= MAX_SIDE:
             continue
         if not (BACKUP / path.name).exists():
             shutil.copy2(path, BACKUP / path.name)

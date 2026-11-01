@@ -8,6 +8,7 @@
   const OPSLAG = "std-amelie-michiel";
   const LOCALE = { nl: "nl-BE", fr: "fr-BE", en: "en-GB", de: "de-DE" };
   const STIJLEN = ["hoeve", "veldbloemen", "blauwe-inkt"];
+  const ACHTERGRONDEN = ["standaard", "lichtblauw", "donkerblauw"];
   const AANWEZIG_NL = { ja: "Ja, zeker", misschien: "Waarschijnlijk", nee: "Helaas niet" };
 
   const opslag = {
@@ -61,6 +62,7 @@
     document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t(el.dataset.t); });
     document.querySelectorAll("[data-t-html]").forEach((el) => { el.innerHTML = t(el.dataset.tHtml); });
     document.querySelectorAll("[data-t-ph]").forEach((el) => { el.placeholder = t(el.dataset.tPh); });
+    document.querySelectorAll("[data-t-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.tAria)));
     document.querySelectorAll("[data-taal]").forEach((k) => k.setAttribute("aria-pressed", k.dataset.taal === taal));
 
     $("#std-datum").textContent = SITE.datum.kort;
@@ -94,6 +96,16 @@
     document.querySelectorAll("[data-stijl-knop]").forEach((k) =>
       k.setAttribute("aria-pressed", k.dataset.stijlKnop === stijl));
     if (SITE.stijlKiezer) opslag.schrijf({ stijl });
+  }
+
+  function zetAchtergrond(achtergrond) {
+    if (!ACHTERGRONDEN.includes(achtergrond)) achtergrond = "standaard";
+    document.documentElement.dataset.achtergrond = achtergrond;
+    document.querySelectorAll("[data-achtergrond-knop]").forEach((k) =>
+      k.setAttribute("aria-pressed", k.dataset.achtergrondKnop === achtergrond));
+    const meta = document.querySelector('meta[name="theme-color"]');
+    meta.content = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+    if (SITE.stijlKiezer) opslag.schrijf({ achtergrond });
   }
 
   /* ---------- schermen ---------- */
@@ -337,10 +349,10 @@
     const form = $("#formulier");
     const melding = $("#form-melding");
 
-    const update = () => { $("#komt-blok").hidden = form.aanwezig.value === "nee"; };
-    form.addEventListener("change", update);
-    form.addEventListener("input", (e) => e.target.classList.remove("ongeldig"));
-    update();
+    form.addEventListener("input", (e) => {
+      e.target.classList.remove("ongeldig");
+      e.target.closest(".keuzes")?.classList.remove("ongeldig");
+    });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -351,9 +363,15 @@
       if (!form.naam.value.trim()) { fouten.push(t("formFoutNaam")); form.naam.classList.add("ongeldig"); }
       if (!form.email.value || !form.email.checkValidity()) { fouten.push(t("formFoutEmail")); form.email.classList.add("ongeldig"); }
       if (!form.aanwezig.value) { fouten.push(t("formFoutAanwezig")); form.querySelector(".keuzes").classList.add("ongeldig"); }
+      // het adres is nodig om de uitnodiging per post te sturen, behalve als iemand niet komt
+      const adresLeeg = ["straat", "postcode", "gemeente"].filter((n) => !form[n].value.trim());
+      if (form.aanwezig.value !== "nee" && adresLeeg.length) {
+        fouten.push(t("formFoutAdres"));
+        adresLeeg.forEach((n) => form[n].classList.add("ongeldig"));
+      }
       if (fouten.length) {
         melding.textContent = t("formVulIn", { lijst: fouten.join(", ") });
-        form.querySelector(".ongeldig input, input.ongeldig")?.focus();
+        form.querySelector("input.ongeldig, .ongeldig input")?.focus();
         return;
       }
       if (!SITE.formulierUrl) {
@@ -366,9 +384,10 @@
         naam: form.naam.value.trim(),
         email: form.email.value.trim(),
         aanwezig: AANWEZIG_NL[form.aanwezig.value],
-        aantal: komt ? form.aantal.value : "0",
-        kerk: komt && form.kerk.checked ? "ja" : "",
-        feest: komt && form.feest.checked ? "ja" : "",
+        straat: form.straat.value.trim(),
+        postcode: form.postcode.value.trim(),
+        gemeente: form.gemeente.value.trim(),
+        land: form.land.value.trim(),
         bericht: form.bericht.value.trim(),
         uitnodiging: isDinerGast ? "diner + feest" : "feest",
         taal: taal.toUpperCase(),
@@ -434,7 +453,10 @@
   kiezer.hidden = !SITE.stijlKiezer;
   kiezer.querySelectorAll("[data-stijl-knop]").forEach((k) =>
     k.addEventListener("click", () => zetStijl(k.dataset.stijlKnop)));
+  kiezer.querySelectorAll("[data-achtergrond-knop]").forEach((k) =>
+    k.addEventListener("click", () => zetAchtergrond(k.dataset.achtergrondKnop)));
   zetStijl(params.get("stijl") || (SITE.stijlKiezer && opslag.lees().stijl) || SITE.stijl);
+  zetAchtergrond(params.get("achtergrond") || (SITE.stijlKiezer && opslag.lees().achtergrond) || SITE.achtergrond);
 
   $("#start").addEventListener("click", startQuiz);
   $("#overslaan").addEventListener("click", () => onthul());

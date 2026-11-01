@@ -179,6 +179,64 @@
 }
 
 /* ============================================================
+   ACHTERGRONDEN
+   Overschrijven de kleuren van de gekozen stijl.
+   ============================================================ */
+[data-achtergrond="lichtblauw"] {
+  --bg: #E3EDF8;
+  --bg-textuur: none;
+  --papier: #F3F7FC;
+  --kaart-bg: #F3F7FC;
+  --inkt: #1F315C;
+  --inkt-zacht: #56658A;
+  --lijn: rgba(31, 49, 92, .16);
+  --invoer-bg: transparent;
+}
+[data-stijl="veldbloemen"][data-achtergrond="lichtblauw"] { --invoer-bg: #FFFFFF; }
+
+[data-achtergrond="donkerblauw"] {
+  --bg: #1C2C55;
+  --bg-textuur: none;
+  --papier: #233666;
+  --kaart-bg: #233666;
+  --inkt: #F4EFE3;
+  --inkt-zacht: #B8C1DA;
+  --accent: #F7EC8D;
+  --accent-2: #F6A93A;
+  --lijn: rgba(244, 239, 227, .2);
+  --fout: #C8B6F0;
+  --invoer-bg: transparent;
+
+  --knop-kleur: #1C2C55;
+  --knop-hover-kleur: #1C2C55;
+
+  --b-lijn: #B9C79A;
+  --b-blad: rgba(185, 199, 154, .18);
+  --b-kroon: #86C5FF;
+  --b-kroon-lijn: #86C5FF;
+  --b-kroon-alt: #B8A4E6;
+  --b-kelk: rgba(185, 199, 154, .35);
+  --b-madeliefje: #F4EFE3;
+  --b-madeliefje-lijn: #F4EFE3;
+  --b-hart: #F6A93A;
+  --b-korrel: rgba(246, 199, 110, .35);
+  --b-korrel-lijn: #E8C06A;
+}
+[data-stijl="hoeve"][data-achtergrond="donkerblauw"] {
+  --knop-kleur: var(--inkt);
+  --knop-hover-bg: var(--inkt);
+}
+[data-stijl="veldbloemen"][data-achtergrond="donkerblauw"] { --knop-hover-bg: #FFF4B0; }
+[data-stijl="blauwe-inkt"][data-achtergrond="donkerblauw"] {
+  --knop-hover-bg: transparent;
+  --knop-hover-kleur: var(--accent);
+  --b-blad: transparent;
+  --b-kroon: transparent;
+  --b-kelk: transparent;
+  --b-korrel: transparent;
+}
+
+/* ============================================================
    BASIS
    ============================================================ */
 :root { color-scheme: light; }
@@ -252,7 +310,7 @@ button, input, textarea { font: inherit; color: inherit; }
   letter-spacing: .04em;
   color: var(--inkt);
 }
-.monogram i { margin: 0 3px; font-family: var(--f-naam); font-style: var(--naam-stijl); color: var(--accent-2); }
+.monogram .en { margin: 0 2px; font-style: normal; color: var(--accent-2); }
 
 .talen { display: flex; gap: 2px; }
 .talen button {
@@ -654,7 +712,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .veld-invoer textarea { resize: vertical; }
 .veld-invoer input:focus, .veld-invoer textarea:focus { outline: none; border-color: var(--accent); }
 .veld-invoer input::placeholder, .veld-invoer textarea::placeholder { color: var(--inkt-zacht); opacity: .55; font-style: italic; }
-.veld-smal input { max-width: 110px; }
+.adres input { margin-bottom: 8px; }
+.adres-rij { display: grid; grid-template-columns: 7.5em 1fr; gap: 14px; }
 .veld-invoer .ongeldig { border-color: var(--fout) !important; }
 
 .keuzes { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -703,17 +762,17 @@ button, input, textarea { font: inherit; color: inherit; }
   right: 12px;
   bottom: 12px;
   z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: grid;
+  gap: 2px;
   padding: 6px;
-  border-radius: 999px;
+  border-radius: 18px;
   background: #fff;
   box-shadow: 0 4px 18px rgba(0, 0, 0, .18);
   font: 500 12px/1 system-ui, sans-serif;
   color: #333;
 }
-.stijlkiezer span { padding: 0 6px 0 8px; color: #888; }
+.stijlkiezer .rij { display: flex; align-items: center; gap: 2px; }
+.stijlkiezer span { width: 44px; padding-left: 8px; color: #888; }
 .stijlkiezer button {
   padding: 8px 10px;
   border: 0;
@@ -724,7 +783,7 @@ button, input, textarea { font: inherit; color: inherit; }
 }
 .stijlkiezer button[aria-pressed="true"] { background: #222; color: #fff; }
 
-body:has(.stijlkiezer:not([hidden])) { padding-bottom: 64px; }
+body:has(.stijlkiezer:not([hidden])) { padding-bottom: 100px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

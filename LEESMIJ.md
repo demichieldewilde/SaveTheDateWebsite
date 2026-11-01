@@ -61,7 +61,8 @@ De code (`lente`) pas je aan bij `dinerCode` in `js/config.js`. In de sheet zie 
 - De site kiest zelf de taal van de browser (NL, FR, EN of DE); bezoekers kunnen bovenaan wisselen.
   Een link in een vaste taal: voeg `?lang=fr` toe (of `&lang=fr` na de dinercode).
 - Stijl kiezen: `stijl` in `js/config.js` (`hoeve`, `veldbloemen` of `blauwe-inkt`).
-  Zet `stijlKiezer: false` zodra jullie gekozen hebben; dan verdwijnt het knopje rechtsonder.
+- Achtergrond kiezen: `achtergrond` in `js/config.js` (`standaard`, `lichtblauw` of `donkerblauw`).
+  Zet `stijlKiezer: false` zodra jullie gekozen hebben; dan verdwijnen de knopjes rechtsonder.
 
 ## 6. Dingen aanpassen
 

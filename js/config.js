@@ -53,7 +53,9 @@ window.SITE = {
 
   // Stijl van de site: "hoeve", "veldbloemen" of "blauwe-inkt".
   stijl: "hoeve",
-  // Toont rechtsonder een knopje om tussen de stijlen te wisselen. Zet op false voor de echte site.
+  // Achtergrond: "standaard" (de kleur van de stijl), "lichtblauw" of "donkerblauw".
+  achtergrond: "standaard",
+  // Toont rechtsonder knopjes om stijl en achtergrond te wisselen. Zet op false voor de echte site.
   stijlKiezer: true,
 
   fotoKaart: "fotos/selfie-close-up.jpg",

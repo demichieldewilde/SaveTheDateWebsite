@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nl-BE" data-stijl="hoeve">
+<html lang="nl-BE" data-stijl="hoeve" data-achtergrond="standaard">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
 </head>
 <body>
   <header class="kop">
-    <span class="monogram" aria-hidden="true">A<i>&amp;</i>M</span>
+    <span class="monogram" aria-hidden="true">A <span class="en">&amp;</span> M</span>
     <nav class="talen" id="talen" aria-label="Taal · Langue · Language · Sprache"></nav>
     <div class="voortgang-lijn" id="voortgang" hidden><i></i></div>
   </header>
@@ -98,19 +98,15 @@
             </div>
           </fieldset>
 
-          <div id="komt-blok">
-            <label class="veld-invoer veld-smal">
-              <span data-t="formAantal"></span>
-              <input name="aantal" type="number" min="1" max="12" value="1" inputmode="numeric">
-            </label>
-            <fieldset class="veld-invoer">
-              <legend data-t="formOnderdelen"></legend>
-              <div class="keuzes">
-                <label class="keuze"><input type="checkbox" name="kerk" checked><span data-t="formKerk"></span></label>
-                <label class="keuze"><input type="checkbox" name="feest" checked><span data-t="formFeest"></span></label>
-              </div>
-            </fieldset>
-          </div>
+          <fieldset class="veld-invoer adres">
+            <legend><span data-t="formAdres"></span> <small data-t="formAdresUitleg"></small></legend>
+            <input name="straat" autocomplete="street-address" data-t-ph="formStraat" data-t-aria="formStraat">
+            <div class="adres-rij">
+              <input name="postcode" autocomplete="postal-code" data-t-ph="formPostcode" data-t-aria="formPostcode">
+              <input name="gemeente" autocomplete="address-level2" data-t-ph="formGemeente" data-t-aria="formGemeente">
+            </div>
+            <input name="land" autocomplete="country-name" data-t-ph="formLand" data-t-aria="formLandLabel">
+          </fieldset>
 
           <label class="veld-invoer">
             <span><span data-t="formBericht"></span> <small data-t="formOptioneel"></small></span>
@@ -137,10 +133,18 @@
   </main>
 
   <div class="stijlkiezer" id="stijlkiezer" hidden>
-    <span>Stijl</span>
-    <button type="button" data-stijl-knop="hoeve">Hoeve</button>
-    <button type="button" data-stijl-knop="veldbloemen">Veldbloemen</button>
-    <button type="button" data-stijl-knop="blauwe-inkt">Blauwe inkt</button>
+    <div class="rij">
+      <span>Stijl</span>
+      <button type="button" data-stijl-knop="hoeve">Hoeve</button>
+      <button type="button" data-stijl-knop="veldbloemen">Veldbloemen</button>
+      <button type="button" data-stijl-knop="blauwe-inkt">Blauwe inkt</button>
+    </div>
+    <div class="rij">
+      <span>Kleur</span>
+      <button type="button" data-achtergrond-knop="standaard">Standaard</button>
+      <button type="button" data-achtergrond-knop="lichtblauw">Lichtblauw</button>
+      <button type="button" data-achtergrond-knop="donkerblauw">Donkerblauw</button>
+    </div>
   </div>
 
   <script src="js/config.js"></script>

@@ -1,216 +1,151 @@
 <!doctype html>
-<html lang="nl-BE">
+<html lang="nl-BE" data-stijl="hoeve">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Amélie & Michiel · Save the date</title>
-  <meta name="description" content="Hoe goed ken jij Amélie & Michiel? Speel de quiz en ontdek ons nieuws.">
-  <meta property="og:title" content="Amélie & Michiel hebben nieuws">
-  <meta property="og:description" content="Hoe goed ken jij ons? Speel de quiz en ontdek het.">
-  <meta name="theme-color" content="#F5F4ED">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cg fill='%235E84E2'%3E%3Cellipse cy='-26' rx='15' ry='24'/%3E%3Cellipse cy='-26' rx='15' ry='24' transform='rotate(72)'/%3E%3Cellipse cy='-26' rx='15' ry='24' transform='rotate(144)'/%3E%3Cellipse cy='-26' rx='15' ry='24' transform='rotate(216)'/%3E%3Cellipse cy='-26' rx='15' ry='24' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='12' fill='%23FFA62B'/%3E%3C/svg%3E">
+  <meta name="description" content="Amélie & Michiel hebben nieuws.">
+  <meta property="og:title" content="Amélie & Michiel · Save the date">
+  <meta property="og:description" content="Hoe goed ken jij ons? · Nous connais-tu bien ? · How well do you know us? · Wie gut kennst du uns?">
+  <meta name="theme-color" content="#EFE8DA">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-style='italic' font-size='40' text-anchor='middle' fill='%233E5C9A'%3E%26amp;%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Italiana&family=Jost:wght@400;500&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="bloem" viewBox="-50 -50 100 100">
-      <g style="fill: currentColor">
-        <ellipse cy="-26" rx="15" ry="24"/>
-        <ellipse cy="-26" rx="15" ry="24" transform="rotate(72)"/>
-        <ellipse cy="-26" rx="15" ry="24" transform="rotate(144)"/>
-        <ellipse cy="-26" rx="15" ry="24" transform="rotate(216)"/>
-        <ellipse cy="-26" rx="15" ry="24" transform="rotate(288)"/>
-      </g>
-      <circle r="11" style="fill: var(--hart, #FFA62B)"/>
-    </symbol>
-    <symbol id="madeliefje" viewBox="-50 -50 100 100">
-      <g style="fill: currentColor">
-        <ellipse cy="-30" rx="7" ry="20"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(30)"/>
-        <ellipse cy="-30" rx="7" ry="20" transform="rotate(60)"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(90)"/>
-        <ellipse cy="-30" rx="7" ry="20" transform="rotate(120)"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(150)"/>
-        <ellipse cy="-30" rx="7" ry="20" transform="rotate(180)"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(210)"/>
-        <ellipse cy="-30" rx="7" ry="20" transform="rotate(240)"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(270)"/>
-        <ellipse cy="-30" rx="7" ry="20" transform="rotate(300)"/><ellipse cy="-30" rx="7" ry="20" transform="rotate(330)"/>
-      </g>
-      <circle r="13" style="fill: var(--hart, #F6A93A)"/>
-    </symbol>
-  </svg>
-
   <header class="kop">
-    <span class="monogram" aria-label="Amélie en Michiel">A<i>&amp;</i>M</span>
-    <ol class="voortgang" aria-label="Voortgang van de quiz"></ol>
+    <span class="monogram" aria-hidden="true">A<i>&amp;</i>M</span>
+    <nav class="talen" id="talen" aria-label="Taal · Langue · Language · Sprache"></nav>
+    <div class="voortgang-lijn" id="voortgang" hidden><i></i></div>
   </header>
 
   <main>
     <!-- ============ INTRO ============ -->
     <section id="intro" class="scherm actief" aria-labelledby="intro-titel">
-      <div class="intro-bloemen" aria-hidden="true">
-        <svg class="b b1"><use href="#bloem"/></svg>
-        <svg class="b b2"><use href="#madeliefje"/></svg>
-        <svg class="b b3"><use href="#bloem"/></svg>
-        <svg class="b b4"><use href="#madeliefje"/></svg>
-        <svg class="b b5"><use href="#bloem"/></svg>
+      <div class="intro-inhoud">
+        <p class="label" data-t="introKicker"></p>
+        <h1 id="intro-titel" class="intro-titel" data-t-html="introTitel"></h1>
+        <div class="krans" data-bot="krans:3"></div>
+        <p class="intro-tekst" data-t="introTekst"></p>
+        <button class="knop" id="start" data-t="introStart"></button>
+        <button class="link-knop" id="overslaan" data-t="introOverslaan" hidden></button>
       </div>
-      <p class="label">Een klein reisdagboek</p>
-      <h1 id="intro-titel" class="intro-titel">Hoe goed ken jij<br><em data-veld="namen"></em>?</h1>
-      <p class="intro-tekst">
-        We hebben nieuws. Maar eerst een paar vragen over onze avonturen.
-        Wie ze allemaal doorloopt, krijgt op het einde onze kaart.
-      </p>
-      <button class="knop knop-groot" id="start">Start de quiz</button>
-      <button class="link-knop" id="overslaan" hidden>Ik ken het nieuws al, toon de kaart</button>
     </section>
 
     <!-- ============ QUIZ ============ -->
     <section id="quiz" class="scherm" aria-live="polite">
-      <article class="vraagkaart">
-        <div class="vraag-kop">
-          <span class="postzegel postzegel-klein"><span>Vraag</span><b id="vraag-nr">1</b></span>
-          <span class="vraag-totaal" id="vraag-totaal"></span>
-        </div>
-        <figure class="vraag-foto" id="vraag-foto" hidden><img alt=""></figure>
+      <div class="vraag-beeld" id="vraag-beeld"></div>
+      <div class="vraag-inhoud">
+        <p class="label" id="vraag-nr"></p>
         <h2 class="vraag" id="vraag-tekst" tabindex="-1"></h2>
         <div class="antwoorden" id="antwoorden"></div>
         <div class="feedback" id="feedback" hidden>
           <p class="feedback-titel" id="feedback-titel"></p>
           <p class="feedback-tekst" id="feedback-tekst"></p>
-          <button class="knop" id="volgende">Volgende vraag</button>
+          <button class="knop" id="volgende"></button>
         </div>
-      </article>
+      </div>
     </section>
 
     <!-- ============ ONTHULLING ============ -->
-    <section id="onthulling" class="scherm" aria-labelledby="std-titel">
-      <div class="blaadjes" id="blaadjes" aria-hidden="true"></div>
+    <section id="onthulling" class="scherm" aria-labelledby="std-namen">
+
+      <article class="std">
+        <p class="label std-label">Save the date</p>
+        <figure class="std-foto"><img id="kaart-foto" alt=""></figure>
+        <p class="std-trouwen" data-t="wijTrouwen"></p>
+        <h1 class="std-namen" id="std-namen"></h1>
+        <div class="krans" data-bot="krans:4"></div>
+        <p class="std-datum" id="std-datum"></p>
+        <p class="std-plaats" id="std-plaats"></p>
+        <p class="std-noot" data-t="uitnodigingVolgt"></p>
+      </article>
+
       <p class="score" id="score"></p>
 
-      <div class="kaart-wrap">
-        <div class="kaart" id="kaart">
-          <!-- voorkant -->
-          <div class="kaart-zijde kaart-voor">
-            <div class="kaart-binnen">
-              <figure class="boog"><img id="kaart-foto" alt="Amélie en Michiel"></figure>
-              <p class="std" id="std-titel">Save the date</p>
-              <p class="kaart-namen" data-veld="namen"></p>
-              <p class="kaart-datum" data-veld="datumKort"></p>
-              <p class="kaart-plaats" data-veld="gemeente"></p>
-              <svg class="hoek h1" aria-hidden="true"><use href="#bloem"/></svg>
-              <svg class="hoek h2" aria-hidden="true"><use href="#madeliefje"/></svg>
-            </div>
-          </div>
-          <!-- achterkant -->
-          <div class="kaart-zijde kaart-achter">
-            <div class="kaart-binnen achter-raster">
-              <div class="achter-brief">
-                <p>Lieve vrienden en familie,</p>
-                <p>na skipistes, galettes en een tandem vol kilometers gaan we de grootste stap zetten: <strong>we trouwen!</strong></p>
-                <p>Houd die dag alvast vrij. De officiële uitnodiging volgt.</p>
-                <p class="handtekening" data-veld="namen"></p>
-              </div>
-              <div class="achter-adres">
-                <span class="postzegel postzegel-foto"><img id="postzegel-foto" alt=""></span>
-                <svg class="poststempel" viewBox="0 0 120 120" aria-hidden="true">
-                  <circle cx="60" cy="60" r="54" />
-                  <circle cx="60" cy="60" r="40" />
-                  <path id="stempelboog" d="M60 60 m-47 0 a47 47 0 1 1 94 0 a47 47 0 1 1 -94 0" fill="none" stroke="none"/>
-                  <text><textPath href="#stempelboog" data-veld="stempel">TERNAT · 29.04.2028 ·</textPath></text>
-                  <text x="60" y="66" text-anchor="middle" class="stempel-midden">JA!</text>
-                </svg>
-                <p class="adres-lijn" data-veld="datumLang"></p>
-                <p class="adres-lijn" data-veld="feestLocatie"></p>
-                <p class="adres-lijn" data-veld="gemeente"></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="link-knop draai" id="draai">↻ Draai de kaart om</button>
-      </div>
-
-      <!-- Praktisch -->
       <section class="blok" aria-labelledby="praktisch-titel">
-        <h2 id="praktisch-titel" class="blok-titel">Wanneer &amp; waar</h2>
+        <h2 id="praktisch-titel" class="blok-titel" data-t="wanneerWaar"></h2>
         <p class="aftellen" id="aftellen"></p>
         <ol class="tijdlijn" id="tijdlijn"></ol>
         <div class="agenda-knoppen">
-          <a class="knop knop-licht" id="google-agenda" target="_blank" rel="noopener">Google Agenda</a>
-          <button class="knop knop-licht" id="ics">Andere agenda (.ics)</button>
+          <a class="knop knop-klein" id="google-agenda" target="_blank" rel="noopener" data-t="agendaGoogle"></a>
+          <button class="knop knop-klein" id="ics" data-t="agendaIcs"></button>
         </div>
       </section>
 
-      <!-- Formulier -->
       <section class="blok" aria-labelledby="form-titel">
-        <h2 id="form-titel" class="blok-titel">Laat alvast iets weten</h2>
-        <p class="blok-intro">Kan je erbij zijn? Laat het ons weten, dan weten we ook waar we de officiële uitnodiging naartoe mogen sturen.</p>
+        <h2 id="form-titel" class="blok-titel" data-t="formTitel"></h2>
+        <p class="blok-intro" data-t="formIntro"></p>
 
         <form id="formulier" novalidate>
-          <label class="veld">
-            <span>Naam (of namen)</span>
-            <input name="naam" required autocomplete="name" placeholder="bv. Jan & Marie Peeters">
+          <label class="veld-invoer">
+            <span data-t="formNaam"></span>
+            <input name="naam" required autocomplete="name" data-t-ph="formNaamVb">
           </label>
-          <label class="veld">
-            <span>E-mailadres</span>
-            <input name="email" type="email" required autocomplete="email" placeholder="jij@voorbeeld.be">
+          <label class="veld-invoer">
+            <span data-t="formEmail"></span>
+            <input name="email" type="email" required autocomplete="email" data-t-ph="formEmailVb">
           </label>
 
-          <fieldset class="veld">
-            <legend>Zijn jullie erbij?</legend>
+          <fieldset class="veld-invoer">
+            <legend data-t="formAanwezig"></legend>
             <div class="keuzes">
-              <label class="keuze"><input type="radio" name="aanwezig" value="Ja, zeker" required><span>Ja, zeker!</span></label>
-              <label class="keuze"><input type="radio" name="aanwezig" value="Waarschijnlijk"><span>Waarschijnlijk wel</span></label>
-              <label class="keuze"><input type="radio" name="aanwezig" value="Helaas niet"><span>Helaas niet</span></label>
+              <label class="keuze"><input type="radio" name="aanwezig" value="ja" required><span data-t="formJa"></span></label>
+              <label class="keuze"><input type="radio" name="aanwezig" value="misschien"><span data-t="formMisschien"></span></label>
+              <label class="keuze"><input type="radio" name="aanwezig" value="nee"><span data-t="formNee"></span></label>
             </div>
           </fieldset>
 
           <div id="komt-blok">
-            <label class="veld veld-smal">
-              <span>Met hoeveel personen?</span>
+            <label class="veld-invoer veld-smal">
+              <span data-t="formAantal"></span>
               <input name="aantal" type="number" min="1" max="12" value="1" inputmode="numeric">
             </label>
-
-            <fieldset class="veld">
-              <legend>We komen naar</legend>
+            <fieldset class="veld-invoer">
+              <legend data-t="formOnderdelen"></legend>
               <div class="keuzes">
-                <label class="keuze"><input type="checkbox" name="kerk" value="ja" checked><span>De kerk</span></label>
-                <label class="keuze" id="keuze-diner" hidden><input type="checkbox" name="diner" value="ja" checked><span>Het diner</span></label>
-                <label class="keuze"><input type="checkbox" name="feest" value="ja" checked><span>Het feest</span></label>
+                <label class="keuze"><input type="checkbox" name="kerk" checked><span data-t="formKerk"></span></label>
+                <label class="keuze"><input type="checkbox" name="feest" checked><span data-t="formFeest"></span></label>
               </div>
             </fieldset>
-
-            <label class="veld" id="dieet-veld" hidden>
-              <span>Dieetwensen of allergieën</span>
-              <input name="dieet" placeholder="bv. vegetarisch, geen noten">
-            </label>
           </div>
 
-          <label class="veld">
-            <span>Een berichtje voor ons <small>(mag ook leeg blijven)</small></span>
+          <label class="veld-invoer">
+            <span><span data-t="formBericht"></span> <small data-t="formOptioneel"></small></span>
             <textarea name="bericht" rows="3"></textarea>
           </label>
 
           <label class="honing" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
 
           <p class="form-melding" id="form-melding" role="status"></p>
-          <button class="knop knop-groot" type="submit" id="verstuur">Verstuur</button>
+          <button class="knop knop-breed" type="submit" id="verstuur" data-t="formVerstuur"></button>
         </form>
 
         <div class="bedankt" id="bedankt" hidden tabindex="-1">
-          <svg class="bedankt-bloem" aria-hidden="true"><use href="#bloem"/></svg>
-          <h3>Dankjewel!</h3>
+          <h3 data-t="bedankt"></h3>
           <p id="bedankt-tekst"></p>
         </div>
       </section>
 
       <footer class="voet">
-        <p><span data-veld="namen"></span> · <span data-veld="datumKort"></span></p>
-        <button class="link-knop" id="opnieuw">Quiz opnieuw spelen</button>
+        <p id="voet-tekst"></p>
+        <button class="link-knop" id="opnieuw" data-t="opnieuw"></button>
       </footer>
     </section>
   </main>
 
+  <div class="stijlkiezer" id="stijlkiezer" hidden>
+    <span>Stijl</span>
+    <button type="button" data-stijl-knop="hoeve">Hoeve</button>
+    <button type="button" data-stijl-knop="veldbloemen">Veldbloemen</button>
+    <button type="button" data-stijl-knop="blauwe-inkt">Blauwe inkt</button>
+  </div>
+
   <script src="js/config.js"></script>
+  <script src="js/teksten.js"></script>
+  <script src="js/botanisch.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

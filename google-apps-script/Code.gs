@@ -15,11 +15,10 @@ const KOLOMMEN = [
   ["aanwezig", "Aanwezig"],
   ["aantal", "Aantal personen"],
   ["kerk", "Kerk"],
-  ["diner", "Diner"],
   ["feest", "Feest"],
-  ["dieet", "Dieetwensen"],
   ["bericht", "Bericht"],
   ["uitnodiging", "Uitgenodigd voor"],
+  ["taal", "Taal"],
   ["quizscore", "Quizscore"],
 ];
 

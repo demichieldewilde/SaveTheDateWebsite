@@ -5,7 +5,9 @@ Een statische website (HTML, CSS en JavaScript, zonder build-stap). Bezoekers sp
 ```
 index.html                 de pagina
 css/style.css              vormgeving (kleuren bovenaan)
-js/config.js               ← ALLES OM AAN TE PASSEN: teksten, data, quizvragen
+js/config.js               ← ALLES OM AAN TE PASSEN: data, locaties, quizvragen, stijl
+js/teksten.js              vaste teksten (knoppen, formulier, ...) in NL/FR/EN/DE
+js/botanisch.js            tekent de korenbloem, aar en het kransje
 js/app.js                  de logica (normaal niet aan te raken)
 fotos/                     foto's in webformaat
 fotos-origineel/           de originele foto's (gaat niet mee naar GitHub)
@@ -50,14 +52,21 @@ Pas je het script later aan? Kies dan **Implementeren → Implementaties beheren
 - **Iedereen** krijgt de gewone link: `https://<gebruikersnaam>.github.io/save-the-date/`
   Die gasten zien de kerk en het feest.
 - **Dinergasten** krijgen de link met code: `https://<gebruikersnaam>.github.io/save-the-date/?k=lente`
-  Zij zien ook het diner en kunnen dieetwensen doorgeven.
+  Zij zien in "Wanneer & waar" ook het diner. Kiezen kunnen ze niet: dat beslissen jullie.
 
-De code (`lente`) pas je aan bij `dinerCode` in `js/config.js`. In de sheet zie je in de kolom *Uitgenodigd voor* welke link iemand gebruikte. Opgelet: dit is een gemakkelijke drempel en geen echte beveiliging.
+De code (`lente`) pas je aan bij `dinerCode` in `js/config.js`. In de sheet zie je in de kolom *Uitgenodigd voor* welke link iemand gebruikte.
 
-## 5. Dingen aanpassen
+## 5. Talen en stijl
+
+- De site kiest zelf de taal van de browser (NL, FR, EN of DE); bezoekers kunnen bovenaan wisselen.
+  Een link in een vaste taal: voeg `?lang=fr` toe (of `&lang=fr` na de dinercode).
+- Stijl kiezen: `stijl` in `js/config.js` (`hoeve`, `veldbloemen` of `blauwe-inkt`).
+  Zet `stijlKiezer: false` zodra jullie gekozen hebben; dan verdwijnt het knopje rechtsonder.
+
+## 6. Dingen aanpassen
 
 - **Kerklocatie, uren, enz.**: `js/config.js` → `kerk`, `diner`, `feest`. Een leeg veld toont automatisch "volgt nog".
-- **Quizvragen**: `js/config.js` → `QUIZ`. Per vraag kies je tekst- of foto-antwoorden, welk antwoord juist is (`juist: 0` = het eerste) en de uitleg bij een fout antwoord.
+- **Quizvragen**: `js/config.js` → `QUIZ`. Per vraag: 0, 1 of 2 foto's, de antwoorden, welk antwoord juist is (`juist: 0` = het eerste) en de uitleg bij een fout antwoord, telkens in 4 talen.
 - **Foto vervangen**: zet een nieuwe foto in `fotos/` met dezelfde naam, of verwijs in `config.js` naar een nieuwe naam. Voer daarna dit uit (nodig: `pip install pillow`), zodat de foto klein genoeg is:
 
   ```bash

@@ -3,16 +3,12 @@
 
   const SITE = window.SITE;
   const QUIZ = window.QUIZ;
+  const TEKSTEN = window.TEKSTEN;
   const $ = (sel) => document.querySelector(sel);
   const OPSLAG = "std-amelie-michiel";
-
-  const isDinerGast = Boolean(SITE.dinerCode) &&
-    new URLSearchParams(location.search).get("k") === SITE.dinerCode;
-
-  let huidige = 0;
-  let score = 0;
-
-  /* ---------- kleine hulpjes ---------- */
+  const LOCALE = { nl: "nl-BE", fr: "fr-BE", en: "en-GB", de: "de-DE" };
+  const STIJLEN = ["hoeve", "veldbloemen", "blauwe-inkt"];
+  const AANWEZIG_NL = { ja: "Ja, zeker", misschien: "Waarschijnlijk", nee: "Helaas niet" };
 
   const opslag = {
     lees() {
@@ -23,272 +19,317 @@
     },
   };
 
-  const willekeurig = (lijst) => lijst[Math.floor(Math.random() * lijst.length)];
+  const params = new URLSearchParams(location.search);
+  const isDinerGast = Boolean(SITE.dinerCode) && params.get("k") === SITE.dinerCode;
+  const namen = `${SITE.namen.een} & ${SITE.namen.twee}`;
 
-  function bloemSvg(id = "bloem") {
-    const ns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("aria-hidden", "true");
-    const use = document.createElementNS(ns, "use");
-    use.setAttribute("href", `#${id}`);
-    svg.append(use);
-    return svg;
+  let taal = kiesTaal();
+  let huidige = 0;
+  let keuzes = [];      // gekozen antwoord per vraag
+  let titels = [];      // welke "Juist!/Bijna" per vraag
+  let naQuiz = false;
+
+  /* ---------- taal ---------- */
+
+  function kiesTaal() {
+    const kandidaten = [params.get("lang"), opslag.lees().taal, (navigator.language || "").slice(0, 2)];
+    return kandidaten.find((k) => SITE.talen.includes(k)) || SITE.standaardTaal;
   }
+
+  function t(sleutel, vars = {}) {
+    const s = TEKSTEN[taal]?.[sleutel] ?? TEKSTEN.nl[sleutel] ?? sleutel;
+    if (typeof s !== "string") return s;
+    return s.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : k === "namen" ? namen : m));
+  }
+
+  // vertaal een { nl, fr, en, de }-object uit de config
+  function vt(obj) {
+    if (obj == null) return "";
+    const s = typeof obj === "string" ? obj : obj[taal] ?? obj.nl ?? "";
+    return s.replace("{datum}", datumLang());
+  }
+
+  const datumLang = () =>
+    new Date(`${SITE.datum.iso}T12:00:00`).toLocaleDateString(LOCALE[taal], {
+      weekday: "long", day: "numeric", month: "long", year: "numeric",
+    });
+
+  function zetTaal(nieuw) {
+    taal = nieuw;
+    opslag.schrijf({ taal });
+    document.documentElement.lang = LOCALE[taal];
+    document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t(el.dataset.t); });
+    document.querySelectorAll("[data-t-html]").forEach((el) => { el.innerHTML = t(el.dataset.tHtml); });
+    document.querySelectorAll("[data-t-ph]").forEach((el) => { el.placeholder = t(el.dataset.tPh); });
+    document.querySelectorAll("[data-taal]").forEach((k) => k.setAttribute("aria-pressed", k.dataset.taal === taal));
+
+    $("#std-datum").textContent = SITE.datum.kort;
+    $("#std-plaats").textContent = `${SITE.feest.locatie} · ${SITE.feest.gemeente}`;
+    $("#voet-tekst").textContent = `${namen} · ${datumLang()}`;
+    zetScore();
+    bouwTijdlijn();
+    bouwAgendaLink();
+    if ($("#quiz").classList.contains("actief")) toonVraag(false);
+  }
+
+  function bouwTaalknoppen() {
+    const nav = $("#talen");
+    SITE.talen.forEach((code) => {
+      const knop = document.createElement("button");
+      knop.type = "button";
+      knop.dataset.taal = code;
+      knop.textContent = code.toUpperCase();
+      knop.title = TEKSTEN[code].taalNaam;
+      knop.lang = code;
+      knop.addEventListener("click", () => zetTaal(code));
+      nav.append(knop);
+    });
+  }
+
+  /* ---------- stijl ---------- */
+
+  function zetStijl(stijl) {
+    if (!STIJLEN.includes(stijl)) stijl = "hoeve";
+    document.documentElement.dataset.stijl = stijl;
+    document.querySelectorAll("[data-stijl-knop]").forEach((k) =>
+      k.setAttribute("aria-pressed", k.dataset.stijlKnop === stijl));
+    if (SITE.stijlKiezer) opslag.schrijf({ stijl });
+  }
+
+  /* ---------- schermen ---------- */
 
   function toonScherm(id) {
     document.querySelectorAll(".scherm").forEach((s) => s.classList.toggle("actief", s.id === id));
+    $("#voortgang").hidden = id !== "quiz";
     window.scrollTo({ top: 0, behavior: "instant" });
-  }
-
-  /* ---------- teksten uit de config invullen ---------- */
-
-  const namen = `${SITE.namen.een} & ${SITE.namen.twee}`;
-  const velden = {
-    namen,
-    datumKort: SITE.datum.kort,
-    datumLang: SITE.datum.lang,
-    gemeente: SITE.feest.gemeente,
-    feestLocatie: SITE.feest.locatie,
-    stempel: `${SITE.feest.gemeente.toUpperCase()} · ${SITE.datum.kort} · `.repeat(2),
-  };
-  document.querySelectorAll("[data-veld]").forEach((el) => {
-    el.textContent = velden[el.dataset.veld] ?? "";
-  });
-  $("#kaart-foto").src = SITE.fotoKaart;
-  $("#postzegel-foto").src = SITE.fotoPostzegel;
-
-  /* ---------- voortgang ---------- */
-
-  const voortgang = $(".voortgang");
-  QUIZ.forEach(() => {
-    const li = document.createElement("li");
-    li.append(bloemSvg());
-    voortgang.append(li);
-  });
-
-  function zetVoortgang() {
-    [...voortgang.children].forEach((li, i) => li.classList.toggle("huidig", i === huidige));
   }
 
   /* ---------- quiz ---------- */
 
-  const LETTERS = "ABCDEF";
-  const JUIST = ["Juist!", "Helemaal mee!", "Bingo!", "Knap gedaan!"];
-  const FOUT = ["Bijna…", "Net niet!", "Oei!", "Mis, maar dat geeft niet."];
+  const LETTERS = "ABCDEFGHIJ";
+  const juisteAntwoorden = (q) => [].concat(q.juist);
+  const isJuist = (q, keuze) => q.juist == null || q.juist === "alle" || juisteAntwoorden(q).includes(keuze);
 
-  function toonVraag() {
+  function startQuiz() {
+    huidige = 0;
+    keuzes = [];
+    titels = [];
+    toonScherm("quiz");
+    toonVraag(true);
+  }
+
+  function toonVraag(nieuw) {
     const q = QUIZ[huidige];
-    zetVoortgang();
+    $("#vraag-nr").textContent = t("vraagNr", { n: huidige + 1, t: QUIZ.length });
+    $("#vraag-tekst").textContent = vt(q.vraag);
 
-    $("#vraag-nr").textContent = huidige + 1;
-    $("#vraag-totaal").textContent = `${huidige + 1} / ${QUIZ.length}`;
-    $("#vraag-tekst").textContent = q.vraag;
-
-    const fig = $("#vraag-foto");
-    fig.hidden = !q.foto;
-    if (q.foto) fig.querySelector("img").src = q.foto;
+    if (nieuw) {
+      bouwBeeld(q);
+      $(".vraag-inhoud").classList.remove("verschijn");
+      void $(".vraag-inhoud").offsetWidth;
+      $(".vraag-inhoud").classList.add("verschijn");
+    }
 
     const box = $("#antwoorden");
     box.replaceChildren();
     box.className = "antwoorden";
-    const metFotos = q.antwoorden.some((a) => a.foto);
-    box.classList.toggle("antwoorden-fotos", metFotos);
+    box.classList.toggle("antwoorden-fotos", q.antwoorden.some((a) => a.foto));
+    box.classList.toggle("antwoorden-veel", q.antwoorden.length > 4);
 
     q.antwoorden.forEach((a, i) => {
       const knop = document.createElement("button");
       knop.type = "button";
       knop.className = "antwoord";
-      knop.dataset.letter = LETTERS[i];
+      const letter = document.createElement("span");
+      letter.className = "letter";
+      letter.textContent = LETTERS[i];
+      knop.append(letter);
       if (a.foto) {
         const img = document.createElement("img");
         img.src = a.foto;
-        img.alt = a.alt || "";
-        img.loading = "lazy";
+        img.alt = vt(a.alt);
         knop.append(img);
-        knop.setAttribute("aria-label", `${LETTERS[i]}: ${a.alt || "foto"}`);
       } else {
-        knop.append(a.tekst);
+        const tekst = document.createElement("span");
+        tekst.textContent = vt(a);
+        knop.append(tekst);
       }
       knop.addEventListener("click", () => beantwoord(i));
       box.append(knop);
     });
 
     $("#feedback").hidden = true;
-    $("#vraag-tekst").focus({ preventScroll: true });
+    zetVoortgang();
+    if (keuzes[huidige] !== undefined) toonResultaat(false);
+    else if (nieuw) $("#vraag-tekst").focus({ preventScroll: true });
+  }
+
+  function bouwBeeld(q) {
+    const beeld = $("#vraag-beeld");
+    const fotos = q.fotos || [];
+    const binnen = document.createElement("div");
+    binnen.className = "beeld-binnen";
+    beeld.className = "vraag-beeld";
+    beeld.replaceChildren(binnen);
+    if (!fotos.length) {
+      beeld.classList.add("beeld-illustratie");
+      binnen.innerHTML = window.Botanisch.stengels(huidige + 4);
+      return;
+    }
+    beeld.classList.add(fotos.length > 1 ? "beeld-duo" : "beeld-een");
+    fotos.slice(0, 2).forEach((src) => {
+      const fig = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      fig.append(img);
+      binnen.append(fig);
+    });
+  }
+
+  function zetVoortgang() {
+    const klaar = keuzes.filter((k) => k !== undefined).length;
+    $("#voortgang i").style.width = `${(klaar / QUIZ.length) * 100}%`;
   }
 
   function beantwoord(keuze) {
-    const q = QUIZ[huidige];
-    const knoppen = [...document.querySelectorAll(".antwoord")];
-    const alleJuist = q.juist === "alle";
-    const goed = alleJuist || keuze === q.juist;
-    if (goed) score++;
+    if (keuzes[huidige] !== undefined) return;
+    keuzes[huidige] = keuze;
+    titels[huidige] = Math.floor(Math.random() * 3);
+    toonResultaat(true);
+  }
 
-    $("#antwoorden").classList.add("beantwoord");
-    knoppen.forEach((k, i) => {
+  function toonResultaat(animeer) {
+    const q = QUIZ[huidige];
+    const keuze = keuzes[huidige];
+    const goed = isJuist(q, keuze);
+    const alleGoed = q.juist == null || q.juist === "alle";
+
+    const box = $("#antwoorden");
+    box.classList.add("beantwoord");
+    if (!animeer) box.classList.add("zonder-animatie");
+    [...box.children].forEach((k, i) => {
       k.disabled = true;
       if (i === keuze) k.classList.add("gekozen", goed ? "juist" : "fout");
-      if (!alleJuist && i === q.juist) k.classList.add("juist");
+      if (!alleGoed && juisteAntwoorden(q).includes(i)) k.classList.add("juist");
     });
-
-    voortgang.children[huidige].classList.add(goed ? "juist" : "fout");
 
     const fb = $("#feedback");
     fb.className = `feedback ${goed ? "is-juist" : "is-fout"}`;
-    $("#feedback-titel").textContent = willekeurig(goed ? JUIST : FOUT);
-    $("#feedback-tekst").textContent = goed ? (q.bravo || "") : (q.uitleg || "");
-    const laatste = huidige === QUIZ.length - 1;
-    $("#volgende").textContent = laatste ? "Bekijk ons nieuws →" : "Volgende vraag →";
+    $("#feedback-titel").textContent = t(goed ? "juist" : "fout")[titels[huidige] || 0];
+    $("#feedback-tekst").textContent = goed ? vt(q.bravo) : vt(q.uitleg);
+    $("#volgende").textContent = huidige === QUIZ.length - 1 ? t("laatste") : t("volgende");
     fb.hidden = false;
-    fb.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    zetVoortgang();
+    if (animeer) setTimeout(() => fb.scrollIntoView({ behavior: "smooth", block: "nearest" }), 60);
   }
 
   $("#volgende").addEventListener("click", () => {
     if (huidige < QUIZ.length - 1) {
       huidige++;
-      toonVraag();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "instant" });
+      toonVraag(true);
     } else {
-      onthul(true);
+      naQuiz = true;
+      opslag.schrijf({ klaar: true, score: score() });
+      onthul();
     }
   });
 
-  function startQuiz() {
-    huidige = 0;
-    score = 0;
-    [...voortgang.children].forEach((li) => li.classList.remove("juist", "fout"));
-    voortgang.hidden = false;
-    toonScherm("quiz");
-    toonVraag();
-  }
+  const score = () => QUIZ.filter((q, i) => keuzes[i] !== undefined && isJuist(q, keuzes[i])).length;
 
   /* ---------- onthulling ---------- */
 
-  function onthul(naQuiz) {
-    voortgang.hidden = true;
+  function onthul() {
     toonScherm("onthulling");
-    $("#kaart").classList.remove("omgedraaid");
-
-    if (naQuiz) {
-      opslag.schrijf({ klaar: true, score });
-      $("#score").textContent = `Je had ${score} van de ${QUIZ.length} juist`;
-      blaadjesRegen();
-    } else {
-      $("#score").textContent = "";
-    }
-    // even de voorkant tonen, dan zelf omdraaien
-    clearTimeout(onthul.timer);
-    onthul.timer = setTimeout(() => $("#kaart").classList.add("omgedraaid"), 3200);
+    zetScore();
   }
 
-  const draaiKaart = () => {
-    clearTimeout(onthul.timer);
-    $("#kaart").classList.toggle("omgedraaid");
-  };
-  $("#kaart").addEventListener("click", draaiKaart);
-  $("#draai").addEventListener("click", draaiKaart);
-
-  function blaadjesRegen() {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const kleuren = ["#5E84E2", "#FFA62B", "#F7EC8D", "#8B6EC7", "#86C5FF", "#F6A93A"];
-    const doos = $("#blaadjes");
-    doos.replaceChildren();
-    for (let i = 0; i < 46; i++) {
-      const b = document.createElement("span");
-      b.className = "blaadje";
-      b.style.left = `${Math.random() * 100}%`;
-      b.style.background = willekeurig(kleuren);
-      b.style.setProperty("--dx", `${(Math.random() - 0.5) * 220}px`);
-      b.style.setProperty("--rot", `${(Math.random() - 0.5) * 900}deg`);
-      b.style.animationDuration = `${3 + Math.random() * 3}s`;
-      b.style.animationDelay = `${Math.random() * 1.2}s`;
-      b.style.scale = String(0.6 + Math.random() * 0.8);
-      doos.append(b);
-    }
-    setTimeout(() => doos.replaceChildren(), 7000);
+  function zetScore() {
+    $("#score").textContent = naQuiz ? t("score", { s: score(), t: QUIZ.length }) : "";
   }
 
   /* ---------- wanneer & waar ---------- */
 
   function bouwTijdlijn() {
-    const volgt = (tekst) => `<span class="volgt">${tekst}</span>`;
     const items = [
-      {
-        titel: "Kerkelijke trouw",
-        uur: SITE.kerk.uur,
-        tekst: SITE.kerk.locatie
-          ? `${SITE.kerk.locatie}${SITE.kerk.adres ? `, ${SITE.kerk.adres}` : ""}`
-          : volgt("Locatie volgt nog"),
-      },
+      { titel: t("kerk"), uur: SITE.kerk.uur, plaats: SITE.kerk.locatie || null },
     ];
-    if (isDinerGast) {
-      items.push({
-        titel: "Diner",
-        uur: SITE.diner.uur,
-        tekst: `${SITE.diner.locatie}, ${SITE.feest.gemeente}`,
-      });
-    }
-    items.push({
-      titel: "Feest",
-      uur: SITE.feest.uur,
-      tekst: `<a href="${SITE.feest.kaartLink}" target="_blank" rel="noopener">${SITE.feest.locatie}, ${SITE.feest.gemeente}</a>`,
-    });
+    if (isDinerGast) items.push({ titel: t("diner"), uur: SITE.diner.uur, plaats: SITE.diner.locatie });
+    items.push({ titel: t("feest"), uur: SITE.feest.uur, plaats: SITE.feest.locatie, link: SITE.feest.kaartLink });
 
     const ol = $("#tijdlijn");
-    items.forEach((it, i) => {
+    ol.replaceChildren();
+    for (const it of items) {
       const li = document.createElement("li");
-      li.append(bloemSvg(i % 2 ? "madeliefje" : "bloem"));
-      const div = document.createElement("div");
-      div.innerHTML = `<h3>${it.titel}<span class="uur">${it.uur || ""}</span></h3>
-        <p>${it.tekst}${it.uur ? "" : ` · ${volgt("uur volgt nog")}`}</p>`;
-      li.append(div);
+      const uur = document.createElement("span");
+      uur.className = "tl-uur";
+      uur.textContent = it.uur || "—";
+      const wat = document.createElement("div");
+      const h3 = document.createElement("h3");
+      h3.textContent = it.titel;
+      const p = document.createElement("p");
+      if (it.plaats && it.link) {
+        const a = Object.assign(document.createElement("a"), { href: it.link, target: "_blank", rel: "noopener" });
+        a.textContent = `${it.plaats}, ${SITE.feest.gemeente}`;
+        p.append(a);
+      } else {
+        p.textContent = it.plaats ? `${it.plaats}, ${SITE.feest.gemeente}` : t("locatieVolgt");
+      }
+      if (!it.uur) {
+        const volgt = document.createElement("em");
+        volgt.textContent = ` · ${t("uurVolgt")}`;
+        p.append(volgt);
+      }
+      wat.append(h3, p);
+      li.append(uur, wat);
       ol.append(li);
-    });
+    }
 
     const dagen = Math.ceil((new Date(`${SITE.datum.iso}T00:00:00`) - new Date()) / 864e5);
-    $("#aftellen").textContent = dagen > 1
-      ? `Nog ${dagen} nachtjes slapen`
-      : dagen === 1 ? "Morgen is het zover!" : SITE.datum.lang;
+    $("#aftellen").textContent = dagen > 0 ? t("aftellen", { n: dagen }) : datumLang();
   }
 
   /* ---------- agenda ---------- */
 
   const utc = (iso) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
-  function bouwAgenda() {
+  function bouwAgendaLink() {
     const a = SITE.agenda;
     const g = new URL("https://calendar.google.com/calendar/render");
     g.searchParams.set("action", "TEMPLATE");
-    g.searchParams.set("text", a.titel);
+    g.searchParams.set("text", t("agendaTitel"));
     g.searchParams.set("dates", `${utc(a.start)}/${utc(a.einde)}`);
     g.searchParams.set("location", a.locatie);
-    g.searchParams.set("details", `Save the date! De officiële uitnodiging volgt. ${location.href.split("?")[0]}`);
+    g.searchParams.set("details", `${t("agendaInfo")} ${location.href.split("?")[0]}`);
     $("#google-agenda").href = g.toString();
-
-    $("#ics").addEventListener("click", () => {
-      const ics = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Amelie en Michiel//Save the date//NL",
-        "BEGIN:VEVENT",
-        `UID:std-${SITE.datum.iso}@amelie-michiel`,
-        `DTSTAMP:${utc(new Date().toISOString())}`,
-        `DTSTART:${utc(a.start)}`,
-        `DTEND:${utc(a.einde)}`,
-        `SUMMARY:${a.titel}`,
-        `LOCATION:${a.locatie.replace(/,/g, "\\,")}`,
-        "DESCRIPTION:Save the date! De officiële uitnodiging volgt.",
-        "END:VEVENT",
-        "END:VCALENDAR",
-      ].join("\r\n");
-      const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-      const link = Object.assign(document.createElement("a"), { href: url, download: "trouw-amelie-michiel.ics" });
-      document.body.append(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
   }
+
+  $("#ics").addEventListener("click", () => {
+    const a = SITE.agenda;
+    const esc = (s) => s.replace(/[,;]/g, "\\$&");
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Amelie en Michiel//Save the date//NL",
+      "BEGIN:VEVENT",
+      `UID:std-${SITE.datum.iso}@amelie-michiel`,
+      `DTSTAMP:${utc(new Date().toISOString())}`,
+      `DTSTART:${utc(a.start)}`,
+      `DTEND:${utc(a.einde)}`,
+      `SUMMARY:${esc(t("agendaTitel"))}`,
+      `LOCATION:${esc(a.locatie)}`,
+      `DESCRIPTION:${esc(t("agendaInfo"))}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ].join("\r\n");
+    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+    const link = Object.assign(document.createElement("a"), { href: url, download: "save-the-date-amelie-michiel.ics" });
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
 
   /* ---------- formulier ---------- */
 
@@ -296,18 +337,10 @@
     const form = $("#formulier");
     const melding = $("#form-melding");
 
-    $("#keuze-diner").hidden = !isDinerGast;
-    if (!isDinerGast) form.diner.checked = false;
-
-    const update = () => {
-      const nee = form.aanwezig.value === "Helaas niet";
-      $("#komt-blok").hidden = nee;
-      $("#dieet-veld").hidden = !(isDinerGast && form.diner.checked && !nee);
-    };
+    const update = () => { $("#komt-blok").hidden = form.aanwezig.value === "nee"; };
     form.addEventListener("change", update);
-    update();
-
     form.addEventListener("input", (e) => e.target.classList.remove("ongeldig"));
+    update();
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -315,53 +348,50 @@
       form.querySelectorAll(".ongeldig").forEach((el) => el.classList.remove("ongeldig"));
 
       const fouten = [];
-      if (!form.naam.value.trim()) { fouten.push("je naam"); form.naam.classList.add("ongeldig"); }
-      if (!form.email.checkValidity() || !form.email.value) { fouten.push("een geldig e-mailadres"); form.email.classList.add("ongeldig"); }
-      if (!form.aanwezig.value) { fouten.push("of je erbij bent"); form.querySelector(".keuzes").classList.add("ongeldig"); }
+      if (!form.naam.value.trim()) { fouten.push(t("formFoutNaam")); form.naam.classList.add("ongeldig"); }
+      if (!form.email.value || !form.email.checkValidity()) { fouten.push(t("formFoutEmail")); form.email.classList.add("ongeldig"); }
+      if (!form.aanwezig.value) { fouten.push(t("formFoutAanwezig")); form.querySelector(".keuzes").classList.add("ongeldig"); }
       if (fouten.length) {
-        melding.textContent = `Vul nog ${fouten.join(", ")} in.`;
-        form.querySelector(".ongeldig")?.focus();
+        melding.textContent = t("formVulIn", { lijst: fouten.join(", ") });
+        form.querySelector(".ongeldig input, input.ongeldig")?.focus();
         return;
       }
-
       if (!SITE.formulierUrl) {
-        melding.textContent = "Het formulier is nog niet gekoppeld (formulierUrl in js/config.js is leeg).";
+        melding.textContent = t("formNietGekoppeld");
         return;
       }
 
-      const komt = form.aanwezig.value !== "Helaas niet";
+      const komt = form.aanwezig.value !== "nee";
       const data = new URLSearchParams({
         naam: form.naam.value.trim(),
         email: form.email.value.trim(),
-        aanwezig: form.aanwezig.value,
+        aanwezig: AANWEZIG_NL[form.aanwezig.value],
         aantal: komt ? form.aantal.value : "0",
         kerk: komt && form.kerk.checked ? "ja" : "",
-        diner: komt && isDinerGast && form.diner.checked ? "ja" : "",
         feest: komt && form.feest.checked ? "ja" : "",
-        dieet: komt && isDinerGast ? form.dieet.value.trim() : "",
         bericht: form.bericht.value.trim(),
         uitnodiging: isDinerGast ? "diner + feest" : "feest",
+        taal: taal.toUpperCase(),
         quizscore: opslag.lees().klaar ? `${opslag.lees().score}/${QUIZ.length}` : "",
         website: form.website.value,
       });
 
       const knop = $("#verstuur");
       knop.disabled = true;
-      knop.textContent = "Even geduld…";
+      knop.textContent = t("formBezig");
       try {
         await verstuur(data);
-        opslag.schrijf({ verstuurd: true });
         form.hidden = true;
         $("#bedankt-tekst").textContent = komt
-          ? `We kijken er nu al naar uit, ${data.get("naam").split(/[ &]/)[0]}. De officiële uitnodiging volgt.`
-          : "Jammer dat het niet lukt. Fijn dat je het ons laat weten!";
+          ? t("bedanktJa", { naam: data.get("naam").split(/[ &]/)[0] })
+          : t("bedanktNee");
         $("#bedankt").hidden = false;
         $("#bedankt").focus();
       } catch {
-        melding.textContent = "Er ging iets mis bij het versturen. Probeer het later nog eens of stuur ons een berichtje.";
+        melding.textContent = t("formFout");
       } finally {
         knop.disabled = false;
-        knop.textContent = "Verstuur";
+        knop.textContent = t("formVerstuur");
       }
     });
   }
@@ -383,13 +413,31 @@
 
   /* ---------- start ---------- */
 
-  bouwTijdlijn();
-  bouwAgenda();
+  document.querySelectorAll("[data-bot]").forEach((el) => {
+    const [soort, seed] = el.dataset.bot.split(":");
+    el.innerHTML = window.Botanisch[soort](Number(seed));
+  });
+
+  const naamDelen = [SITE.namen.een, "&", SITE.namen.twee].map((s, i) => {
+    const el = document.createElement(i === 1 ? "i" : "span");
+    el.textContent = s;
+    return el;
+  });
+  $("#std-namen").append(...naamDelen);
+  $("#kaart-foto").src = SITE.fotoKaart;
+
+  bouwTaalknoppen();
   bouwFormulier();
+  zetTaal(taal);
+
+  const kiezer = $("#stijlkiezer");
+  kiezer.hidden = !SITE.stijlKiezer;
+  kiezer.querySelectorAll("[data-stijl-knop]").forEach((k) =>
+    k.addEventListener("click", () => zetStijl(k.dataset.stijlKnop)));
+  zetStijl(params.get("stijl") || (SITE.stijlKiezer && opslag.lees().stijl) || SITE.stijl);
 
   $("#start").addEventListener("click", startQuiz);
-  $("#overslaan").addEventListener("click", () => onthul(false));
+  $("#overslaan").addEventListener("click", () => onthul());
   $("#opnieuw").addEventListener("click", startQuiz);
   $("#overslaan").hidden = !opslag.lees().klaar;
-  voortgang.hidden = true;
 })();

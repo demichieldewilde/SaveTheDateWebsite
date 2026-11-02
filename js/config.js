@@ -71,6 +71,7 @@ window.SITE = {
  *               Elke pin: naam, lat, lon, juist: true (anders fout), tekst en fotos die na het tonen verschijnen.
  *               direct: true  -> een pin toont meteen of hij juist is (en de info) zodra je hem aantikt.
  *               namenTonen: true -> de namen staan altijd bij de pinnen.
+ *               kant: "boven", "onder", "links" of "rechts" -> waar de naam naast de pin staat.
  * Bezoekers mogen altijd meerdere antwoorden aanduiden; juist = precies de juiste aangeduid.
  * - antwoorden: tekst  -> { nl: "...", fr: "...", ... }
  *               foto   -> { foto: "fotos/...", alt: { nl: "..." } }
@@ -336,16 +337,16 @@ window.QUIZ = [
     fotos: ["fotos/sporthal-medaille.jpg", "fotos/klimgordels.jpg"],
     antwoorden: [
       { nl: "Kring, OD en Pagadderke", fr: "Kring, OD et Pagadderke", en: "Kring, OD and Pagadderke", de: "Kring, OD und Pagadderke" },
-      { nl: "Bizon, Théâtre Universitaire de Louvain en IncluCap", fr: "Bizon, Théâtre Universitaire de Louvain et IncluCap", en: "Bizon, Théâtre Universitaire de Louvain and IncluCap", de: "Bizon, Théâtre Universitaire de Louvain und IncluCap" },
-      { nl: "Chiro, Rode Kruis en IncluCap", fr: "Chiro, Croix-Rouge et IncluCap", en: "Chiro, Red Cross and IncluCap", de: "Chiro, Rotes Kreuz und IncluCap" },
+      { nl: "Bizon, Théâtre Universitaire de Louvain en IncluKap", fr: "Bizon, Théâtre Universitaire de Louvain et IncluKap", en: "Bizon, Théâtre Universitaire de Louvain and IncluKap", de: "Bizon, Théâtre Universitaire de Louvain und IncluKap" },
+      { nl: "Chiro, Rode Kruis en IncluKap", fr: "Chiro, Croix-Rouge et IncluKap", en: "Chiro, Red Cross and IncluKap", de: "Chiro, Rotes Kreuz und IncluKap" },
       { nl: "Scouts, Théâtre Universitaire de Louvain en Oxfam", fr: "Scouts, Théâtre Universitaire de Louvain et Oxfam", en: "Scouts, Théâtre Universitaire de Louvain and Oxfam", de: "Pfadfinder, Théâtre Universitaire de Louvain und Oxfam" },
     ],
     juist: 1,
     uitleg: {
-      nl: "Bizon, Théâtre Universitaire de Louvain en IncluCap.",
-      fr: "Bizon, le Théâtre Universitaire de Louvain et IncluCap.",
-      en: "Bizon, Théâtre Universitaire de Louvain and IncluCap.",
-      de: "Bizon, Théâtre Universitaire de Louvain und IncluCap.",
+      nl: "Bizon, Théâtre Universitaire de Louvain en IncluKap.",
+      fr: "Bizon, le Théâtre Universitaire de Louvain et IncluKap.",
+      en: "Bizon, Théâtre Universitaire de Louvain and IncluKap.",
+      de: "Bizon, Théâtre Universitaire de Louvain und IncluKap.",
     },
   },
   {
@@ -358,7 +359,7 @@ window.QUIZ = [
     video: "fotos/video-verkleed-dansje-kamp.mp4",
     antwoorden: [
       { nl: "Kring, Chiro, Bizon en Scouts", fr: "Kring, Chiro, Bizon et Scouts", en: "Kring, Chiro, Bizon and Scouts", de: "Kring, Chiro, Bizon und Pfadfinder" },
-      { nl: "Théâtre Universitaire, OD en IncluCap", fr: "Théâtre Universitaire, OD et IncluCap", en: "Théâtre Universitaire, OD and IncluCap", de: "Théâtre Universitaire, OD und IncluCap" },
+      { nl: "Théâtre Universitaire, OD en IncluKap", fr: "Théâtre Universitaire, OD et IncluKap", en: "Théâtre Universitaire, OD and IncluKap", de: "Théâtre Universitaire, OD und IncluKap" },
       { nl: "Kring, OD, Bizon en Pagadderke", fr: "Kring, OD, Bizon et Pagadderke", en: "Kring, OD, Bizon and Pagadderke", de: "Kring, OD, Bizon und Pagadderke" },
       { nl: "Studentenraad, OD, KSA en Pagadderke", fr: "Conseil étudiant, OD, KSA et Pagadderke", en: "Student council, OD, KSA and Pagadderke", de: "Studierendenrat, OD, KSA und Pagadderke" },
     ],
@@ -554,18 +555,15 @@ window.QUIZ = [
     },
     kaart: {
       namenTonen: true,
-      // ruwe lijn van de Juliana Trail (rondwandeling rond de Julische Alpen)
-      route: [
-        [46.484, 13.785], [46.461, 13.937], [46.436, 14.053], [46.404, 14.140], [46.344, 14.174],
-        [46.368, 14.114], [46.343, 14.062], [46.273, 13.955], [46.278, 13.887], [46.213, 13.960],
-        [46.152, 13.744], [46.183, 13.733], [46.247, 13.579], [46.338, 13.552], [46.380, 13.750],
-        [46.484, 13.785],
-      ],
+      // begin- en eindpunten van de etappes; de lijn volgt de route ongeveer
+      route: [[46.484, 13.785], [46.461, 13.937], [46.436, 14.053], [46.374, 14.205], [46.344, 14.174], [46.368, 14.114], [46.333, 13.965], [46.29, 13.89], [46.273, 13.955], [46.213, 13.96], [46.15, 13.875], [46.152, 13.744], [46.183, 13.733], [46.247, 13.579], [46.338, 13.552], [46.405, 13.597], [46.442, 13.567], [46.505, 13.585], [46.484, 13.785]],
       pinnen: [
-        { naam: { nl: "Kranjska Gora" }, lat: 46.484, lon: 13.785, tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
-        { naam: { nl: "Bled" }, lat: 46.368, lon: 14.114, tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Kranjska Gora" }, lat: 46.484, lon: 13.785, kant: "onder", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Mojstrana" }, lat: 46.461, lon: 13.937, kant: "boven", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Jesenice" }, lat: 46.436, lon: 14.053, kant: "links", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Begunje" }, lat: 46.374, lon: 14.205, kant: "boven", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
         {
-          naam: { nl: "Radovljica" }, lat: 46.344, lon: 14.174, juist: true,
+          naam: { nl: "Radovljica" }, lat: 46.344, lon: 14.174, kant: "onder", juist: true,
           tekst: {
             nl: "Hier, in Radovljica, werd het aanzoek gedaan.",
             fr: "C'est ici, à Radovljica, qu'a eu lieu la demande.",
@@ -574,8 +572,19 @@ window.QUIZ = [
           },
           fotos: ["fotos/selfie-in-tent.jpg"],
         },
-        { naam: { nl: "Bohinjska Bistrica" }, lat: 46.273, lon: 13.955, tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
-        { naam: { nl: "Kobarid" }, lat: 46.247, lon: 13.579, tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Bled" }, lat: 46.368, lon: 14.114, kant: "links", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Goreljek (Pokljuka)" }, lat: 46.333, lon: 13.965, kant: "onder", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Stara Fužina" }, lat: 46.29, lon: 13.89, kant: "links", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Bohinjska Bistrica" }, lat: 46.273, lon: 13.955, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Podbrdo" }, lat: 46.213, lon: 13.96, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Grahovo ob Bači" }, lat: 46.15, lon: 13.875, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Most na Soči" }, lat: 46.152, lon: 13.744, kant: "onder", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Tolmin" }, lat: 46.183, lon: 13.733, kant: "boven", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Kobarid" }, lat: 46.247, lon: 13.579, kant: "boven", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Bovec" }, lat: 46.338, lon: 13.552, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Log pod Mangartom" }, lat: 46.405, lon: 13.597, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Cave del Predil" }, lat: 46.442, lon: 13.567, kant: "rechts", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
+        { naam: { nl: "Tarvisio" }, lat: 46.505, lon: 13.585, kant: "boven", tekst: { nl: "Een ander dorp op de Juliana Trail.", fr: "Un autre village du Juliana Trail.", en: "Another village on the Juliana Trail.", de: "Ein anderes Dorf am Juliana Trail." } },
       ],
     },
     uitleg: {

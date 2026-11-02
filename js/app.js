@@ -278,15 +278,55 @@
         title: vt(p.naam),
       });
       const vast = Boolean(q.kaart.namenTonen);
+      const kant = { boven: "top", onder: "bottom", links: "left", rechts: "right" }[p.kant] || (vast ? "right" : "top");
+      const verschuif = { top: [0, -10], bottom: [0, 10], left: [-10, 0], right: [10, 0] }[kant];
       m.bindTooltip(vt(p.naam), {
-        permanent: vast, direction: vast ? "right" : "top", offset: vast ? [10, 0] : [0, -10], className: vast ? "pin-naam" : "",
+        permanent: vast, direction: kant, offset: verschuif, className: vast ? "pin-naam" : "",
       });
       m.on("click", () => klikPin(i));
       return m.addTo(kaart);
     });
     const punten = [...q.kaart.pinnen.map((p) => [p.lat, p.lon]), ...(q.kaart.route || [])];
-    kaart.fitBounds(L.latLngBounds(punten), { padding: [24, 24] });
-    requestAnimationFrame(() => kaart && kaart.invalidateSize());
+    // extra ruimte zodat de namen naast de pinnen niet van de kaart vallen
+    const rand = q.kaart.namenTonen ? [10, 30] : [24, 24];
+    kaart.fitBounds(L.latLngBounds(punten), { padding: rand });
+    setTimeout(() => {
+      if (!kaart) return;
+      kaart.invalidateSize();
+      if (q.kaart.namenTonen) {
+        plaatsNamen();
+        kaart.on("zoomend", plaatsNamen);
+      }
+    }, 50);
+  }
+
+  // zet elke naam aan een kant waar hij niets overlapt en binnen de kaart blijft
+  function plaatsNamen() {
+    const vak = kaart.getContainer().getBoundingClientRect();
+    const bezet = pinnen.map((m) => m.getElement().getBoundingClientRect());
+    const KANTEN = { top: [0, -10], right: [10, 0], left: [-10, 0], bottom: [0, 10] };
+    const overlapt = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+    pinnen.forEach((m) => {
+      const tip = m.getTooltip();
+      const voorkeur = tip.options.voorkeur || (tip.options.voorkeur = tip.options.direction);
+      const volgorde = [voorkeur, ...Object.keys(KANTEN).filter((k) => k !== voorkeur)];
+      // eerste kant zonder botsing; anders de kant met de minste botsingen
+      let beste = null;
+      for (const kant of volgorde) {
+        tip.options.direction = kant;
+        tip.options.offset = L.point(KANTEN[kant]);
+        tip.update();
+        const r = tip.getElement().getBoundingClientRect();
+        const binnen = r.left >= vak.left && r.right <= vak.right && r.top >= vak.top && r.bottom <= vak.bottom;
+        const score = (binnen ? 0 : 100) + bezet.filter((b) => overlapt(r, b)).length;
+        if (!beste || score < beste.score) beste = { kant, score };
+        if (score === 0) break;
+      }
+      tip.options.direction = beste.kant;
+      tip.options.offset = L.point(KANTEN[beste.kant]);
+      tip.update();
+      bezet.push(tip.getElement().getBoundingClientRect());
+    });
   }
 
   function klikPin(i) {
@@ -442,6 +482,7 @@
     if (pin.fotos?.length) {
       const rij = document.createElement("div");
       rij.className = "pin-fotos";
+      rij.style.setProperty("--kolommen", pin.fotos.length === 1 ? 1 : 2);
       pin.fotos.forEach((src) => {
         const img = Object.assign(document.createElement("img"), { src, alt: "", loading: "lazy" });
         rij.append(img);

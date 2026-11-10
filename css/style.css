@@ -30,12 +30,13 @@
   --label-spatie: .18em;
   --label-grootte: 15px;
 
-  --knop-bg: transparent;
-  --knop-kleur: var(--inkt);
-  --knop-rand: 1px solid currentColor;
-  --knop-radius: 0;
-  --knop-hover-bg: var(--inkt);
-  --knop-hover-kleur: var(--papier);
+  /* knoppen zoals bij veldbloemen: gevuld en afgerond */
+  --knop-bg: var(--accent);
+  --knop-kleur: #fff;
+  --knop-rand: 1px solid var(--accent);
+  --knop-radius: 999px;
+  --knop-hover-bg: #3A5285;
+  --knop-hover-kleur: #fff;
 
   --kaart-bg: var(--papier);
   --kaart-rand: 1px solid var(--lijn);
@@ -222,10 +223,7 @@
   --b-korrel: rgba(246, 199, 110, .35);
   --b-korrel-lijn: #E8C06A;
 }
-[data-stijl="hoeve"][data-achtergrond="donkerblauw"] {
-  --knop-kleur: var(--inkt);
-  --knop-hover-bg: var(--inkt);
-}
+[data-stijl="hoeve"][data-achtergrond="donkerblauw"],
 [data-stijl="veldbloemen"][data-achtergrond="donkerblauw"] { --knop-hover-bg: #FFF4B0; }
 [data-stijl="blauwe-inkt"][data-achtergrond="donkerblauw"] {
   --knop-hover-bg: transparent;
@@ -493,7 +491,8 @@ button, input, textarea { font: inherit; color: inherit; }
   height: 100%;
 }
 .beeld-een figure,
-.beeld-duo figure {
+.beeld-duo figure,
+.beeld-trio figure {
   flex: 0 1 auto;
   min-width: 0;
   margin: 0;
@@ -510,10 +509,21 @@ button, input, textarea { font: inherit; color: inherit; }
   border-radius: calc(var(--vraagfoto-radius) * .6);
 }
 .beeld-duo figure { max-width: calc(50% - 7px); }
+/* drie foto's: één bovenaan, twee eronder */
+.beeld-trio .beeld-binnen {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-content: center;
+}
+.beeld-trio figure:first-child { grid-column: 1 / -1; justify-self: center; }
+.beeld-trio img { max-height: calc((var(--beeld-h) - 14px) / 2 - 2 * var(--vraagfoto-passe)); }
 [data-stijl="hoeve"] .vraag-beeld figure { box-shadow: 0 1px 2px rgba(46, 52, 69, .08), 0 14px 30px -18px rgba(46, 52, 69, .35); }
 [data-stijl="blauwe-inkt"] .vraag-beeld figure { outline: 1px solid var(--accent); outline-offset: 5px; }
 [data-stijl="hoeve"] .beeld-duo figure:first-child { transform: rotate(-1.2deg); }
 [data-stijl="hoeve"] .beeld-duo figure:last-child { transform: rotate(1.5deg); }
+[data-stijl="hoeve"] .beeld-trio figure:nth-child(1) { transform: rotate(-1.2deg); }
+[data-stijl="hoeve"] .beeld-trio figure:nth-child(3) { transform: rotate(1.5deg); }
 
 .beeld-illustratie .bot { position: absolute; inset: 6% 0 0; width: 100%; height: 94%; }
 
@@ -828,8 +838,10 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .agenda-knoppen { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .agenda-knoppen .knop { flex: 1 1 200px; }
+[data-stijl="hoeve"] .agenda-knoppen .knop,
 [data-stijl="veldbloemen"] .agenda-knoppen .knop,
 [data-stijl="blauwe-inkt"] .agenda-knoppen .knop { background: transparent; color: var(--accent); }
+[data-stijl="hoeve"] .agenda-knoppen .knop:hover,
 [data-stijl="veldbloemen"] .agenda-knoppen .knop:hover,
 [data-stijl="blauwe-inkt"] .agenda-knoppen .knop:hover { background: var(--accent); color: var(--papier); }
 

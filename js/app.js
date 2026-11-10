@@ -246,8 +246,8 @@
       binnen.innerHTML = window.Botanisch.stengels(huidige + 4);
       return;
     }
-    beeld.classList.add(fotos.length > 1 ? "beeld-duo" : "beeld-een");
-    fotos.slice(0, 2).forEach((src) => {
+    beeld.classList.add(["beeld-een", "beeld-duo", "beeld-trio"][Math.min(fotos.length, 3) - 1]);
+    fotos.slice(0, 3).forEach((src) => {
       const fig = document.createElement("figure");
       const img = document.createElement("img");
       img.src = src;
@@ -692,6 +692,17 @@
     const [soort, seed] = el.dataset.bot.split(":");
     el.innerHTML = window.Botanisch[soort](Number(seed));
   });
+
+  // gastenlijst: het naamveld stelt de ingegeven namen voor tijdens het typen
+  if (SITE.gasten?.length) {
+    const formulier = $("#formulier");
+    const lijst = document.createElement("datalist");
+    lijst.id = "gasten-lijst";
+    lijst.append(...SITE.gasten.map((naam) => Object.assign(document.createElement("option"), { value: naam })));
+    formulier.append(lijst);
+    formulier.naam.setAttribute("list", lijst.id);
+    formulier.naam.autocomplete = "off";
+  }
 
   const naamDelen = [SITE.namen.een, "&", SITE.namen.twee].map((s, i) => {
     const el = document.createElement(i === 1 ? "i" : "span");

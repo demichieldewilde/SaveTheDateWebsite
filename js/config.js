@@ -45,6 +45,11 @@ window.SITE = {
   // Zij zien het diner in "Wanneer & waar". Kiezen kunnen ze niet: dat beslissen jullie.
   dinerCode: "lente",
 
+  // Namen die het formulier voorstelt zodra een gast begint te typen (vrij typen blijft mogelijk).
+  // Let op: deze lijst is voor iedereen zichtbaar in de broncode van de site.
+  // Bijvoorbeeld: gasten: ["Jan & Marie Peeters", "Familie Janssens", "Sofie De Smet"],
+  gasten: [],
+
   // URL van jullie Google Apps Script (zie LEESMIJ.md, stap 2).
   formulierUrl: "",
 
@@ -54,9 +59,9 @@ window.SITE = {
   // Stijl van de site: "hoeve", "veldbloemen" of "blauwe-inkt".
   stijl: "hoeve",
   // Achtergrond: "standaard" (de kleur van de stijl), "lichtblauw" of "donkerblauw".
-  achtergrond: "standaard",
+  achtergrond: "donkerblauw",
   // Toont rechtsonder knopjes om stijl en achtergrond te wisselen. Zet op false voor de echte site.
-  stijlKiezer: true,
+  stijlKiezer: false,
 
   fotoIntro: "fotos/selfie-heuvels.jpg",
   fotoKaart: "fotos/zonnebrillen-jeep.jpg",
@@ -64,7 +69,7 @@ window.SITE = {
 
 /*
  * QUIZ
- * - fotos:      0, 1 of 2 foto's bij de vraag (geen foto = een illustratie)
+ * - fotos:      0 tot 3 foto's bij de vraag (geen foto = een illustratie)
  * - video:      (optioneel) een filmpje in plaats van foto's
  * - fotoNa:     (optioneel) foto of kaartje dat pas na het antwoorden verschijnt
  * - kaart:      (optioneel) een kaart met pinnen in plaats van antwoorden.
@@ -81,6 +86,122 @@ window.SITE = {
  * In een vraag wordt {datum} vervangen door de trouwdatum in de juiste taal.
  */
 window.QUIZ = [
+  {
+    vraag: {
+      nl: "Waar zijn Michiel en Amélie elkaar voor het eerst tegengekomen?",
+      fr: "Où Michiel et Amélie se sont-ils rencontrés pour la première fois ?",
+      en: "Where did Michiel and Amélie first meet?",
+      de: "Wo sind sich Michiel und Amélie zum ersten Mal begegnet?",
+    },
+    fotos: ["fotos/groepsselfie-rivier.jpg", "fotos/houten-troon-kamp.jpg"],
+    antwoorden: [
+      { nl: "Bosuil 2021" },
+      { nl: "Wigwam 2020" },
+      { nl: "KHL-weekend 2022", fr: "Week-end KHL 2022", en: "KHL weekend 2022", de: "KHL-Wochenende 2022" },
+      { nl: "Roads to Narnia 2022" },
+    ],
+    juist: 0,
+    uitleg: {
+      nl: "Op Bosuil in 2021: Amélie kwam op de eind-SBT helpen om het kamp af te breken.",
+      fr: "À Bosuil en 2021 : Amélie est venue aider à démonter le camp.",
+      en: "At Bosuil in 2021: Amélie came to help take down the camp at the end.",
+      de: "Bei Bosuil 2021: Amélie kam am Ende, um beim Abbau des Lagers zu helfen.",
+    },
+    bravo: {
+      nl: "Amélie kwam op de eind-SBT helpen om het Bosuil-kamp af te breken.",
+      fr: "Amélie est venue aider à démonter le camp Bosuil.",
+      en: "Amélie came to help take down the Bosuil camp.",
+      de: "Amélie kam, um beim Abbau des Bosuil-Lagers zu helfen.",
+    },
+  },
+  {
+    vraag: {
+      nl: "En waar hebben Michiel en Amélie elkaar echt leren kennen?",
+      fr: "Et où Michiel et Amélie ont-ils vraiment appris à se connaître ?",
+      en: "And where did Michiel and Amélie really get to know each other?",
+      de: "Und wo haben sich Michiel und Amélie wirklich kennengelernt?",
+    },
+    fotos: ["fotos/kamp-bijl-en-moker.jpg", "fotos/groepsfoto-park-zonsondergang.jpg"],
+    antwoorden: [
+      { nl: "Troubles at the North Pole 2022" },
+      { nl: "Wigwam 2020" },
+      { nl: "KHL-weekend 2022", fr: "Week-end KHL 2022", en: "KHL weekend 2022", de: "KHL-Wochenende 2022" },
+      { nl: "Roads to Narnia 2022" },
+    ],
+    juist: 3,
+    uitleg: {
+      nl: "Op Roads to Narnia in 2022, waar we samen kampleiding waren. Op het KHL-weekend hebben we niet echt met elkaar gepraat, en Troubles at the North Pole ging pas in 2023 door: het tweede kamp waarvan we samen kampleiding waren.",
+      fr: "À Roads to Narnia en 2022, où nous étions ensemble responsables du camp. Au week-end KHL, nous ne nous sommes pas vraiment parlé, et Troubles at the North Pole n'a eu lieu qu'en 2023 : le deuxième camp dont nous étions ensemble responsables.",
+      en: "At Roads to Narnia in 2022, where we were camp leaders together. At the KHL weekend we didn't really talk to each other, and Troubles at the North Pole only took place in 2023: the second camp we led together.",
+      de: "Bei Roads to Narnia 2022, wo wir gemeinsam die Lagerleitung hatten. Beim KHL-Wochenende haben wir nicht wirklich miteinander gesprochen, und Troubles at the North Pole fand erst 2023 statt: das zweite Lager, das wir zusammen geleitet haben.",
+    },
+    bravo: {
+      nl: "Op Roads to Narnia, waar we samen kampleiding waren. Op het KHL-weekend hebben we niet echt met elkaar gepraat, en Troubles at the North Pole ging pas in 2023 door: het tweede kamp waarvan we samen kampleiding waren.",
+      fr: "À Roads to Narnia, où nous étions ensemble responsables du camp. Au week-end KHL, nous ne nous sommes pas vraiment parlé, et Troubles at the North Pole n'a eu lieu qu'en 2023 : le deuxième camp dont nous étions ensemble responsables.",
+      en: "At Roads to Narnia, where we were camp leaders together. At the KHL weekend we didn't really talk to each other, and Troubles at the North Pole only took place in 2023: the second camp we led together.",
+      de: "Bei Roads to Narnia, wo wir gemeinsam die Lagerleitung hatten. Beim KHL-Wochenende haben wir nicht wirklich miteinander gesprochen, und Troubles at the North Pole fand erst 2023 statt: das zweite Lager, das wir zusammen geleitet haben.",
+    },
+  },
+  {
+    vraag: {
+      nl: "Waar heeft Amélie Michiel aan de haak geslagen?",
+      fr: "Où Michiel a-t-il mordu à l'hameçon d'Amélie ?",
+      en: "Where did Amélie get Michiel hooked?",
+      de: "Wo ist Michiel Amélie an den Haken gegangen?",
+    },
+    fotos: ["fotos/vishaak-zomer.jpg"],
+    antwoorden: [
+      { nl: "Genève", fr: "Genève", en: "Geneva", de: "Genf" },
+      { nl: "Montpellier" },
+      { nl: "Vresse-sur-Semois" },
+      { nl: "Brussel", fr: "Bruxelles", en: "Brussels", de: "Brüssel" },
+      { nl: "Lac du Salagou" },
+      { nl: "Wetteren" },
+      { nl: "Wenen", fr: "Vienne", en: "Vienna", de: "Wien" },
+    ],
+    // twee juiste antwoorden: Genève (figuurlijk) en Lac du Salagou (letterlijk)
+    juist: [0, 4],
+    uitleg: {
+      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
+      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
+      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
+      de: "Im übertragenen Sinn in Genf, und ganz wörtlich am Lac du Salagou: Im See lag ein alter Angelhaken, der sich in Amélies Wasserschuh verfing, mit dem sie Michiel bei einer Wasserschlacht versehentlich trat.",
+    },
+    bravo: {
+      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
+      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
+      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
+      de: "Im übertragenen Sinn in Genf, und ganz wörtlich am Lac du Salagou: Im See lag ein alter Angelhaken, der sich in Amélies Wasserschuh verfing, mit dem sie Michiel bei einer Wasserschlacht versehentlich trat.",
+    },
+  },
+  {
+    vraag: {
+      nl: "Wat was er te doen in Genève?",
+      fr: "Qu'y avait-il à faire à Genève ?",
+      en: "What was there to do in Geneva?",
+      de: "Was gab es in Genf zu tun?",
+    },
+    fotos: ["fotos/geneve-kathedraal-regen-wijzen.jpg", "fotos/geneve-haven-gele-jas.jpg", "fotos/selfie-kamer-serieus.jpg"],
+    antwoorden: [
+      { nl: "Michiel wou de LHC bezoeken", fr: "Michiel voulait visiter le LHC", en: "Michiel wanted to visit the LHC", de: "Michiel wollte den LHC besuchen" },
+      { nl: "Amélie was er op Erasmus", fr: "Amélie y était en Erasmus", en: "Amélie was there on Erasmus", de: "Amélie machte dort ihr Erasmus" },
+      { nl: "Zwitserland is een leuke eerste date", fr: "La Suisse, c'est un chouette premier rendez-vous", en: "Switzerland makes a nice first date", de: "Die Schweiz ist ein schönes erstes Date" },
+      { nl: "Amélie wou de kerstmarkt daar bezoeken", fr: "Amélie voulait visiter le marché de Noël là-bas", en: "Amélie wanted to visit the Christmas market there", de: "Amélie wollte den Weihnachtsmarkt dort besuchen" },
+    ],
+    juist: [1, 2],
+    uitleg: {
+      nl: "Amélie zat in Genève op Erasmus, en Zwitserland is nu eenmaal een leuke eerste date.",
+      fr: "Amélie était en Erasmus à Genève, et la Suisse, c'est tout simplement un chouette premier rendez-vous.",
+      en: "Amélie was on Erasmus in Geneva, and Switzerland simply makes a nice first date.",
+      de: "Amélie machte ihr Erasmus in Genf, und die Schweiz ist nun mal ein schönes erstes Date.",
+    },
+    bravo: {
+      nl: "Amélie zat in Genève op Erasmus, en Zwitserland is nu eenmaal een leuke eerste date.",
+      fr: "Amélie était en Erasmus à Genève, et la Suisse, c'est tout simplement un chouette premier rendez-vous.",
+      en: "Amélie was on Erasmus in Geneva, and Switzerland simply makes a nice first date.",
+      de: "Amélie machte ihr Erasmus in Genf, und die Schweiz ist nun mal ein schönes erstes Date.",
+    },
+  },
   {
     vraag: {
       nl: "Amélies familie komt gedeeltelijk uit Bretagne, waar het traditie is om Bretoense galettes te eten. Waar at Michiel zijn allereerste Bretoense galette, in een Asterix-restaurant?",
@@ -109,66 +230,6 @@ window.QUIZ = [
       fr: "En effet : pas en Bretagne, mais à Copenhague.",
       en: "Indeed: not in Brittany, but in Copenhagen.",
       de: "Genau: nicht in der Bretagne, sondern in Kopenhagen.",
-    },
-  },
-  {
-    vraag: {
-      nl: "Waar zijn Michiel en Amélie elkaar voor het eerst tegengekomen?",
-      fr: "Où Michiel et Amélie se sont-ils rencontrés pour la première fois ?",
-      en: "Where did Michiel and Amélie first meet?",
-      de: "Wo sind sich Michiel und Amélie zum ersten Mal begegnet?",
-    },
-    fotos: [],
-    antwoorden: [
-      { nl: "Bosuil 2021" },
-      { nl: "Wigwam 2020" },
-      { nl: "KHL-weekend 2022", fr: "Week-end KHL 2022", en: "KHL weekend 2022", de: "KHL-Wochenende 2022" },
-      { nl: "Roads to Narnia 2022" },
-    ],
-    juist: 0,
-    uitleg: {
-      nl: "Op Bosuil in 2021: Amélie kwam op de eind-SBT helpen om het kamp af te breken. In 2022 gingen we samen op KHL-weekend, maar daar spraken we niet met elkaar, want we hadden er zoveel andere vrienden. Pas op Roads to Narnia, waar we samen kampleiding waren, zijn we echt met elkaar beginnen praten.",
-      fr: "À Bosuil en 2021 : Amélie est venue aider à démonter le camp. En 2022, nous sommes allés ensemble au week-end KHL, mais nous ne nous sommes pas parlé, tant il y avait d'autres amis. Ce n'est qu'à Roads to Narnia, où nous étions ensemble responsables du camp, que nous avons vraiment commencé à parler.",
-      en: "At Bosuil in 2021: Amélie came to help take down the camp at the end. In 2022 we both went to the KHL weekend, but we didn't talk to each other because there were so many other friends. Only at Roads to Narnia, where we were camp leaders together, did we really start talking.",
-      de: "Bei Bosuil 2021: Amélie kam am Ende, um beim Abbau des Lagers zu helfen. 2022 waren wir beide beim KHL-Wochenende, haben aber nicht miteinander gesprochen, weil dort so viele andere Freunde waren. Erst bei Roads to Narnia, wo wir zusammen Lagerleitung waren, haben wir wirklich angefangen zu reden.",
-    },
-    bravo: {
-      nl: "Amélie kwam op de eind-SBT helpen om het Bosuil-kamp af te breken. Echt beginnen praten deden we pas op Roads to Narnia, waar we samen kampleiding waren.",
-      fr: "Amélie est venue aider à démonter le camp Bosuil. Mais nous n'avons vraiment commencé à parler qu'à Roads to Narnia, où nous étions ensemble responsables du camp.",
-      en: "Amélie came to help take down the Bosuil camp. We only really started talking at Roads to Narnia, where we were camp leaders together.",
-      de: "Amélie kam, um beim Abbau des Bosuil-Lagers zu helfen. Richtig ins Gespräch kamen wir erst bei Roads to Narnia, wo wir zusammen Lagerleitung waren.",
-    },
-  },
-  {
-    vraag: {
-      nl: "Waar heeft Amélie Michiel aan de haak geslagen?",
-      fr: "Où Amélie a-t-elle ferré Michiel ?",
-      en: "Where did Amélie get Michiel hooked?",
-      de: "Wo hat Amélie Michiel an den Haken bekommen?",
-    },
-    fotos: ["fotos/vishaak-zomer.jpg"],
-    antwoorden: [
-      { nl: "Genève", fr: "Genève", en: "Geneva", de: "Genf" },
-      { nl: "Montpellier" },
-      { nl: "Vresse-sur-Semois" },
-      { nl: "Brussel", fr: "Bruxelles", en: "Brussels", de: "Brüssel" },
-      { nl: "Lac du Salagou" },
-      { nl: "Wetteren" },
-      { nl: "Wenen", fr: "Vienne", en: "Vienna", de: "Wien" },
-    ],
-    // twee juiste antwoorden: Genève (figuurlijk) en Lac du Salagou (letterlijk)
-    juist: [0, 4],
-    uitleg: {
-      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
-      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure d'eau d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
-      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
-      de: "Im übertragenen Sinn in Genf, und ganz wörtlich am Lac du Salagou: Im See lag ein alter Angelhaken, der sich in Amélies Wasserschuh verfing, mit dem sie Michiel bei einer Wasserschlacht versehentlich trat.",
-    },
-    bravo: {
-      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
-      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure d'eau d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
-      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
-      de: "Im übertragenen Sinn in Genf, und ganz wörtlich am Lac du Salagou: Im See lag ein alter Angelhaken, der sich in Amélies Wasserschuh verfing, mit dem sie Michiel bei einer Wasserschlacht versehentlich trat.",
     },
   },
   {
@@ -222,13 +283,13 @@ window.QUIZ = [
     juist: 0,
     uitleg: {
       nl: "Amélie, en ze kreeg toen de kroon van winnaar van dat jaar. (Vraag maar niet van wie.)",
-      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Ne demandez pas de qui.)",
+      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander à qui elle appartenait.)",
       en: "Amélie, and she got that year's winner's crown. (Don't ask whose.)",
       de: "Amélie, und sie bekam die Siegerkrone des Jahres. (Frag lieber nicht, von wem.)",
     },
     bravo: {
       nl: "Amélie, en ze kreeg toen de kroon van winnaar van dat jaar. (Vraag maar niet van wie.)",
-      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Ne demandez pas de qui.)",
+      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander à qui elle appartenait.)",
       en: "Amélie, and she got that year's winner's crown. (Don't ask whose.)",
       de: "Amélie, und sie bekam die Siegerkrone des Jahres. (Frag lieber nicht, von wem.)",
     },
@@ -240,7 +301,7 @@ window.QUIZ = [
   {
     vraag: {
       nl: "In welke winkel, waar Amélie altijd haar beste snufjes vond, werkt ze nu?",
-      fr: "Dans quel magasin, où Amélie trouvait toujours ses meilleures trouvailles, travaille-t-elle maintenant ?",
+      fr: "Dans quel magasin, où Amélie dénichait toujours ses meilleures trouvailles, travaille-t-elle maintenant ?",
       en: "Which shop, where Amélie always found her best gadgets, does she work at now?",
       de: "In welchem Geschäft, in dem Amélie immer ihre besten Fundstücke gefunden hat, arbeitet sie jetzt?",
     },
@@ -254,13 +315,13 @@ window.QUIZ = [
     juist: 0,
     uitleg: {
       nl: "Amélie werkt nu bij Decathlon, de winkel waar ze altijd haar beste snufjes vond.",
-      fr: "Amélie travaille maintenant chez Decathlon, le magasin où elle trouvait toujours ses meilleures trouvailles.",
+      fr: "Amélie travaille maintenant chez Decathlon, le magasin où elle dénichait toujours ses meilleures trouvailles.",
       en: "Amélie now works at Decathlon, the shop where she always found her best gadgets.",
       de: "Amélie arbeitet jetzt bei Decathlon, dem Geschäft, in dem sie immer ihre besten Fundstücke gefunden hat.",
     },
     bravo: {
       nl: "Bij Decathlon, waar ze altijd haar beste snufjes vond.",
-      fr: "Chez Decathlon, où elle trouvait toujours ses meilleures trouvailles.",
+      fr: "Chez Decathlon, où elle dénichait toujours ses meilleures trouvailles.",
       en: "At Decathlon, where she always found her best gadgets.",
       de: "Bei Decathlon, wo sie immer ihre besten Fundstücke gefunden hat.",
     },
@@ -302,6 +363,23 @@ window.QUIZ = [
       fr: "Michiel a 12 cousins et cousines.",
       en: "Michiel has 12 cousins.",
       de: "Michiel hat 12 Cousins und Cousinen.",
+    },
+  },
+  {
+    vraag: {
+      nl: "En hoeveel neven en nichten heeft Amélie?",
+      fr: "Et combien de cousins et cousines Amélie a-t-elle ?",
+      en: "And how many cousins does Amélie have?",
+      de: "Und wie viele Cousins und Cousinen hat Amélie?",
+    },
+    fotos: [],
+    antwoorden: [{ nl: "4" }, { nl: "8" }, { nl: "12" }, { nl: "16" }, { nl: "20" }],
+    juist: 0,
+    uitleg: {
+      nl: "Amélie heeft 4 neven en nichten.",
+      fr: "Amélie a 4 cousins et cousines.",
+      en: "Amélie has 4 cousins.",
+      de: "Amélie hat 4 Cousins und Cousinen.",
     },
   },
   {
@@ -435,7 +513,7 @@ window.QUIZ = [
         {
           naam: { nl: "België", fr: "Belgique", en: "Belgium", de: "Belgien" },
           lat: 50.75, lon: 4.5, juist: true,
-          tekst: { nl: "Uiteraard, duh!", fr: "Évidemment, voyons !", en: "Obviously, duh!", de: "Natürlich, logisch!" },
+          tekst: { nl: "Uiteraard, duh!", fr: "Évidemment, voyons !", en: "Obviously, duh!", de: "Na klar, logisch!" },
           fotos: ["fotos/selfie-tong-uit.jpg", "fotos/selfie-gekke-bekken.jpg"],
         },
         {
@@ -501,7 +579,7 @@ window.QUIZ = [
           lat: 49.2, lon: 16.6, juist: true,
           tekst: {
             nl: "We bezochten samen Brno, waar Amélie op Erasmus zou gaan als corona er niet tussen was gekomen.",
-            fr: "Nous avons visité ensemble Brno, où Amélie devait partir en Erasmus si le Covid ne s'en était pas mêlé.",
+            fr: "Nous avons visité ensemble Brno, où Amélie serait partie en Erasmus si le Covid ne s'en était pas mêlé.",
             en: "We visited Brno together, where Amélie would have gone on Erasmus if it hadn't been for Covid.",
             de: "Wir haben zusammen Brno besucht, wo Amélie ohne Corona ihr Erasmus gemacht hätte.",
           },
@@ -510,15 +588,21 @@ window.QUIZ = [
           naam: { nl: "Zwitserland", fr: "Suisse", en: "Switzerland", de: "Schweiz" },
           lat: 46.5, lon: 7.4, juist: true,
           tekst: { nl: "Hier begon alles.", fr: "C'est ici que tout a commencé.", en: "This is where it all began.", de: "Hier hat alles angefangen." },
+          fotos: [
+            "fotos/geneve-kathedraal-regen-pruillip.jpg",
+            "fotos/geneve-kathedraal-regen-close-up.jpg",
+            "fotos/selfie-kamer-lachend.jpg",
+            "fotos/selfie-kamer-mond-open.jpg",
+          ],
         },
         {
           naam: { nl: "Zweden", fr: "Suède", en: "Sweden", de: "Schweden" },
           lat: 60.5, lon: 15.5, juist: true,
           tekst: {
-            nl: "We bezochten Marine op Erasmus.",
-            fr: "Nous avons rendu visite à Marine en Erasmus.",
-            en: "We visited Marine on Erasmus.",
-            de: "Wir haben Marine im Erasmus besucht.",
+            nl: "We bezochten Marine tijdens haar Erasmus.",
+            fr: "Nous avons rendu visite à Marine pendant son Erasmus.",
+            en: "We visited Marine during her Erasmus.",
+            de: "Wir haben Marine während ihres Erasmus besucht.",
           },
         },
         // landen waar we (nog) niet samen waren
@@ -536,12 +620,12 @@ window.QUIZ = [
     uitleg: {
       nl: "Groen: daar waren we samen. Rood: daar (nog) niet. Gestippeld: die heb je gemist.",
       fr: "Vert : nous y sommes allés ensemble. Rouge : pas (encore). En pointillés : celles que tu as manquées.",
-      en: "Green: we've been there together. Red: not (yet). Dotted: the ones you missed.",
+      en: "Green: we've been there together. Red: not (yet). Dashed: the ones you missed.",
       de: "Grün: Da waren wir zusammen. Rot: (noch) nicht. Gestrichelt: die hast du verpasst.",
     },
     bravo: {
       nl: "Alle elf gevonden, en geen enkele te veel!",
-      fr: "Les onze trouvés, et pas un de trop !",
+      fr: "Tu les as trouvés tous les onze, et pas un de trop !",
       en: "All eleven found, and not one too many!",
       de: "Alle elf gefunden, und keiner zu viel!",
     },
@@ -566,9 +650,9 @@ window.QUIZ = [
           naam: { nl: "Radovljica" }, lat: 46.344, lon: 14.174, kant: "onder", juist: true,
           tekst: {
             nl: "Hier, in Radovljica, werd het aanzoek gedaan.",
-            fr: "C'est ici, à Radovljica, qu'a eu lieu la demande.",
+            fr: "C'est ici, à Radovljica, qu'a eu lieu la demande en mariage.",
             en: "This is where the proposal happened, in Radovljica.",
-            de: "Hier, in Radovljica, fand der Antrag statt.",
+            de: "Hier, in Radovljica, fand der Heiratsantrag statt.",
           },
           fotos: ["fotos/selfie-in-tent.jpg"],
         },

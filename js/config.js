@@ -283,14 +283,14 @@ window.QUIZ = [
     juist: 0,
     uitleg: {
       nl: "Amélie, en ze kreeg toen de kroon van winnaar van dat jaar. (Vraag maar niet van wie.)",
-      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander à qui elle appartenait.)",
-      en: "Amélie, and she got that year's winner's crown. (Don't ask whose.)",
+      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander de qui elle la tient.)",
+      en: "Amélie, and she got that year's winner's crown. (Don't ask who she got it from.)",
       de: "Amélie, und sie bekam die Siegerkrone des Jahres. (Frag lieber nicht, von wem.)",
     },
     bravo: {
       nl: "Amélie, en ze kreeg toen de kroon van winnaar van dat jaar. (Vraag maar niet van wie.)",
-      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander à qui elle appartenait.)",
-      en: "Amélie, and she got that year's winner's crown. (Don't ask whose.)",
+      fr: "Amélie, et elle a reçu la couronne de la gagnante de l'année. (Mieux vaut ne pas demander de qui elle la tient.)",
+      en: "Amélie, and she got that year's winner's crown. (Don't ask who she got it from.)",
       de: "Amélie, und sie bekam die Siegerkrone des Jahres. (Frag lieber nicht, von wem.)",
     },
     fotoNa: {

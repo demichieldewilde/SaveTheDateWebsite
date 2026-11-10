@@ -51,7 +51,7 @@ window.SITE = {
   gasten: [],
 
   // URL van jullie Google Apps Script (zie LEESMIJ.md, stap 2).
-  formulierUrl: "",
+  formulierUrl: "https://script.google.com/macros/s/AKfycbw07-yv4IfAx3tKt8QK0tlVOKSn98kyvr9oFRJByC4A71YRIvni3esXuzyx0Zl4GK1P/exec",
 
   talen: ["nl", "fr", "en", "de"],
   standaardTaal: "nl",

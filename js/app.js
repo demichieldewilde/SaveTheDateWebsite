@@ -6,7 +6,7 @@
   const TEKSTEN = window.TEKSTEN;
   const $ = (sel) => document.querySelector(sel);
   const OPSLAG = "std-amelie-michiel";
-  const LOCALE = { nl: "nl-BE", fr: "fr-BE", en: "en-GB", de: "de-DE" };
+  const LOCALE = { nl: "nl-BE", fr: "fr-BE", en: "en-GB" };
   const STIJLEN = ["hoeve", "veldbloemen", "blauwe-inkt"];
   const ACHTERGRONDEN = ["standaard", "lichtblauw", "donkerblauw"];
   const AANWEZIG_NL = { ja: "Ja, zeker", misschien: "Waarschijnlijk", nee: "Helaas niet" };
@@ -220,6 +220,7 @@
     if (kaart) { kaart.remove(); kaart = null; pinnen = []; }
     openPin = null;
     $("#quiz").classList.toggle("is-kaartvraag", Boolean(q.kaart));
+    $("#quiz").classList.toggle("gespiegeld", !q.kaart && huidige % 2 === 1);
     $("#kaart-rij").hidden = !q.kaart;
 
     if (q.kaart) {
@@ -243,7 +244,7 @@
     }
     if (!fotos.length) {
       beeld.classList.add("beeld-illustratie");
-      binnen.innerHTML = window.Botanisch.stengels(huidige + 4);
+      binnen.innerHTML = window.Botanisch.boeket(huidige + 4);
       return;
     }
     beeld.classList.add(["beeld-een", "beeld-duo", "beeld-trio"][Math.min(fotos.length, 3) - 1]);

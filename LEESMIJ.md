@@ -6,7 +6,7 @@ Een statische website (HTML, CSS en JavaScript, zonder build-stap). Bezoekers sp
 index.html                 de pagina
 css/style.css              vormgeving (kleuren bovenaan)
 js/config.js               ← ALLES OM AAN TE PASSEN: data, locaties, quizvragen, stijl
-js/teksten.js              vaste teksten (knoppen, formulier, ...) in NL/FR/EN/DE
+js/teksten.js              vaste teksten (knoppen, formulier, ...) in NL/FR/EN
 js/botanisch.js            tekent de korenbloem, aar en het kransje
 js/app.js                  de logica (normaal niet aan te raken)
 fotos/                     foto's in webformaat
@@ -58,7 +58,7 @@ De code (`lente`) pas je aan bij `dinerCode` in `js/config.js`. In de sheet zie 
 
 ## 5. Talen en stijl
 
-- De site kiest zelf de taal van de browser (NL, FR, EN of DE); bezoekers kunnen bovenaan wisselen.
+- De site kiest zelf de taal van de browser (NL, FR of EN); bezoekers kunnen bovenaan wisselen.
   Een link in een vaste taal: voeg `?lang=fr` toe (of `&lang=fr` na de dinercode).
 - Stijl kiezen: `stijl` in `js/config.js` (`hoeve`, `veldbloemen` of `blauwe-inkt`).
 - Achtergrond kiezen: `achtergrond` in `js/config.js` (`standaard`, `lichtblauw` of `donkerblauw`).
@@ -67,7 +67,7 @@ De code (`lente`) pas je aan bij `dinerCode` in `js/config.js`. In de sheet zie 
 ## 6. Dingen aanpassen
 
 - **Kerklocatie, uren, enz.**: `js/config.js` → `kerk`, `diner`, `feest`. Een leeg veld toont automatisch "volgt nog".
-- **Quizvragen**: `js/config.js` → `QUIZ`. Per vraag: 0, 1 of 2 foto's, de antwoorden, welk antwoord juist is (`juist: 0` = het eerste) en de uitleg bij een fout antwoord, telkens in 4 talen.
+- **Quizvragen**: `js/config.js` → `QUIZ`. Per vraag: 0 tot 3 foto's, de antwoorden, welk antwoord juist is (`juist: 0` = het eerste) en de uitleg bij een fout antwoord, telkens in 3 talen.
 - **Foto vervangen**: zet een nieuwe foto in `fotos/` met dezelfde naam, of verwijs in `config.js` naar een nieuwe naam. Voer daarna dit uit (nodig: `pip install pillow`), zodat de foto klein genoeg is:
 
   ```bash

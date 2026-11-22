@@ -59,11 +59,10 @@ window.SITE = {
   // Stijl van de site: "hoeve", "veldbloemen" of "blauwe-inkt".
   stijl: "hoeve",
   // Achtergrond: "standaard" (de kleur van de stijl), "lichtblauw" of "donkerblauw".
-  achtergrond: "donkerblauw",
+  achtergrond: "geel",
   // Toont rechtsonder knopjes om stijl en achtergrond te wisselen. Zet op false voor de echte site.
   stijlKiezer: false,
 
-  fotoIntro: "fotos/selfie-heuvels.jpg",
   fotoKaart: "fotos/zonnebrillen-jeep.jpg",
 };
 
@@ -88,9 +87,9 @@ window.SITE = {
 window.QUIZ = [
   {
     vraag: {
-      nl: "Waar zijn Michiel en Amélie elkaar voor het eerst tegengekomen?",
-      fr: "Où Michiel et Amélie se sont-ils rencontrés pour la première fois ?",
-      en: "Where did Michiel and Amélie first meet?",
+      nl: "Waar zijn we elkaar voor het eerst tegengekomen?",
+      fr: "Où nous sommes-nous rencontrés pour la première fois ?",
+      en: "Where did we first meet?",
     },
     fotos: ["fotos/groepsselfie-rivier.jpg", "fotos/houten-troon-kamp.jpg"],
     antwoorden: [
@@ -101,21 +100,21 @@ window.QUIZ = [
     ],
     juist: 0,
     uitleg: {
-      nl: "Op Bosuil in 2021: Amélie kwam op de eind-SBT helpen om het kamp af te breken.",
-      fr: "À Bosuil en 2021 : Amélie est venue aider à démonter le camp.",
-      en: "At Bosuil in 2021: Amélie came to help take down the camp at the end.",
+      nl: "Op Bosuil in 2021: tijdens het Bizon-kamp Bosuil kwam Amélie op het einde van het kamp helpen om het kampmateriaal terug naar ons depot te brengen, oftewel de Kribbe (eind-SBT).",
+      fr: "À Bosuil en 2021 : à la fin du camp Bizon Bosuil, Amélie est venue aider à ramener le matériel du camp à notre dépôt, alias la Kribbe (la SBT de fin de camp).",
+      en: "At Bosuil in 2021: at the end of the Bizon camp Bosuil, Amélie came to help bring the camp gear back to our depot, a.k.a. the Kribbe (the end-of-camp SBT).",
     },
     bravo: {
-      nl: "Amélie kwam op de eind-SBT helpen om het Bosuil-kamp af te breken.",
-      fr: "Amélie est venue aider à démonter le camp Bosuil.",
-      en: "Amélie came to help take down the Bosuil camp.",
+      nl: "Tijdens het Bizon-kamp Bosuil 2021 kwam Amélie op het einde van het kamp helpen om het kampmateriaal terug naar ons depot te brengen, oftewel de Kribbe (eind-SBT).",
+      fr: "À la fin du camp Bizon Bosuil 2021, Amélie est venue aider à ramener le matériel du camp à notre dépôt, alias la Kribbe (la SBT de fin de camp).",
+      en: "At the end of the Bizon camp Bosuil 2021, Amélie came to help bring the camp gear back to our depot, a.k.a. the Kribbe (the end-of-camp SBT).",
     },
   },
   {
     vraag: {
-      nl: "En waar hebben Michiel en Amélie elkaar echt leren kennen?",
-      fr: "Et où Michiel et Amélie ont-ils vraiment appris à se connaître ?",
-      en: "And where did Michiel and Amélie really get to know each other?",
+      nl: "En waar hebben we elkaar echt leren kennen?",
+      fr: "Et où avons-nous vraiment appris à nous connaître ?",
+      en: "And where did we really get to know each other?",
     },
     fotos: ["fotos/kamp-bijl-en-moker.jpg", "fotos/groepsfoto-park-zonsondergang.jpg"],
     antwoorden: [
@@ -167,9 +166,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Wat was er te doen in Genève?",
-      fr: "Qu'y avait-il à faire à Genève ?",
-      en: "What was there to do in Geneva?",
+      nl: "Wat gingen we doen in Genève?",
+      fr: "Qu'allions-nous faire à Genève ?",
+      en: "What took us to Geneva?",
     },
     fotos: ["fotos/geneve-kathedraal-regen-wijzen.jpg", "fotos/geneve-haven-gele-jas.jpg", "fotos/selfie-kamer-serieus.jpg"],
     antwoorden: [
@@ -219,9 +218,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "In welk district van Wenen wonen Amélie en Michiel?",
-      fr: "Dans quel arrondissement de Vienne habitent Amélie et Michiel ?",
-      en: "In which district of Vienna do Amélie and Michiel live?",
+      nl: "In welk district van Wenen wonen we?",
+      fr: "Dans quel arrondissement de Vienne habitons-nous ?",
+      en: "In which district of Vienna do we live?",
     },
     fotos: ["fotos/verhuisdozen.jpg"],
     antwoorden: [
@@ -303,9 +302,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Hoe heten de broers en zussen van Amélie en Michiel?",
-      fr: "Comment s'appellent les frères et sœurs d'Amélie et Michiel ?",
-      en: "What are the names of Amélie and Michiel's brothers and sisters?",
+      nl: "Hoe heten onze broers en zussen?",
+      fr: "Comment s'appellent nos frères et sœurs ?",
+      en: "What are the names of our brothers and sisters?",
     },
     fotos: [],
     antwoorden: [
@@ -353,9 +352,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Wie draagt de broek in de relatie?",
-      fr: "Qui porte la culotte dans le couple ?",
-      en: "Who wears the trousers in the relationship?",
+      nl: "Wie van ons twee draagt de broek?",
+      fr: "Qui de nous deux porte la culotte ?",
+      en: "Which of us wears the trousers?",
     },
     fotos: ["fotos/tafel-rode-muur.jpg"],
     antwoorden: [{ nl: "Michiel" }, { nl: "Amélie" }],
@@ -586,9 +585,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Michiel heeft Amélie ten huwelijk gevraagd op de Juliana Trail in Slovenië. In welk dorpje gebeurde dat?",
-      fr: "Michiel a demandé Amélie en mariage sur le Juliana Trail, en Slovénie. Dans quel village était-ce ?",
-      en: "Michiel proposed to Amélie on the Juliana Trail in Slovenia. In which village did it happen?",
+      nl: "We hebben ons verloofd op de Juliana Trail in Slovenië. In welk dorpje gebeurde dat?",
+      fr: "Nous nous sommes fiancés sur le Juliana Trail, en Slovénie. Dans quel village était-ce ?",
+      en: "We got engaged on the Juliana Trail in Slovenia. In which village did it happen?",
     },
     kaart: {
       namenTonen: true,

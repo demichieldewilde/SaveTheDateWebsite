@@ -140,7 +140,7 @@ window.Botanisch = (() => {
     return svg("bot-krans", "0 0 320 80", s);
   }
 
-  /* ---------- sierrand rond een foto: bloemenranken + kompassen ---------- */
+  /* ---------- bloemen in volksstijl: blauw, geel en wit ---------- */
 
   // blauwe bloem met vijf brede, licht gepunte blaadjes en nerven
   function sterbloem(x, y, r, hoek) {
@@ -171,83 +171,6 @@ window.Botanisch = (() => {
     `<g transform="translate(${r1(x)} ${r1(y)}) rotate(${r1(hoek)})">` +
     `<path class="sierblad" d="M0 0C${r1(l * 0.28)} ${r1(-l * 0.36)} ${r1(l * 0.72)} ${r1(-l * 0.34)} ${r1(l)} 0C${r1(l * 0.72)} ${r1(l * 0.34)} ${r1(l * 0.28)} ${r1(l * 0.36)} 0 0Z"/>` +
     `<path class="sierblad-nerf" d="M${r1(l * 0.15)} 0L${r1(l * 0.8)} 0"/></g>`;
-
-  // rank rond de rechterbovenhoek (viewBox 0 0 240 240; de foto ligt links-onder van de rank)
-  function rank(seed) {
-    const rng = maakRng(seed);
-    const A = [[8, 46], [52, 14], [150, 4], [196, 42]];
-    const B = [[196, 42], [222, 70], [216, 160], [190, 234]];
-    let s = "";
-    const op = (p, t, d = 0) => {
-      const b = bez(p, t);
-      const n = rad(b.hoek - 90); // naar buiten (boven / rechts)
-      return { x: b.x + Math.cos(n) * d, y: b.y + Math.sin(n) * d, hoek: b.hoek };
-    };
-    // stipjes eerst, zodat ze achter alles liggen
-    for (const p of [A, B]) {
-      for (let i = 0; i < 11; i++) {
-        const q = op(p, 0.04 + i * 0.09 + rng() * 0.03, (i % 2 ? -1 : 1) * (11 + rng() * 9));
-        s += `<circle class="${rng() < 0.8 ? "stip" : "stip-blauw"}" cx="${r1(q.x)}" cy="${r1(q.y)}" r="${r1(1.7 + rng() * 1.1)}"/>`;
-      }
-    }
-    s += `<path class="rank" d="${pad(A)}"/><path class="rank" d="${pad(B)}"/>`;
-    // [bocht, t, soort, kant (1 = buiten, -1 = binnen)]
-    const stukken = [
-      [A, 0.12, "krul", 1], [A, 0.2, "blad", -1], [A, 0.3, "krul", -1], [A, 0.4, "blad", 1],
-      [A, 0.62, "blad", 1], [A, 0.7, "krul", -1], [A, 0.8, "blad", -1],
-      [B, 0.12, "krul", 1], [B, 0.22, "blad", -1], [B, 0.34, "krul", -1], [B, 0.42, "blad", 1],
-      [B, 0.7, "blad", 1], [B, 0.78, "krul", -1], [B, 0.86, "blad", -1],
-    ];
-    for (const [p, t, soort, kant] of stukken) {
-      const q = op(p, t);
-      if (soort === "blad") s += sierblad(q.x, q.y, q.hoek - kant * 48, 15);
-      if (soort === "krul") s += krul(q.x, q.y, q.hoek - kant * 35, 0.85, kant < 0);
-    }
-    // bloemen bovenop
-    s += geelbloem(...Object.values(op(A, 0.02, 0)).slice(0, 2), 11, rng() * 45);
-    s += sterbloem(...Object.values(op(A, 0.52, 2)).slice(0, 2), 21, 8 + rng() * 10);
-    s += geelbloem(...Object.values(op(A, 0.97, -2)).slice(0, 2), 11, rng() * 45);
-    s += geelbloem(...Object.values(op(B, 0.25, 2)).slice(0, 2), 11, rng() * 45);
-    s += sterbloem(...Object.values(op(B, 0.56, 2)).slice(0, 2), 21, -20 + rng() * 10);
-    s += geelbloem(...Object.values(op(B, 1, 0)).slice(0, 2), 11, rng() * 45);
-    return s;
-  }
-
-  // kompasroos zoals op een oude zeekaart
-  function kompas() {
-    let s = "";
-    // spitse straaltjes tussen de windrichtingen
-    for (let i = 0; i < 16; i++) {
-      if (i % 2 === 0) continue;
-      s += `<path class="straal" transform="rotate(${i * 22.5})" d="M-2.4 -50L0 -74L2.4 -50Z"/>`;
-    }
-    s += `<circle class="ring" r="56"/><circle class="ring" r="51"/>`;
-    for (let i = 0; i < 72; i++) {
-      const a = rad(i * 5), l = i % 3 ? 2.5 : 5;
-      s += `<path class="streep" d="M${r1(Math.cos(a) * 51)} ${r1(Math.sin(a) * 51)}L${r1(Math.cos(a) * (51 - l))} ${r1(Math.sin(a) * (51 - l))}"/>`;
-    }
-    s += `<circle class="ring dun" r="36"/><circle class="ring stippel" r="31"/><circle class="ring dun" r="26"/>`;
-    const punt = (hoek, l, b) =>
-      `<g transform="rotate(${hoek})"><path class="punt-donker" d="M0 ${-l}L${b} 0L0 0Z"/><path class="punt-licht" d="M0 ${-l}L${-b} 0L0 0Z"/></g>`;
-    for (const h of [45, 135, 225, 315]) s += punt(h, 44, 6);
-    for (const h of [0, 90, 180, 270]) s += punt(h, 86, 8.5);
-    s += `<circle class="midden" r="7"/><circle class="midden-hart" r="3"/>`;
-    for (const [t, x, y] of [["N", 0, -93], ["E", 95, 1], ["S", 0, 97], ["W", -95, 1]]) {
-      s += `<text class="windstreek" x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle">${t}</text>`;
-    }
-    return s;
-  }
-
-  function sierRand(seed = 1) {
-    const stuk = (klasse, viewBox, inhoud) =>
-      `<svg class="sier ${klasse}" viewBox="${viewBox}" aria-hidden="true" focusable="false">${inhoud}</svg>`;
-    return (
-      stuk("sier-rank sier-rb", "0 0 240 240", rank(seed)) +
-      stuk("sier-rank sier-lo", "0 0 240 240", rank(seed + 7)) +
-      stuk("sier-kompas sier-lb", "-105 -105 210 210", kompas()) +
-      stuk("sier-kompas sier-ro", "-105 -105 210 210", kompas())
-    );
-  }
 
   // wit bloemetje (madeliefje in vooraanzicht), zelfde stijl als het gele
   function witbloem(x, y, r, hoek = 0) {
@@ -325,5 +248,47 @@ window.Botanisch = (() => {
     return `<svg class="bot bloei bot-boeket" viewBox="0 0 300 480" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">${s}</svg>`;
   }
 
-  return { stengels, krans, slinger, boeket, sierRand };
+
+  // bloemengroepje voor de hoeken van de pagina (viewBox 0 0 160 160, hoek linksboven)
+  function hoekje(rng) {
+    let s = "";
+    const stelen = [[[0, 0], [30, 20], [56, 40], [84, 46]], [[0, 0], [18, 34], [34, 64], [40, 92]], [[0, 0], [40, 10], [80, 8], [118, 16]], [[0, 0], [8, 40], [10, 84], [16, 122]]];
+    for (const p of stelen) {
+      s += `<path class="rank" d="${pad(p)}"/>`;
+      for (const t of [0.35, 0.6, 0.82]) {
+        const b = bez(p, t);
+        s += sierblad(b.x, b.y, b.hoek + (t === 0.6 ? 48 : -48), 11);
+      }
+    }
+    for (let i = 0; i < 10; i++) s += `<circle class="${i % 3 ? "stip" : "stip-blauw"}" cx="${r1(20 + rng() * 110)}" cy="${r1(20 + rng() * 110)}" r="${r1(1.6 + rng())}"/>`;
+    s += sterbloem(84, 46, 18, rng() * 72) + sterbloem(16, 122, 13, rng() * 72);
+    s += geelbloem(40, 92, 12, rng() * 45) + geelbloem(118, 16, 11, rng() * 45) + witbloem(58, 70, 9);
+    return s;
+  }
+
+  function hoekbloemen(seed = 1) {
+    const rng = maakRng(seed);
+    const stuk = (k) => `<svg class="bot bloei hoek hoek-${k}" viewBox="0 0 160 160" aria-hidden="true" focusable="false">${hoekje(rng)}</svg>`;
+    return stuk("lb") + stuk("rb") + stuk("lo") + stuk("ro");
+  }
+
+  // voorlopig bloemetje bij een antwoord, in de stijl van inkt + waterverf
+  function tekenbloem(seed = 1) {
+    const rng = maakRng(seed * 7 + 3);
+    const kleuren = ["geel", "blauw", "oranje", "lila"];
+    const kleur = kleuren[seed % kleuren.length];
+    const n = 5 + (seed % 3);
+    let was = "", inkt = "";
+    for (let i = 0; i < n; i++) {
+      const a = (360 / n) * i + rng() * 10;
+      const l = 13 + rng() * 3, b = 6 + rng() * 2;
+      const blad = `M0 -3C${r1(-b)} ${r1(-l * 0.4)} ${r1(-b * 0.7)} ${r1(-l)} 0 ${r1(-l)}C${r1(b * 0.7)} ${r1(-l)} ${r1(b)} ${r1(-l * 0.4)} 0 -3Z`;
+      was += `<path class="was" transform="rotate(${r1(a + 4)}) translate(${r1(rng() * 2)} 0)" d="${blad}"/>`;
+      inkt += `<path class="inkt" transform="rotate(${r1(a)})" d="${blad}"/>`;
+    }
+    return `<svg class="tekenbloem tb-${kleur}" viewBox="-20 -20 40 40" aria-hidden="true" focusable="false">` +
+      `${was}${inkt}<circle class="was-hart" r="4.6"/><circle class="inkt" r="3.6"/></svg>`;
+  }
+
+  return { stengels, krans, slinger, boeket, hoekbloemen, tekenbloem };
 })();

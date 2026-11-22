@@ -5,7 +5,11 @@
 window.TEKSTEN = {
   nl: {
     taalNaam: "Nederlands",
-    introTitel: "<em>{een}</em> en <em>{twee}</em> gaan trouwen!!!",
+    introTitel: "<em>{een}</em> & <em>{twee}</em> gaan trouwen!",
+    introLabel: "Big News",
+    introOntdek: "Leer ons verhaal beter kennen",
+    introVoet: "… en meer over deze dag via de quiz: klik op het zegel",
+    introTekeningAlt: "Tekening van Amélie als luipaard en Michiel als koning, onder de banier De Kronieken van Wenen",
     introTekst: "Wil je meer weten over deze dag en het koppel? Doe dan de quiz.",
     introStart: "Start de quiz",
     introOverslaan: "Ik ken het nieuws al, toon de kaart",
@@ -74,7 +78,11 @@ window.TEKSTEN = {
 
   fr: {
     taalNaam: "Français",
-    introTitel: "<em>{een}</em> et <em>{twee}</em> vont se marier !!!",
+    introTitel: "<em>{een}</em> & <em>{twee}</em> vont se marier !",
+    introLabel: "Grande Nouvelle",
+    introOntdek: "Apprends à mieux connaître notre histoire",
+    introVoet: "… et plus sur ce jour grâce au quiz : clique sur le sceau",
+    introTekeningAlt: "Dessin d'Amélie en léopard et de Michiel en roi, sous la bannière De Kronieken van Wenen",
     introTekst: "Tu veux en savoir plus sur ce jour et sur le couple ? Fais le quiz.",
     introStart: "Commencer le quiz",
     introOverslaan: "Je connais déjà la nouvelle, voir la carte",
@@ -143,7 +151,11 @@ window.TEKSTEN = {
 
   en: {
     taalNaam: "English",
-    introTitel: "<em>{een}</em> and <em>{twee}</em> are getting married!!!",
+    introTitel: "<em>{een}</em> & <em>{twee}</em> are getting married!",
+    introLabel: "Big News",
+    introOntdek: "Get to know our story better",
+    introVoet: "… and more about the day in the quiz: click the seal",
+    introTekeningAlt: "Drawing of Amélie as a leopard and Michiel as a king, under the banner De Kronieken van Wenen",
     introTekst: "Want to know more about the day and the couple? Take the quiz.",
     introStart: "Start the quiz",
     introOverslaan: "I already know the news, show me the card",

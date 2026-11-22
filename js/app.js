@@ -8,7 +8,7 @@
   const OPSLAG = "std-amelie-michiel";
   const LOCALE = { nl: "nl-BE", fr: "fr-BE", en: "en-GB" };
   const STIJLEN = ["hoeve", "veldbloemen", "blauwe-inkt"];
-  const ACHTERGRONDEN = ["standaard", "lichtblauw", "donkerblauw"];
+  const ACHTERGRONDEN = ["standaard", "lichtblauw", "donkerblauw", "geel"];
   const AANWEZIG_NL = { ja: "Ja, zeker", misschien: "Waarschijnlijk", nee: "Helaas niet" };
 
   const opslag = {
@@ -64,6 +64,7 @@
     document.querySelectorAll("[data-t-html]").forEach((el) => { el.innerHTML = t(el.dataset.tHtml); });
     document.querySelectorAll("[data-t-ph]").forEach((el) => { el.placeholder = t(el.dataset.tPh); });
     document.querySelectorAll("[data-t-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.tAria)));
+    document.querySelectorAll("[data-t-alt]").forEach((el) => { el.alt = t(el.dataset.tAlt); });
     document.querySelectorAll("[data-taal]").forEach((k) => k.setAttribute("aria-pressed", k.dataset.taal === taal));
 
     $("#std-datum").textContent = SITE.datum.kort;
@@ -116,6 +117,14 @@
     if (id !== "quiz") document.querySelectorAll(".vraag-beeld video").forEach((v) => v.pause());
     $("#voortgang").hidden = id !== "quiz";
     window.scrollTo({ top: 0, behavior: "instant" });
+    if (id === "intro") speelEnvelop($("#intro-scene"));
+  }
+
+  // envelop schuift binnen, daarna schuift de brief eruit (zie .scene.binnen in de CSS)
+  function speelEnvelop(scene) {
+    scene.classList.remove("binnen");
+    void scene.offsetWidth;
+    scene.classList.add("binnen");
   }
 
   /* ---------- quiz ---------- */
@@ -125,6 +134,7 @@
   let kaart = null;           // Leaflet-kaart bij een kaartvraag
   let pinnen = [];            // markers op die kaart
   let openPin = null;         // pin waarvan de info getoond wordt
+  let kaartGrens = null;      // gebied dat de kaart moet tonen
 
   const keuzeLijst = (q) => (q.kaart ? q.kaart.pinnen : q.antwoorden);
   const alleGoed = (q) => !q.kaart && (q.juist == null || q.juist === "alle");
@@ -163,17 +173,19 @@
     $("#vraag-tekst").textContent = vt(q.vraag);
     $("#vraag-hint").textContent = getoond ? "" : t(q.kaart ? "kaartHint" : "meerdereHint");
 
+    $("#vraag-zegel").textContent = huidige + 1;
+
     if (nieuw) {
       selectie = new Set();
       bouwBeeld(q);
-      $(".vraag-inhoud").classList.remove("verschijn");
-      void $(".vraag-inhoud").offsetWidth;
-      $(".vraag-inhoud").classList.add("verschijn");
+      speelEnvelop($("#vraag-scene"));
     }
 
     const box = $("#antwoorden");
     box.replaceChildren();
     box.className = "antwoorden";
+    // de antwoorden liggen in twee kolommen links en rechts van de envelop
+    $("#podium").style.setProperty("--rijen", q.kaart ? 1 : Math.ceil(q.antwoorden.length / 2));
     if (q.kaart) {
       box.classList.add("antwoorden-kaart");
       pinnen.forEach((m, i) => m.setTooltipContent(vt(q.kaart.pinnen[i].naam)));
@@ -184,6 +196,9 @@
         const knop = document.createElement("button");
         knop.type = "button";
         knop.className = "antwoord";
+        knop.style.setProperty("--i", i);
+        knop.style.setProperty("--draai", `${[-2.2, 1.8, 1.2, -1.6, -0.8, 2.4, 1.5, -1.9][i % 8]}deg`);
+        knop.insertAdjacentHTML("beforeend", window.Botanisch.tekenbloem(huidige * 3 + i));
         const letter = document.createElement("span");
         letter.className = "letter";
         letter.textContent = LETTERS[i];
@@ -220,11 +235,23 @@
     if (kaart) { kaart.remove(); kaart = null; pinnen = []; }
     openPin = null;
     $("#quiz").classList.toggle("is-kaartvraag", Boolean(q.kaart));
-    $("#quiz").classList.toggle("gespiegeld", !q.kaart && huidige % 2 === 1);
+    $("#quiz").classList.remove("uitgevouwen");
     $("#kaart-rij").hidden = !q.kaart;
 
     if (q.kaart) {
       bouwKaart(q, $("#kaart-plek"));
+      // eerst schuift de brief uit de envelop, dan vouwt het papier open tot de kaart erop past
+      const vraag = huidige;
+      setTimeout(() => {
+        if (huidige !== vraag || !kaart) return;
+        $("#quiz").classList.add("uitgevouwen");
+        setTimeout(() => {
+          if (huidige !== vraag || !kaart) return;
+          kaart.invalidateSize();
+          kaart.fitBounds(kaartGrens.punten, { padding: kaartGrens.rand });
+          if (q.kaart.namenTonen) plaatsNamen();
+        }, 950);
+      }, 1500);
       return;
     }
     if (q.video) {
@@ -290,7 +317,8 @@
     const punten = [...q.kaart.pinnen.map((p) => [p.lat, p.lon]), ...(q.kaart.route || [])];
     // extra ruimte zodat de namen naast de pinnen niet van de kaart vallen
     const rand = q.kaart.namenTonen ? [10, 30] : [24, 24];
-    kaart.fitBounds(L.latLngBounds(punten), { padding: rand });
+    kaartGrens = { punten: L.latLngBounds(punten), rand };
+    kaart.fitBounds(kaartGrens.punten, { padding: rand });
     setTimeout(() => {
       if (!kaart) return;
       kaart.invalidateSize();
@@ -712,7 +740,6 @@
   });
   $("#std-namen").append(...naamDelen);
   $("#kaart-foto").src = SITE.fotoKaart;
-  $("#intro-foto").src = SITE.fotoIntro;
 
   bouwTaalknoppen();
   bouwFormulier();
@@ -731,4 +758,5 @@
   $("#overslaan").addEventListener("click", () => onthul());
   $("#opnieuw").addEventListener("click", () => toonScherm("intro"));
   $("#overslaan").hidden = !opslag.lees().klaar;
+  speelEnvelop($("#intro-scene"));
 })();

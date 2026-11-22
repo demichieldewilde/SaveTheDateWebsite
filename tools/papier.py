@@ -1,47 +1,64 @@
-"""Maakt de papierstructuur als vaste, naadloze afbeelding (grijs, gemengd met soft-light in de CSS).
+"""Maakt de papierstructuur als vaste, naadloze, doorzichtige afbeelding.
 
-Vroeger rekende de browser die structuur zelf uit met een SVG-lichteffect, maar dat valt op
-schermen met meer pixels (gsm) donkerder uit. Een vaste afbeelding ziet er overal hetzelfde uit.
+Witte lichtjes en zwarte schaduwtjes met een beetje doorzichtigheid, gewoon bovenop de kleur gelegd.
+Er is dus geen mengmodus (soft-light) nodig: die past Safari op iPhone niet altijd toe, waardoor het
+papier daar volledig grijs werd. Zo ziet het er op elke browser en elk scherm hetzelfde uit.
+
 Gebruik: python tools/papier.py  -> zet --papier-vezel en --papier-vezel-zacht in css/style.css
 """
-import base64, io, re
+import base64
+import io
+import re
 from pathlib import Path
+
 import numpy as np
 from PIL import Image
 
 N = 320
 rng = np.random.default_rng(4)
 
+
 def ruis(freq_lo, freq_hi, macht):
     """naadloze ruis: willekeurig spectrum, beperkt tot een frequentieband"""
-    f = np.fft.fftfreq(N)[:, None] ** 2 + np.fft.fftfreq(N)[None, :] ** 2
-    f = np.sqrt(f)
+    f = np.sqrt(np.fft.fftfreq(N)[:, None] ** 2 + np.fft.fftfreq(N)[None, :] ** 2)
     band = ((f >= freq_lo) & (f <= freq_hi)) / np.maximum(f, 1e-6) ** macht
     spec = (rng.normal(size=(N, N)) + 1j * rng.normal(size=(N, N))) * band
     r = np.real(np.fft.ifft2(spec))
     return (r - r.mean()) / r.std()
 
+
 def reliëf(hoogte):
-    # licht schuin van linksboven, zoals het oude lichteffect (azimut 45°)
+    # licht schuin van linksboven (azimut 45°)
     dx = np.roll(hoogte, -1, 1) - np.roll(hoogte, 1, 1)
     dy = np.roll(hoogte, -1, 0) - np.roll(hoogte, 1, 0)
-    return -(dx + dy)
+    r = -(dx + dy)
+    return (r - r.mean()) / r.std()
 
-def maak(naam, gem, sd):
-    fijn = ruis(.08, .5, .3)          # korrel van het papier
-    vezel = ruis(.01, .06, .8)        # grotere vlekken en vezels
-    schaduw = reliëf(.7 * fijn + .6 * vezel)
-    schaduw = (schaduw - schaduw.mean()) / schaduw.std() * sd + gem
-    im = Image.fromarray(np.clip(schaduw, 0, 255).astype(np.uint8), "L")
+
+FIJN = ruis(.08, .5, .3)    # korrel van het papier
+VEZEL = ruis(.01, .06, .8)  # grotere vlekken en vezels
+RELIËF = reliëf(.7 * FIJN + .6 * VEZEL)
+
+
+def maak(naam, sterkte):
+    """sterkte: hoeveel dekking één standaardafwijking reliëf krijgt (0.05 = 5% wit of zwart)"""
+    # een paar tinten volstaan (palet-PNG): dat houdt het bestand klein
+    stappen = 7
+    trede = np.clip(np.round(np.abs(RELIËF) / 2.5 * stappen), 0, stappen).astype(np.uint8)
+    index = np.where(RELIËF > 0, trede, trede + stappen + 1).astype(np.uint8)  # 0..7 wit, 8..15 zwart
+    alfa = [round(min(1, i / stappen * 2.5 * sterkte) * 255) for i in range(stappen + 1)]
+    im = Image.fromarray(index, "P")
+    im.putpalette([255, 255, 255] * (stappen + 1) + [0, 0, 0] * (stappen + 1))
     buf = io.BytesIO()
-    im.save(buf, "JPEG", quality=82, optimize=True)
+    im.save(buf, "PNG", optimize=True, transparency=bytes(alfa + alfa))
     data = base64.b64encode(buf.getvalue()).decode()
     css = Path(__file__).resolve().parent.parent / "css" / "style.css"
     tekst = css.read_text(encoding="utf-8")
-    tekst, n = re.subn(rf"^  --{naam}: url\(.*\);$", f'  --{naam}: url("data:image/jpeg;base64,{data}");', tekst, flags=re.M)
+    tekst, n = re.subn(rf"^  --{naam}: url\(.*\);$", f'  --{naam}: url("data:image/png;base64,{data}");', tekst, flags=re.M)
     assert n == 1, naam
-    css.write_text(tekst, encoding="utf-8", newline="")
+    css.write_bytes(tekst.encode("utf-8"))
     print(naam, len(data) // 1024, "KB")
 
-maak("papier-vezel", 186, 17)
-maak("papier-vezel-zacht", 187, 7)
+
+maak("papier-vezel", .05)
+maak("papier-vezel-zacht", .07)

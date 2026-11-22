@@ -170,7 +170,12 @@
     const getoond = keuzes[huidige] !== undefined;
     $("#vraag-nr").textContent = t("vraagNr", { n: huidige + 1, t: QUIZ.length });
     $("#vraag-tekst").textContent = vt(q.vraag);
-    $("#vraag-hint").textContent = getoond ? "" : t(q.kaart ? "kaartHint" : "meerdereHint");
+    let hint = t(q.kaart ? "kaartHint" : "meerdereHint");
+    if (q.kaart) {
+      const n = q.kaart.pinnen.filter((p) => p.juist).length;
+      hint += " " + (n === 1 ? t("kaartAantal1") : t("kaartAantal", { n }));
+    }
+    $("#vraag-hint").textContent = getoond ? "" : hint;
 
     $("#vraag-zegel").textContent = huidige + 1;
 
@@ -266,12 +271,18 @@
       return;
     }
     beeld.classList.add(["beeld-een", "beeld-duo", "beeld-trio"][Math.min(fotos.length, 3) - 1]);
-    fotos.slice(0, 3).forEach((src) => {
+    // een foto is een pad, of { foto, bijschrift } als er een kort onderschrift onder moet
+    fotos.slice(0, 3).forEach((f) => {
       const fig = document.createElement("figure");
       const img = document.createElement("img");
-      img.src = src;
+      img.src = typeof f === "string" ? f : f.foto;
       img.alt = "";
       fig.append(img);
+      if (f.bijschrift) {
+        const cap = document.createElement("figcaption");
+        cap.textContent = vt(f.bijschrift);
+        fig.append(cap);
+      }
       binnen.append(fig);
     });
   }

@@ -694,6 +694,9 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .35);
 }
 .beeld-duo, .beeld-trio { gap: 8px; }
+/* kort onderschrift onder een foto, in handschrift */
+.vraag-beeld figcaption { margin-top: 4px; font: 400 19px/1.1 var(--hand); color: var(--inkt-zacht); }
+.vraag-beeld figure:has(figcaption) img { max-height: calc(var(--beeld-h) - 26px); }
 .beeld-duo figure { max-width: calc(50% - 4px); }
 .beeld-trio figure { max-width: calc((100% - 16px) / 3); }
 /* op een gsm zijn drie foto's naast elkaar te klein: twee boven, een eronder */
@@ -1046,7 +1049,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   font-family: var(--f-naam);
   font-style: var(--naam-stijl);
   font-weight: var(--naam-gewicht);
-  font-size: calc(clamp(44px, 12vw, 72px) * var(--naam-schaal));
+  font-size: calc(clamp(32px, 8vw, 50px) * var(--naam-schaal));
   line-height: 1.02;
   color: var(--accent);
 }
@@ -1056,12 +1059,13 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .std .krans { margin: 22px auto 18px; }
 .std-datum {
   margin: 0;
-  font: var(--display-gewicht) 26px/1.2 var(--f-display);
-  letter-spacing: .12em;
+  font: 600 clamp(40px, 11vw, 68px)/1.1 var(--f-display);
+  letter-spacing: .06em;
+  color: #063DA2;
 }
 .std-plaats {
-  margin: 10px 0 0;
-  font: 400 var(--label-grootte)/1.4 var(--f-label);
+  margin: 12px 0 0;
+  font: 500 clamp(19px, 4.6vw, 26px)/1.35 var(--f-label);
   font-variant: var(--label-variant);
   text-transform: var(--label-case);
   letter-spacing: var(--label-spatie);

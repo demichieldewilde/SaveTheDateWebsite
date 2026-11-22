@@ -102,12 +102,12 @@ window.QUIZ = [
     juist: 0,
     uitleg: {
       nl: "In augustus 2021 ging Michiel mee op het Bizonkamp Bosuil. Amélie kwam op het einde van dat kamp helpen om het materiaal terug naar ons depot te brengen, oftewel de Kribbe. Buiten \"Hoe was het kamp?\" hebben we niet veel met elkaar gesproken.",
-      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt, alias la Kribbe. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
+      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
       en: "In August 2021, Michiel went along on the Bizon camp Bosuil. At the end of that camp, Amélie came to help bring the gear back to our depot, a.k.a. the Kribbe. Apart from \"How was camp?\", we didn't say much to each other.",
     },
     bravo: {
       nl: "In augustus 2021 ging Michiel mee op het Bizonkamp Bosuil. Amélie kwam op het einde van dat kamp helpen om het materiaal terug naar ons depot te brengen, oftewel de Kribbe. Buiten \"Hoe was het kamp?\" hebben we niet veel met elkaar gesproken.",
-      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt, alias la Kribbe. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
+      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
       en: "In August 2021, Michiel went along on the Bizon camp Bosuil. At the end of that camp, Amélie came to help bring the gear back to our depot, a.k.a. the Kribbe. Apart from \"How was camp?\", we didn't say much to each other.",
     },
   },
@@ -127,13 +127,18 @@ window.QUIZ = [
     juist: 3,
     uitleg: {
       nl: "In de zomer van 2022 werden we last minute door het lot samengebracht om samen kampleiding te zijn van het kamp Roads to Narnia. Tijdens de (heel) korte voorbereiding en het kamp leerden we elkaar echt kennen. Dat jaar waren we al samen met de andere kamp- en hoofdleidingen van Bizon op weekend geweest, maar die kans om elkaar te leren kennen hadden we niet benut. In 2023 besloten we om nog eens samen kampleiding te zijn, voor het kamp Troubles at the North Pole.",
-      fr: "À l'été 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
+      fr: "En juillet 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
       en: "In the summer of 2022, fate brought us together at the last minute to lead the Roads to Narnia camp together. During the (very) short preparation and the camp itself, we really got to know each other. That year we had already been on a weekend away with Bizon's other camp and head leaders, but we hadn't used that chance to get to know each other. In 2023 we decided to lead a camp together once more: Troubles at the North Pole.",
     },
     bravo: {
       nl: "In de zomer van 2022 werden we last minute door het lot samengebracht om samen kampleiding te zijn van het kamp Roads to Narnia. Tijdens de (heel) korte voorbereiding en het kamp leerden we elkaar echt kennen. Dat jaar waren we al samen met de andere kamp- en hoofdleidingen van Bizon op weekend geweest, maar die kans om elkaar te leren kennen hadden we niet benut. In 2023 besloten we om nog eens samen kampleiding te zijn, voor het kamp Troubles at the North Pole.",
-      fr: "À l'été 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
+      fr: "En juillet 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
       en: "In the summer of 2022, fate brought us together at the last minute to lead the Roads to Narnia camp together. During the (very) short preparation and the camp itself, we really got to know each other. That year we had already been on a weekend away with Bizon's other camp and head leaders, but we hadn't used that chance to get to know each other. In 2023 we decided to lead a camp together once more: Troubles at the North Pole.",
+    },
+    fotoNa: {
+      foto: "fotos/khl-weekend-strand.jpg",
+      alt: { nl: "Groepsfoto op het strand tijdens het KHL-weekend", fr: "Photo de groupe sur la plage pendant le week-end KHL", en: "Group photo on the beach during the KHL weekend" },
+      bijschrift: { nl: "(KHL-weekend 2022)", fr: "(week-end KHL 2022)", en: "(KHL weekend 2022)" },
     },
   },
   {
@@ -441,9 +446,9 @@ window.QUIZ = [
   },
   {
     vraag: {
-      nl: "Wat is onze gemeenschappelijke hobby?",
-      fr: "Quel est notre hobby commun ?",
-      en: "What hobby do we share?",
+      nl: "Wat zijn onze gemeenschappelijke hobby's?",
+      fr: "Quels sont nos hobbys communs ?",
+      en: "What hobbies do we share?",
     },
     fotos: ["fotos/romeinen-lauwerkrans.jpg"],
     antwoorden: [
@@ -455,14 +460,9 @@ window.QUIZ = [
     // drie juiste antwoorden: alles behalve de Romeinen
     juist: [0, 2, 3],
     uitleg: {
-      nl: "Improvisatietheater, koken en onnozel doen op kamp om de wereld te verbeteren voor kinderen in maatschappelijk kwetsbare situaties.",
-      fr: "Le théâtre d'improvisation, la cuisine et faire les fous en camp pour rendre le monde meilleur pour des enfants en situation de vulnérabilité sociale.",
-      en: "Improv theatre, cooking, and being silly at camp to make the world better for children in socially vulnerable situations.",
-    },
-    bravo: {
-      nl: "Improvisatietheater, koken én onnozel doen op kamp om de wereld te verbeteren voor kinderen in maatschappelijk kwetsbare situaties.",
-      fr: "Le théâtre d'improvisation, la cuisine et faire les fous en camp pour rendre le monde meilleur pour des enfants en situation de vulnérabilité sociale.",
-      en: "Improv theatre, cooking, and being silly at camp to make the world better for children in socially vulnerable situations.",
+      nl: "We hebben allebei in een bepaalde periode van ons leven improvisatietheater gespeeld en gaan er ook graag naar kijken. We koken en bakken heel graag. En een groot deel van ons leven bestaat erin het beste van onszelf te geven om kinderen en jongeren uit een maatschappelijk kwetsbare situatie de tijd van hun leven te geven.",
+      fr: "Nous avons tous les deux fait du théâtre d'improvisation à un moment de notre vie, et nous aimons aussi aller en voir. Nous adorons cuisiner et faire de la pâtisserie. Et une grande partie de notre vie consiste à donner le meilleur de nous-mêmes pour offrir à des enfants et des jeunes en situation de vulnérabilité sociale les plus beaux moments de leur vie.",
+      en: "We've both done improv theatre at some point in our lives, and we love going to watch it too. We love cooking and baking. And a big part of our lives is giving the best of ourselves so that children and young people from socially vulnerable situations can have the time of their lives.",
     },
   },
   {
@@ -478,9 +478,9 @@ window.QUIZ = [
           naam: { nl: "Duitsland", fr: "Allemagne", en: "Germany" },
           lat: 51.1, lon: 10.4, juist: true,
           tekst: {
-            nl: "Hier begon onze trektocht, in september 2023.",
-            fr: "C'est ici qu'a commencé notre trek, en septembre 2023.",
-            en: "This is where our trek began, in September 2023.",
+            nl: "We trokken naar het noorden van Duitsland tijdens onze trektocht in 2023.",
+            fr: "Nous avons traversé l'Allemagne vers le nord pendant notre trek de 2023.",
+            en: "We headed to the north of Germany during our 2023 trek.",
           },
           fotos: ["fotos/tandem-fiets.jpg", "fotos/pasta-eten.jpg", "fotos/wandelen-dijk-silo.jpg"],
         },
@@ -488,9 +488,9 @@ window.QUIZ = [
           naam: { nl: "Denemarken", fr: "Danemark", en: "Denmark" },
           lat: 55.68, lon: 12.57, juist: true,
           tekst: {
-            nl: "Hier waren we samen in 2023, op het einde van onze trektocht.",
-            fr: "Nous étions ici ensemble en 2023, à la fin de notre trek.",
-            en: "We were here together in 2023, at the end of our trek.",
+            nl: "Hier hielden we een korte stop in Kopenhagen tijdens onze trektocht van 2023.",
+            fr: "Nous avons fait une courte halte à Copenhague pendant notre trek de 2023.",
+            en: "We made a short stop in Copenhagen during our 2023 trek.",
           },
           fotos: ["fotos/kopenhagen-nyhavn.jpg", "fotos/schilderij-nyhavn.jpg"],
         },
@@ -509,7 +509,7 @@ window.QUIZ = [
             en: "This is where we live now, in Vienna.",
           },
           fotos: [
-            "fotos/fietsen-langs-rivier.jpg", "fotos/fietsen-kerncentrale.jpg", "fotos/fietshelm-achtung-kinder.jpg",
+            "fotos/fietsen-langs-rivier.jpg", "fotos/fietsen-kerncentrale.jpg", "fotos/fietshelm-achtung-kinder.jpg", "fotos/video-fietsen-oostenrijk.mp4",
             "fotos/skipiste-zonsondergang.jpg", "fotos/zelfgebakken-taart.jpg", "fotos/spiegelselfie-zuilen.jpg",
           ],
         },
@@ -517,9 +517,9 @@ window.QUIZ = [
           naam: { nl: "Frankrijk", fr: "France", en: "France" },
           lat: 46.6, lon: 2.4, juist: true,
           tekst: {
-            nl: "Hier komen we om familie te bezoeken en te genieten van het leven.",
-            fr: "Nous y venons pour rendre visite à la famille et profiter de la vie.",
-            en: "We come here to visit family and enjoy life.",
+            nl: "In Frankrijk komen we familie bezoeken en skiën.",
+            fr: "En France, nous rendons visite à la famille et nous allons skier.",
+            en: "In France we visit family and go skiing.",
           },
           fotos: ["fotos/sete-letters.jpg", "fotos/ontbijt-berghut.jpg", "fotos/strand-selfie-pet.jpg"],
         },
@@ -547,9 +547,9 @@ window.QUIZ = [
           naam: { nl: "Nederland", fr: "Pays-Bas", en: "Netherlands" },
           lat: 52.4, lon: 5.6, juist: true,
           tekst: {
-            nl: "Hier komen we graag zeilen.",
-            fr: "Nous aimons y venir faire de la voile.",
-            en: "We love coming here to sail.",
+            nl: "Hier komen we graag zeilen op het Veerse Meer.",
+            fr: "Nous aimons venir faire de la voile sur le lac de Veere.",
+            en: "We love coming here to sail on the Veerse Meer.",
           },
           fotos: ["fotos/zeilboot-mast-hond.jpg", "fotos/zeilen-op-het-meer.jpg", "fotos/video-zeilboot-meer.mp4"],
         },
@@ -572,7 +572,11 @@ window.QUIZ = [
         {
           naam: { nl: "Zwitserland", fr: "Suisse", en: "Switzerland" },
           lat: 46.5, lon: 7.4, juist: true,
-          tekst: { nl: "Hier begon alles.", fr: "C'est ici que tout a commencé.", en: "This is where it all began." },
+          tekst: {
+            nl: "Hier begon alles, en in de zomer van 2026 gingen we er ook nog Simon bezoeken.",
+            fr: "C'est ici que tout a commencé, et à l'été 2026 nous sommes aussi allés y rendre visite à Simon.",
+            en: "This is where it all began, and in the summer of 2026 we also went to visit Simon here.",
+          },
           fotos: [
             "fotos/geneve-kathedraal-regen-pruillip.jpg",
             "fotos/geneve-kathedraal-regen-close-up.jpg",

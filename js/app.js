@@ -485,13 +485,19 @@
     if (animeer) setTimeout(() => fb.scrollIntoView({ behavior: "smooth", block: "nearest" }), 60);
   }
 
-  // een foto of een filmpje (.mp4); filmpjes spelen stil en in een lus, met knoppen om het geluid aan te zetten
+  // een foto of een filmpje (.mp4); filmpjes spelen meteen af met geluid (filmpjes zonder geluidsspoor blijven stil),
+  // en enkel als de browser dat weigert, starten ze zonder geluid
   function maakMedia(src, alt = "") {
     if (!/\.mp4$/i.test(src)) return Object.assign(document.createElement("img"), { src, alt, loading: "lazy" });
     const video = Object.assign(document.createElement("video"), {
-      src, muted: true, autoplay: true, loop: true, playsInline: true, controls: true, preload: "metadata",
+      src, loop: true, playsInline: true, controls: true, preload: "auto",
     });
-    video.setAttribute("muted", "");
+    video.addEventListener("canplay", () => {
+      video.play().catch(() => {
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    }, { once: true });
     return video;
   }
 

@@ -814,16 +814,19 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   }
   #quiz.actief { padding-top: 68px; }
   /* de antwoorden liggen links en rechts van de envelop */
+  /* de antwoorden staan samen bovenaan, naast de vraag; de laatste rij vangt de rest van de envelop op */
   .podium {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
+    grid-template-rows: repeat(var(--rijen, 1), auto) 1fr;
+    align-items: start;
     column-gap: 40px;
     row-gap: 18px;
     max-width: 1440px;
     margin: 0 auto;
   }
-  .podium .scene { grid-column: 2; grid-row: 1 / span var(--rijen, 1); }
+  .podium .scene { grid-column: 2; grid-row: 1 / -1; }
+  .podium .antwoord:nth-child(-n + 2) { margin-top: 64px; }
   .podium .antwoorden { display: contents; }
   .podium .antwoord { width: auto; }
   .podium .antwoord:nth-child(odd) { grid-column: 1; justify-self: end; }
@@ -840,16 +843,18 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .kaart-plek { height: 58svh; min-height: 320px; }
 .pin-info { margin: 0; }
 .is-kaartvraag .schacht { transition: width .9s cubic-bezier(.3, .7, .2, 1); }
-.uitgevouwen .schacht { width: min(1160px, calc(100vw - 16px)); overflow: visible; }
+.uitgevouwen .schacht { width: min(1160px, calc(100vw - 16px)); overflow: visible; margin-bottom: 0; }
+.is-kaartvraag .kaart-gekozen { margin-top: 18px; text-align: center; }
 .uitgevouwen .brief { padding-bottom: 24px; transition: padding .6s ease; }
-.uitgevouwen .kaart-rij { max-height: 200svh; margin-top: 10px; opacity: 1; }
+.uitgevouwen .kaart-rij { max-height: 600svh; margin-top: 10px; opacity: 1; }
 .uitgevouwen .envelop { height: 0; opacity: 0; transform: translateY(60px); pointer-events: none; }
 /* het verborgen zegel mag geen pins op de kaart afschermen */
 .uitgevouwen .zegel { opacity: 0; visibility: hidden; pointer-events: none; }
 @media (min-width: 900px) {
   .kaart-rij { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
   .kaart-plek { height: 64svh; }
-  .kaart-rij .pin-info { max-height: 64svh; overflow-y: auto; padding-top: 0; border-top: 0; }
+  /* geen apart scrollvak: het papier wordt gewoon langer */
+  .kaart-rij .pin-info { padding-top: 0; border-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -963,13 +968,13 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .pin-info h3 { margin: 0 0 4px; font: var(--display-gewicht) 24px/1.2 var(--f-display); color: var(--accent); }
 .pin-info p { margin: 0; }
 .pin-hint { font-style: italic; color: var(--inkt-zacht); }
+/* foto's en filmpjes netjes in kolommen onder elkaar, zonder gaten */
 .pin-fotos {
-  display: grid;
-  grid-template-columns: repeat(var(--kolommen, 2), minmax(0, 1fr));
-  align-items: start;
-  gap: 10px;
+  columns: var(--kolommen, 2);
+  column-gap: 10px;
   margin-top: 14px;
 }
+.pin-fotos > * { display: block; margin: 0 0 10px; break-inside: avoid; }
 .pin-fotos img,
 .pin-fotos video {
   width: 100%;

@@ -129,7 +129,6 @@
 
   /* ---------- quiz ---------- */
 
-  const LETTERS = "ABCDEFGHIJ";
   let selectie = new Set();   // aangeduide antwoorden bij de huidige vraag, nog niet getoond
   let kaart = null;           // Leaflet-kaart bij een kaartvraag
   let pinnen = [];            // markers op die kaart
@@ -199,10 +198,6 @@
         knop.style.setProperty("--i", i);
         knop.style.setProperty("--draai", `${[-2.2, 1.8, 1.2, -1.6, -0.8, 2.4, 1.5, -1.9][i % 8]}deg`);
         knop.insertAdjacentHTML("beforeend", window.Botanisch.tekenbloem(huidige * 3 + i));
-        const letter = document.createElement("span");
-        letter.className = "letter";
-        letter.textContent = LETTERS[i];
-        knop.append(letter);
         if (a.foto) {
           const img = document.createElement("img");
           img.src = a.foto;
@@ -467,7 +462,7 @@
     $("#feedback-titel").textContent = !goed && juist.length > 1
       ? t("deelsJuist", { g: gevonden, t: juist.length })
       : t(goed ? "juist" : "fout")[titels[huidige] || 0];
-    $("#feedback-tekst").textContent = goed ? vt(q.bravo) : vt(q.uitleg);
+    $("#feedback-tekst").textContent = goed ? vt(q.bravo || q.uitleg) : vt(q.uitleg);
 
     // foto of kaartje dat pas na het antwoorden verschijnt
     const fbFoto = $("#feedback-foto");

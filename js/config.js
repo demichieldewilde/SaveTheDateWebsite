@@ -100,14 +100,14 @@ window.QUIZ = [
     ],
     juist: 0,
     uitleg: {
-      nl: "Op Bosuil in 2021: tijdens het Bizon-kamp Bosuil kwam Amélie op het einde van het kamp helpen om het kampmateriaal terug naar ons depot te brengen, oftewel de Kribbe (eind-SBT).",
-      fr: "À Bosuil en 2021 : à la fin du camp Bizon Bosuil, Amélie est venue aider à ramener le matériel du camp à notre dépôt, alias la Kribbe (la SBT de fin de camp).",
-      en: "At Bosuil in 2021: at the end of the Bizon camp Bosuil, Amélie came to help bring the camp gear back to our depot, a.k.a. the Kribbe (the end-of-camp SBT).",
+      nl: "In augustus 2021 ging Michiel mee op het Bizonkamp Bosuil. Amélie kwam op het einde van dat kamp helpen om het materiaal terug naar ons depot te brengen, oftewel de Kribbe. Buiten \"Hoe was het kamp?\" hebben we niet veel met elkaar gesproken.",
+      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt, alias la Kribbe. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
+      en: "In August 2021, Michiel went along on the Bizon camp Bosuil. At the end of that camp, Amélie came to help bring the gear back to our depot, a.k.a. the Kribbe. Apart from \"How was camp?\", we didn't say much to each other.",
     },
     bravo: {
-      nl: "Tijdens het Bizon-kamp Bosuil 2021 kwam Amélie op het einde van het kamp helpen om het kampmateriaal terug naar ons depot te brengen, oftewel de Kribbe (eind-SBT).",
-      fr: "À la fin du camp Bizon Bosuil 2021, Amélie est venue aider à ramener le matériel du camp à notre dépôt, alias la Kribbe (la SBT de fin de camp).",
-      en: "At the end of the Bizon camp Bosuil 2021, Amélie came to help bring the camp gear back to our depot, a.k.a. the Kribbe (the end-of-camp SBT).",
+      nl: "In augustus 2021 ging Michiel mee op het Bizonkamp Bosuil. Amélie kwam op het einde van dat kamp helpen om het materiaal terug naar ons depot te brengen, oftewel de Kribbe. Buiten \"Hoe was het kamp?\" hebben we niet veel met elkaar gesproken.",
+      fr: "En août 2021, Michiel est parti au camp Bizon Bosuil. À la fin de ce camp, Amélie est venue aider à ramener le matériel à notre dépôt, alias la Kribbe. À part « C'était comment, le camp ? », on ne s'est pas dit grand-chose.",
+      en: "In August 2021, Michiel went along on the Bizon camp Bosuil. At the end of that camp, Amélie came to help bring the gear back to our depot, a.k.a. the Kribbe. Apart from \"How was camp?\", we didn't say much to each other.",
     },
   },
   {
@@ -125,14 +125,14 @@ window.QUIZ = [
     ],
     juist: 3,
     uitleg: {
-      nl: "Op Roads to Narnia in 2022, waar we samen kampleiding waren. Op het KHL-weekend hebben we niet echt met elkaar gepraat, en Troubles at the North Pole ging pas in 2023 door: het tweede kamp waarvan we samen kampleiding waren.",
-      fr: "À Roads to Narnia en 2022, où nous étions ensemble responsables du camp. Au week-end KHL, nous ne nous sommes pas vraiment parlé, et Troubles at the North Pole n'a eu lieu qu'en 2023 : le deuxième camp dont nous étions ensemble responsables.",
-      en: "At Roads to Narnia in 2022, where we were camp leaders together. At the KHL weekend we didn't really talk to each other, and Troubles at the North Pole only took place in 2023: the second camp we led together.",
+      nl: "In de zomer van 2022 werden we last minute door het lot samengebracht om samen kampleiding te zijn van het kamp Roads to Narnia. Tijdens de (heel) korte voorbereiding en het kamp leerden we elkaar echt kennen. Dat jaar waren we al samen met de andere kamp- en hoofdleidingen van Bizon op weekend geweest, maar die kans om elkaar te leren kennen hadden we niet benut. In 2023 besloten we om nog eens samen kampleiding te zijn, voor het kamp Troubles at the North Pole.",
+      fr: "À l'été 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
+      en: "In the summer of 2022, fate brought us together at the last minute to lead the Roads to Narnia camp together. During the (very) short preparation and the camp itself, we really got to know each other. That year we had already been on a weekend away with Bizon's other camp and head leaders, but we hadn't used that chance to get to know each other. In 2023 we decided to lead a camp together once more: Troubles at the North Pole.",
     },
     bravo: {
-      nl: "Op Roads to Narnia, waar we samen kampleiding waren. Op het KHL-weekend hebben we niet echt met elkaar gepraat, en Troubles at the North Pole ging pas in 2023 door: het tweede kamp waarvan we samen kampleiding waren.",
-      fr: "À Roads to Narnia, où nous étions ensemble responsables du camp. Au week-end KHL, nous ne nous sommes pas vraiment parlé, et Troubles at the North Pole n'a eu lieu qu'en 2023 : le deuxième camp dont nous étions ensemble responsables.",
-      en: "At Roads to Narnia, where we were camp leaders together. At the KHL weekend we didn't really talk to each other, and Troubles at the North Pole only took place in 2023: the second camp we led together.",
+      nl: "In de zomer van 2022 werden we last minute door het lot samengebracht om samen kampleiding te zijn van het kamp Roads to Narnia. Tijdens de (heel) korte voorbereiding en het kamp leerden we elkaar echt kennen. Dat jaar waren we al samen met de andere kamp- en hoofdleidingen van Bizon op weekend geweest, maar die kans om elkaar te leren kennen hadden we niet benut. In 2023 besloten we om nog eens samen kampleiding te zijn, voor het kamp Troubles at the North Pole.",
+      fr: "À l'été 2022, le hasard nous a réunis à la dernière minute pour diriger ensemble le camp Roads to Narnia. Pendant la (très) courte préparation et le camp, nous avons vraiment appris à nous connaître. Cette année-là, nous étions déjà partis en week-end avec les autres responsables de camp et chefs de Bizon, mais nous n'avions pas saisi l'occasion de faire connaissance. En 2023, nous avons décidé de diriger à nouveau un camp ensemble : Troubles at the North Pole.",
+      en: "In the summer of 2022, fate brought us together at the last minute to lead the Roads to Narnia camp together. During the (very) short preparation and the camp itself, we really got to know each other. That year we had already been on a weekend away with Bizon's other camp and head leaders, but we hadn't used that chance to get to know each other. In 2023 we decided to lead a camp together once more: Troubles at the North Pole.",
     },
   },
   {
@@ -154,14 +154,14 @@ window.QUIZ = [
     // twee juiste antwoorden: Genève (figuurlijk) en Lac du Salagou (letterlijk)
     juist: [0, 4],
     uitleg: {
-      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
-      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
-      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
+      nl: "Tijdens onze reis naar de Hérault in Frankrijk (2024) lag er in het Lac du Salagou een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte. Figuurlijk begon ons verhaal al in 2022, in Genève.",
+      fr: "Pendant notre voyage dans l'Hérault (2024), un vieil hameçon traînait dans le lac du Salagou et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau. Au sens figuré, notre histoire avait déjà commencé en 2022, à Genève.",
+      en: "During our trip to the Hérault in France (2024), an old fishing hook in the Lac du Salagou got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight. Figuratively, our story had already begun in 2022, in Geneva.",
     },
     bravo: {
-      nl: "Figuurlijk in Genève, en letterlijk aan het Lac du Salagou: in het meer lag een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte.",
-      fr: "Au sens figuré à Genève, et au sens propre au lac du Salagou : un vieil hameçon traînait dans le lac et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau.",
-      en: "Figuratively in Geneva, and literally at the Lac du Salagou: an old fishing hook in the lake got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight.",
+      nl: "Tijdens onze reis naar de Hérault in Frankrijk (2024) lag er in het Lac du Salagou een oude vishaak die zich vastzette in Amélies waterschoen, waarmee ze tijdens een watergevecht per ongeluk tegen Michiel trapte. Figuurlijk begon ons verhaal al in 2022, in Genève.",
+      fr: "Pendant notre voyage dans l'Hérault (2024), un vieil hameçon traînait dans le lac du Salagou et s'est accroché à la chaussure aquatique d'Amélie, avec laquelle elle a donné par accident un coup de pied à Michiel pendant une bataille d'eau. Au sens figuré, notre histoire avait déjà commencé en 2022, à Genève.",
+      en: "During our trip to the Hérault in France (2024), an old fishing hook in the Lac du Salagou got stuck in Amélie's water shoe, which she then accidentally kicked Michiel with during a water fight. Figuratively, our story had already begun in 2022, in Geneva.",
     },
   },
   {
@@ -174,26 +174,26 @@ window.QUIZ = [
     antwoorden: [
       { nl: "Michiel wou de LHC bezoeken", fr: "Michiel voulait visiter le LHC", en: "Michiel wanted to visit the LHC" },
       { nl: "Amélie was er op Erasmus", fr: "Amélie y était en Erasmus", en: "Amélie was there on Erasmus" },
-      { nl: "Zwitserland is een leuke eerste date", fr: "La Suisse, c'est un chouette premier rendez-vous", en: "Switzerland makes a nice first date" },
+      { nl: "Michiel wou er Ovomaltine-chocolade halen", fr: "Michiel voulait y acheter du chocolat Ovomaltine", en: "Michiel wanted to buy Ovomaltine chocolate there" },
       { nl: "Amélie wou de kerstmarkt daar bezoeken", fr: "Amélie voulait visiter le marché de Noël là-bas", en: "Amélie wanted to visit the Christmas market there" },
     ],
-    juist: [1, 2],
+    juist: 1,
     uitleg: {
-      nl: "Amélie zat in Genève op Erasmus, en Zwitserland is nu eenmaal een leuke eerste date.",
-      fr: "Amélie était en Erasmus à Genève, et la Suisse, c'est tout simplement un chouette premier rendez-vous.",
-      en: "Amélie was on Erasmus in Geneva, and Switzerland simply makes a nice first date.",
+      nl: "Amélie zat in Genève op Erasmus.",
+      fr: "Amélie était en Erasmus à Genève.",
+      en: "Amélie was on Erasmus in Geneva.",
     },
     bravo: {
-      nl: "Amélie zat in Genève op Erasmus, en Zwitserland is nu eenmaal een leuke eerste date.",
-      fr: "Amélie était en Erasmus à Genève, et la Suisse, c'est tout simplement un chouette premier rendez-vous.",
-      en: "Amélie was on Erasmus in Geneva, and Switzerland simply makes a nice first date.",
+      nl: "Amélie zat in Genève op Erasmus.",
+      fr: "Amélie était en Erasmus à Genève.",
+      en: "Amélie was on Erasmus in Geneva.",
     },
   },
   {
     vraag: {
-      nl: "Amélies familie komt gedeeltelijk uit Bretagne, waar het traditie is om Bretoense galettes te eten. Waar at Michiel zijn allereerste Bretoense galette, in een Asterix-restaurant?",
-      fr: "La famille d'Amélie vient en partie de Bretagne, où la tradition est de manger des galettes bretonnes. Où Michiel a-t-il mangé sa toute première galette bretonne, dans un restaurant Astérix ?",
-      en: "Part of Amélie's family comes from Brittany, where eating Breton galettes is a tradition. Where did Michiel eat his very first Breton galette, in an Asterix restaurant?",
+      nl: "Amélies familie komt gedeeltelijk uit Bretagne, waar het traditie is om Bretoense galettes te eten. Waar at Michiel zijn allereerste Bretoense galette?",
+      fr: "La famille d'Amélie vient en partie de Bretagne, où la tradition est de manger des galettes bretonnes. Où Michiel a-t-il mangé sa toute première galette bretonne ?",
+      en: "Part of Amélie's family comes from Brittany, where eating Breton galettes is a tradition. Where did Michiel eat his very first Breton galette?",
     },
     fotos: ["fotos/galettes-eten.jpg", "fotos/bord-la-galette.jpg"],
     antwoorden: [
@@ -206,14 +206,14 @@ window.QUIZ = [
     ],
     juist: 4,
     uitleg: {
-      nl: "Niet in Bretagne, maar in Kopenhagen, onder het waakzame oog van Asterix.",
-      fr: "Pas en Bretagne, mais à Copenhague, sous l'œil vigilant d'Astérix.",
-      en: "Not in Brittany, but in Copenhagen, under the watchful eye of Asterix.",
+      nl: "Tijdens onze trektocht door Duitsland en Denemarken in 2023 kwamen we bij onze stop in Kopenhagen een crêperie in Asterix-thema tegen. Die kans konden we niet laten liggen om Michiel kennis te laten maken met hartige pannenkoeken.",
+      fr: "Pendant notre trek à travers l'Allemagne et le Danemark en 2023, nous sommes tombés, lors de notre étape à Copenhague, sur une crêperie sur le thème d'Astérix. Impossible de laisser passer l'occasion de faire découvrir les crêpes salées à Michiel.",
+      en: "During our trek through Germany and Denmark in 2023, we came across an Asterix-themed crêperie during our stop in Copenhagen. We couldn't pass up the chance to introduce Michiel to savoury pancakes.",
     },
     bravo: {
-      nl: "Inderdaad: niet in Bretagne, maar in Kopenhagen.",
-      fr: "En effet : pas en Bretagne, mais à Copenhague.",
-      en: "Indeed: not in Brittany, but in Copenhagen.",
+      nl: "Tijdens onze trektocht door Duitsland en Denemarken in 2023 kwamen we bij onze stop in Kopenhagen een crêperie in Asterix-thema tegen. Die kans konden we niet laten liggen om Michiel kennis te laten maken met hartige pannenkoeken.",
+      fr: "Pendant notre trek à travers l'Allemagne et le Danemark en 2023, nous sommes tombés, lors de notre étape à Copenhague, sur une crêperie sur le thème d'Astérix. Impossible de laisser passer l'occasion de faire découvrir les crêpes salées à Michiel.",
+      en: "During our trek through Germany and Denmark in 2023, we came across an Asterix-themed crêperie during our stop in Copenhagen. We couldn't pass up the chance to introduce Michiel to savoury pancakes.",
     },
   },
   {
@@ -290,14 +290,14 @@ window.QUIZ = [
     ],
     juist: 0,
     uitleg: {
-      nl: "Amélie werkt nu bij Decathlon, de winkel waar ze altijd haar beste snufjes vond.",
-      fr: "Amélie travaille maintenant chez Decathlon, le magasin où elle dénichait toujours ses meilleures trouvailles.",
-      en: "Amélie now works at Decathlon, the shop where she always found her best gadgets.",
+      nl: "Amélie werkt sinds oktober 2026 bij Decathlon Floridsdorf, waar ze elke dag haar beste Duits bovenhaalt 😉",
+      fr: "Depuis octobre 2026, Amélie travaille chez Decathlon Floridsdorf, où elle sort chaque jour son meilleur allemand 😉",
+      en: "Since October 2026, Amélie has been working at Decathlon Floridsdorf, where she gets out her best German every day 😉",
     },
     bravo: {
-      nl: "Bij Decathlon, waar ze altijd haar beste snufjes vond.",
-      fr: "Chez Decathlon, où elle dénichait toujours ses meilleures trouvailles.",
-      en: "At Decathlon, where she always found her best gadgets.",
+      nl: "Amélie werkt sinds oktober 2026 bij Decathlon Floridsdorf, waar ze elke dag haar beste Duits bovenhaalt 😉",
+      fr: "Depuis octobre 2026, Amélie travaille chez Decathlon Floridsdorf, où elle sort chaque jour son meilleur allemand 😉",
+      en: "Since October 2026, Amélie has been working at Decathlon Floridsdorf, where she gets out her best German every day 😉",
     },
   },
   {
@@ -315,9 +315,9 @@ window.QUIZ = [
     ],
     juist: 1,
     uitleg: {
-      nl: "Jolien, Simon, Corentin en Marine.",
-      fr: "Jolien, Simon, Corentin et Marine.",
-      en: "Jolien, Simon, Corentin and Marine.",
+      nl: "Jolien en Simon zijn de zus en broer van Michiel, Corentin en Marine de broer en zus van Amélie.",
+      fr: "Jolien et Simon sont la sœur et le frère de Michiel, Corentin et Marine le frère et la sœur d'Amélie.",
+      en: "Jolien and Simon are Michiel's sister and brother, Corentin and Marine are Amélie's brother and sister.",
     },
   },
   {
@@ -330,9 +330,9 @@ window.QUIZ = [
     antwoorden: [{ nl: "4" }, { nl: "8" }, { nl: "12" }, { nl: "16" }, { nl: "20" }],
     juist: 2,
     uitleg: {
-      nl: "Michiel heeft 12 neven en nichten.",
-      fr: "Michiel a 12 cousins et cousines.",
-      en: "Michiel has 12 cousins.",
+      nl: "Michiel heeft langs beide kanten 6 neven en nichten, samen dus 12.",
+      fr: "Michiel a 6 cousins et cousines de chaque côté, donc 12 en tout.",
+      en: "Michiel has 6 cousins on each side, so 12 in total.",
     },
   },
   {
@@ -345,9 +345,9 @@ window.QUIZ = [
     antwoorden: [{ nl: "2" }, { nl: "4" }, { nl: "6" }, { nl: "8" }, { nl: "10" }],
     juist: 2,
     uitleg: {
-      nl: "Amélie heeft 6 neven en nichten.",
-      fr: "Amélie a 6 cousins et cousines.",
-      en: "Amélie has 6 cousins.",
+      nl: "Amélie heeft 6 neven en nichten. Ze heeft 2 nichten langs papa's kant en 6 neven en nichten langs mama's kant. (Ja hoor, je berekening klopt. Maar hoe kan het dan dat het juiste antwoord toch 6 is?)",
+      fr: "Amélie a 6 cousins et cousines. Elle a 2 cousines du côté de son papa et 6 cousins et cousines du côté de sa maman. (Oui, oui, ton calcul est juste. Mais alors, comment se fait-il que la bonne réponse soit quand même 6 ?)",
+      en: "Amélie has 6 cousins. She has 2 cousins on her dad's side and 6 cousins on her mum's side. (Yes, your maths is right. So how can the right answer still be 6?)",
     },
   },
   {
@@ -378,16 +378,16 @@ window.QUIZ = [
     },
     fotos: ["fotos/sporthal-medaille.jpg", "fotos/klimgordels.jpg"],
     antwoorden: [
-      { nl: "Kring, OD en Pagadderke", fr: "Kring, OD et Pagadderke", en: "Kring, OD and Pagadderke" },
-      { nl: "Bizon, Théâtre Universitaire de Louvain en IncluKap", fr: "Bizon, Théâtre Universitaire de Louvain et IncluKap", en: "Bizon, Théâtre Universitaire de Louvain and IncluKap" },
+      { nl: "Kringwerking Tegenstroom, Ontmoetingsdagen en Pagadderke", fr: "Kringwerking Tegenstroom, Ontmoetingsdagen et Pagadderke", en: "Kringwerking Tegenstroom, Ontmoetingsdagen and Pagadderke" },
+      { nl: "Bizon vzw, Théâtre Universitaire de Louvain en IncluKap", fr: "Bizon vzw, Théâtre Universitaire de Louvain et IncluKap", en: "Bizon vzw, Théâtre Universitaire de Louvain and IncluKap" },
       { nl: "Chiro, Rode Kruis en IncluKap", fr: "Chiro, Croix-Rouge et IncluKap", en: "Chiro, Red Cross and IncluKap" },
       { nl: "Scouts, Théâtre Universitaire de Louvain en Oxfam", fr: "Scouts, Théâtre Universitaire de Louvain et Oxfam", en: "Scouts, Théâtre Universitaire de Louvain and Oxfam" },
     ],
     juist: 1,
     uitleg: {
-      nl: "Bizon, Théâtre Universitaire de Louvain en IncluKap.",
-      fr: "Bizon, le Théâtre Universitaire de Louvain et IncluKap.",
-      en: "Bizon, Théâtre Universitaire de Louvain and IncluKap.",
+      nl: "Amélie is sinds 2016 actief bij Bizon vzw. Doorheen de jaren heeft ze daar verschillende functies en taken opgenomen: ze begon als animator en werd nadien hoofdanimator, schreef mee aan de beleidsnota, organiseerde ontmoetingen, was bestuurder en lid van de Algemene Vergadering, en volgde de communicatie en de vormgeving op. Tijdens haar master in Louvain-la-Neuve was ze ook lid van kotprojecten zoals het Théâtre Universitaire de Louvain, waar ze een theaterfestival en andere evenementen rond amateurtheater organiseerde. Haar laatste semester engageerde ze zich bij IncluKap, dat activiteiten organiseert om studenten en mensen met een mentale beperking samen te brengen en sport mogelijk te maken voor studenten met een fysieke beperking.",
+      fr: "Amélie est active chez Bizon vzw depuis 2016. Au fil des ans, elle y a assumé différentes fonctions et tâches : elle a commencé comme animatrice, puis est devenue animatrice principale, a participé à la rédaction de la note de politique, organisé des rencontres, été administratrice et membre de l'Assemblée générale, et suivi la communication et la mise en page. Pendant son master à Louvain-la-Neuve, elle a aussi fait partie de kots-à-projet comme le Théâtre Universitaire de Louvain, où elle a organisé un festival de théâtre et d'autres événements autour du théâtre amateur. Lors de son dernier semestre, elle s'est engagée chez IncluKap, qui organise des activités pour rassembler des étudiants et des personnes ayant une déficience intellectuelle, et pour rendre le sport accessible aux étudiants ayant un handicap physique.",
+      en: "Amélie has been active at Bizon vzw since 2016. Over the years she has taken on many roles there: she started as a youth leader, then became head leader, helped write the policy plan, organised get-togethers, served as a board member and member of the General Assembly, and looked after communication and design. During her master's in Louvain-la-Neuve she was also part of student project houses such as the Théâtre Universitaire de Louvain, where she organised a theatre festival and other amateur theatre events. In her last semester she got involved with IncluKap, which organises activities that bring students together with people with an intellectual disability and makes sport possible for students with a physical disability.",
     },
   },
   {
@@ -398,16 +398,16 @@ window.QUIZ = [
     },
     video: "fotos/video-verkleed-dansje-kamp.mp4",
     antwoorden: [
-      { nl: "Kring, Chiro, Bizon en Scouts", fr: "Kring, Chiro, Bizon et Scouts", en: "Kring, Chiro, Bizon and Scouts" },
-      { nl: "Théâtre Universitaire, OD en IncluKap", fr: "Théâtre Universitaire, OD et IncluKap", en: "Théâtre Universitaire, OD and IncluKap" },
-      { nl: "Kring, OD, Bizon en Pagadderke", fr: "Kring, OD, Bizon et Pagadderke", en: "Kring, OD, Bizon and Pagadderke" },
-      { nl: "Studentenraad, OD, KSA en Pagadderke", fr: "Conseil étudiant, OD, KSA et Pagadderke", en: "Student council, OD, KSA and Pagadderke" },
+      { nl: "Kringwerking Tegenstroom, Chiro, Bizon vzw en Scouts", fr: "Kringwerking Tegenstroom, Chiro, Bizon vzw et Scouts", en: "Kringwerking Tegenstroom, Chiro, Bizon vzw and Scouts" },
+      { nl: "Théâtre Universitaire, Ontmoetingsdagen en IncluKap", fr: "Théâtre Universitaire, Ontmoetingsdagen et IncluKap", en: "Théâtre Universitaire, Ontmoetingsdagen and IncluKap" },
+      { nl: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw en Pagadderke", fr: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw et Pagadderke", en: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw and Pagadderke" },
+      { nl: "Studentenraad, Ontmoetingsdagen, KSA en Pagadderke", fr: "Conseil étudiant, Ontmoetingsdagen, KSA et Pagadderke", en: "Student council, Ontmoetingsdagen, KSA and Pagadderke" },
     ],
     juist: 2,
     uitleg: {
-      nl: "Kring, OD, Bizon en Pagadderke.",
-      fr: "Kring, OD, Bizon et Pagadderke.",
-      en: "Kring, OD, Bizon and Pagadderke.",
+      nl: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw en Pagadderke.",
+      fr: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw et Pagadderke.",
+      en: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw and Pagadderke.",
     },
   },
   {

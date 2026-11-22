@@ -547,12 +547,13 @@ button, input, textarea { font: inherit; color: inherit; }
   place-items: center;
   width: var(--zegel-b);
   height: var(--zegel-b);
-  padding: 0;
   border: 0;
   background: url("../fotos/zegel.svg") center / contain no-repeat;
   color: #5C0A07;
-  font: italic 700 calc(var(--zegel-b) * .23) / 1 "Cormorant Garamond", Georgia, serif;
-  letter-spacing: .02em;
+  font: 700 calc(var(--zegel-b) * .26) / 1 var(--hand);
+  letter-spacing: .01em;
+  /* het handschrift helt over en staat laag: zo komt de inkt in het midden van het zegel */
+  padding: 0 .24em .12em 0;
   text-shadow: 0 1px 0 rgba(255, 150, 125, .6), 0 -1px 1px rgba(40, 0, 0, .7);
   transform: translate(-50%, -50%) rotate(-6deg);
   transition: transform .25s, opacity .6s ease, filter .25s;
@@ -566,7 +567,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   88% { transform: translate(-50%, -50%) rotate(-1deg) scale(1.1); }
   94% { transform: translate(-50%, -50%) rotate(-9deg) scale(1.04); }
 }
-.zegel-klein { --zegel-b: calc(var(--env-b) * .19); font-style: normal; font-size: calc(var(--zegel-b) * .3); }
+.zegel-klein { --zegel-b: calc(var(--env-b) * .19); font-size: calc(var(--zegel-b) * .36); }
 
 /* animaties: envelop komt binnen, daarna schuift de brief eruit */
 /* backwards: na afloop geen transform meer, anders blijft de zwevende knop aan de envelop hangen */
@@ -592,16 +593,20 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   padding: 68px 12px 12px;
   overflow: hidden;
 }
-.intro-scene {
+/* de vraagenvelop is even groot als de startenvelop */
+.intro-scene,
+.vraag-scene {
   --env-b: clamp(300px, min(96vw, (100svh - 128px) / var(--verhouding)), 820px);
   --verhouding: 1.9;
   --brief-b: calc(var(--env-b) * .92);
   --diep: calc(var(--env-b) * .22);
 }
-.uitnodiging { padding: 12px 14px calc(var(--diep) + 8px); }
+.uitnodiging,
+.vraag-brief { padding: 12px 14px calc(var(--diep) + 8px); }
 /* op een liggend scherm: liggende brief met de tekening links en de tekst rechts, zo kan alles groot */
 @media (min-aspect-ratio: 1 / 1) and (min-width: 700px) {
-  .intro-scene { --verhouding: 1.33; --env-h: calc(var(--env-b) * .5); --diep: calc(var(--env-b) * .16); }
+  .intro-scene, .vraag-scene { --verhouding: 1.33; --env-h: calc(var(--env-b) * .5); --diep: calc(var(--env-b) * .3); }
+  .vraag-brief { padding: 14px 8px calc(var(--diep) + 10px); }
   .uitnodiging {
     display: grid;
     grid-template-columns: 50% 1fr;
@@ -657,16 +662,21 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 
 /* ---------- Quiz: vraag in de envelop, antwoorden errond ---------- */
 #quiz.actief { min-height: 100svh; padding: 76px 16px 56px; }
-.vraag-scene { --env-b: min(92vw, 440px); --beeld-h: clamp(170px, 34svh, 300px); }
-.vraag-brief .label { margin: 0; font: 500 20px/1.2 var(--hand); letter-spacing: .02em; text-transform: none; font-variant: normal; color: var(--zegel); }
+.vraag-scene {
+  --beeld-h: clamp(210px, 46svh, 440px);
+  /* de quiz heeft 16px marge aan elke kant: de envelop mag daar niet over */
+  --env-b: clamp(300px, min(100vw - 32px, (100svh - 128px) / var(--verhouding)), 820px);
+}
+.vraag-brief .label { margin: 0; font: 500 20px/1.2 var(--hand); letter-spacing: .02em; text-transform: none; font-variant: normal; color: #063DA2; }
 .vraag {
   margin: 4px 0 12px;
   font: 500 clamp(25px, calc(var(--env-b) * .068), 34px)/1.12 var(--hand);
+  color: #063DA2;
 }
 .vraag:focus { outline: none; }
 
 /* foto's: altijd volledig in beeld, nooit bijgesneden */
-.vraag-beeld { display: flex; align-items: center; justify-content: center; gap: 10px; height: var(--beeld-h); }
+.vraag-beeld { display: flex; align-items: center; justify-content: center; gap: 10px; max-height: var(--beeld-h); }
 .beeld-binnen { display: contents; }
 .vraag-beeld figure { flex: 0 1 auto; min-width: 0; max-height: 100%; margin: 0; }
 .vraag-beeld img,
@@ -680,10 +690,13 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   border-radius: 3px;
   box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .35);
 }
-.beeld-duo figure { max-width: calc(50% - 5px); }
-.beeld-trio figure { max-width: calc((100% - 20px) / 3); }
+.beeld-duo, .beeld-trio { gap: 8px; }
+.beeld-duo figure { max-width: calc(50% - 4px); }
+.beeld-trio figure { max-width: calc((100% - 16px) / 3); }
 .beeld-duo figure:first-child, .beeld-trio figure:first-child { transform: rotate(-1.5deg); }
 .beeld-duo figure:last-child, .beeld-trio figure:last-child { transform: rotate(1.8deg); }
+/* vragen zonder foto: een klein boeketje, de vraag blijft het belangrijkst */
+.vraag-beeld.beeld-illustratie { height: clamp(110px, 18svh, 170px); }
 .beeld-illustratie .bot { width: 100%; height: 100%; }
 .brief .bloei .witbloem .p { stroke: #D8CFA6; stroke-width: .8; }
 .brief .bloei .glas { fill: rgba(143, 166, 204, .12); stroke: #8FA6CC; }
@@ -704,7 +717,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   --vlak: var(--brief-papier);
   background: var(--papier-vezel), var(--papier-korrel), var(--vlak);
   background-blend-mode: soft-light, normal, normal;
-  color: var(--brief-inkt);
+  color: #063DA2;
   text-align: left;
   font: 500 24px/1.1 var(--hand);
   box-shadow: 0 8px 16px -8px rgba(60, 35, 0, .6);
@@ -720,7 +733,6 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 }
 .zonder-animatie .antwoord { animation: none; }
 .antwoord .tekenbloem { flex: none; width: 34px; height: 34px; }
-.antwoord .letter { flex: none; font: 700 .9em var(--hand); color: var(--zegel); }
 .antwoord:hover:not(:disabled) { transform: rotate(0deg) translateY(-3px) scale(1.03); box-shadow: 0 14px 22px -10px rgba(0, 0, 0, .6); }
 .antwoord:disabled { cursor: default; }
 .antwoord[aria-pressed="true"] { --vlak: #DCE6FA; box-shadow: 0 0 0 3px #063DA2, 0 10px 18px -8px rgba(0, 0, 0, .55); }
@@ -764,12 +776,13 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 }
 #toon-antwoord:hover:not(:disabled) { background: #2C54AE; border-color: #2C54AE; }
 #toon-antwoord:disabled { opacity: .45; cursor: default; }
-.uitgevouwen #toon-antwoord { position: static; margin-top: 18px; transform: none; }
-/* op een smal scherm liggen de antwoorden onder de envelop: dan zweeft de knop onderaan */
-@media (max-width: 999px) {
-  #toon-antwoord, .uitgevouwen #toon-antwoord { position: fixed; z-index: 30; bottom: 16px; left: 50%; margin: 0; transform: translateX(-50%); box-shadow: 0 10px 24px -6px rgba(0, 0, 0, .7); }
-  #toon-antwoord:disabled { opacity: 0; pointer-events: none; }
-  #quiz.actief { padding-bottom: 90px; }
+/* de foto's zijn groot, dus de envelop loopt soms onder het scherm door: de knop zweeft altijd onderaan */
+#toon-antwoord, .uitgevouwen #toon-antwoord { position: fixed; z-index: 30; bottom: 16px; left: 50%; margin: 0; transform: translateX(-50%); box-shadow: 0 10px 24px -6px rgba(0, 0, 0, .7); }
+#toon-antwoord:disabled { opacity: 0; pointer-events: none; }
+#quiz.actief { padding-bottom: 90px; }
+/* op een groot scherm rechts onderaan, zodat de knop het zegel niet bedekt */
+@media (min-width: 1000px) {
+  #toon-antwoord, .uitgevouwen #toon-antwoord { left: auto; right: 28px; bottom: 24px; transform: none; }
 }
 .feedback { position: relative; isolation: isolate; margin-top: 26px; padding: 24px 22px; color: var(--brief-inkt); font: 400 23px/1.3 var(--hand); filter: drop-shadow(0 10px 12px rgba(60, 35, 0, .3)); animation: verschijn .5s ease both; }
 .zonder-animatie ~ .feedback { animation: none; }
@@ -783,7 +796,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .feedback-foto figcaption:empty { display: none; }
 
 @media (min-width: 1000px) {
-  .vraag-scene { --env-b: min(38vw, 500px); --beeld-h: clamp(170px, calc(100svh - 610px), 380px); }
+  .vraag-scene { --beeld-h: clamp(260px, calc(100svh - 450px), 580px); }
   #quiz.actief { padding-top: 68px; }
   /* de antwoorden liggen links en rechts van de envelop */
   .podium {

@@ -551,7 +551,7 @@ window.QUIZ = [
             fr: "Nous aimons y venir faire de la voile.",
             en: "We love coming here to sail.",
           },
-          fotos: ["fotos/zeilboot-mast-hond.jpg", "fotos/zeilen-op-het-meer.jpg", "fotos/video-zeilboot-meer.mp4", "fotos/video-zeilen-oever.mp4"],
+          fotos: ["fotos/zeilboot-mast-hond.jpg", "fotos/zeilen-op-het-meer.jpg", "fotos/video-zeilboot-meer.mp4"],
         },
         {
           naam: { nl: "Tsjechië", fr: "Tchéquie", en: "Czechia" },

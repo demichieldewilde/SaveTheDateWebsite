@@ -257,11 +257,7 @@
       });
       fig.append(video);
       binnen.append(fig);
-      // met geluid starten; lukt dat niet (strenge browser), dan zonder geluid
-      video.play().catch(() => {
-        video.muted = true;
-        video.play().catch(() => {});
-      });
+      volgVideo(video);
       return;
     }
     if (!fotos.length) {
@@ -485,6 +481,44 @@
     if (animeer) setTimeout(() => fb.scrollIntoView({ behavior: "smooth", block: "nearest" }), 60);
   }
 
+  /* ---------- filmpjes: enkel spelen (en dus geluid maken) als je ze echt ziet ---------- */
+  const videos = new Set();
+  function speel(video) {
+    // met geluid starten; lukt dat niet (strenge browser), dan zonder geluid
+    video.play().catch(() => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  }
+  const kijker = new IntersectionObserver((items) => {
+    for (const it of items) {
+      if (it.isIntersecting && it.intersectionRatio >= .4 && !document.hidden) speel(it.target);
+      else it.target.pause();
+    }
+  }, { threshold: [0, .4] });
+  function volgVideo(video) {
+    videos.add(video);
+    kijker.observe(video);
+  }
+  // een filmpje dat van de pagina verdwijnt, zwijgt meteen
+  new MutationObserver((wijzigingen) => {
+    for (const w of wijzigingen) for (const n of w.removedNodes) {
+      if (n.nodeType !== 1) continue;
+      for (const v of n.matches("video") ? [n] : n.querySelectorAll("video")) {
+        v.pause();
+        kijker.unobserve(v);
+        videos.delete(v);
+      }
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+  // ander tabblad of app: alles stil; terug: wat zichtbaar is speelt weer
+  document.addEventListener("visibilitychange", () => {
+    for (const v of videos) {
+      if (document.hidden) v.pause();
+      else { kijker.unobserve(v); kijker.observe(v); }
+    }
+  });
+
   // een foto of een filmpje (.mp4); filmpjes spelen meteen af met geluid (filmpjes zonder geluidsspoor blijven stil),
   // en enkel als de browser dat weigert, starten ze zonder geluid
   function maakMedia(src, alt = "") {
@@ -492,12 +526,7 @@
     const video = Object.assign(document.createElement("video"), {
       src, loop: true, playsInline: true, controls: true, preload: "auto",
     });
-    video.addEventListener("canplay", () => {
-      video.play().catch(() => {
-        video.muted = true;
-        video.play().catch(() => {});
-      });
-    }, { once: true });
+    volgVideo(video);
     return video;
   }
 

@@ -467,10 +467,12 @@
     // foto of kaartje dat pas na het antwoorden verschijnt
     const fbFoto = $("#feedback-foto");
     fbFoto.hidden = !q.fotoNa;
+    // oude foto of filmpje weg, zodat een filmpje niet verder speelt bij de volgende vraag
+    fbFoto.querySelector("img, video")?.remove();
     if (q.fotoNa) {
-      fbFoto.querySelector("img").src = q.fotoNa.foto;
-      fbFoto.querySelector("img").alt = vt(q.fotoNa.alt);
-      fbFoto.querySelector("figcaption").textContent = vt(q.fotoNa.bijschrift);
+      const bijschrift = fbFoto.querySelector("figcaption");
+      bijschrift.before(maakMedia(q.fotoNa.foto, vt(q.fotoNa.alt)));
+      bijschrift.textContent = vt(q.fotoNa.bijschrift);
     }
 
     const info = $("#pin-info");
@@ -481,6 +483,16 @@
     fb.hidden = false;
     zetVoortgang();
     if (animeer) setTimeout(() => fb.scrollIntoView({ behavior: "smooth", block: "nearest" }), 60);
+  }
+
+  // een foto of een filmpje (.mp4); filmpjes spelen stil en in een lus, met knoppen om het geluid aan te zetten
+  function maakMedia(src, alt = "") {
+    if (!/\.mp4$/i.test(src)) return Object.assign(document.createElement("img"), { src, alt, loading: "lazy" });
+    const video = Object.assign(document.createElement("video"), {
+      src, muted: true, autoplay: true, loop: true, playsInline: true, controls: true, preload: "metadata",
+    });
+    video.setAttribute("muted", "");
+    return video;
   }
 
   // na het tonen: klik op een pin om te zien wat we daar deden
@@ -507,16 +519,14 @@
       const rij = document.createElement("div");
       rij.className = "pin-fotos";
       rij.style.setProperty("--kolommen", pin.fotos.length === 1 ? 1 : 2);
-      pin.fotos.forEach((src) => {
-        const img = Object.assign(document.createElement("img"), { src, alt: "", loading: "lazy" });
-        rij.append(img);
-      });
+      pin.fotos.forEach((src) => rij.append(maakMedia(src)));
       info.append(rij);
     }
     pinnen.forEach((m, j) => m.getElement()?.classList.toggle("open", j === i));
   }
 
   $("#volgende").addEventListener("click", () => {
+    document.querySelectorAll("#feedback video, #pin-info video").forEach((v) => v.pause());
     if (huidige < QUIZ.length - 1) {
       huidige++;
       window.scrollTo({ top: 0, behavior: "instant" });
@@ -547,7 +557,7 @@
     const items = [
       { titel: t("kerk"), uur: SITE.kerk.uur, plaats: SITE.kerk.locatie || null },
     ];
-    if (isDinerGast) items.push({ titel: t("diner"), uur: SITE.diner.uur, plaats: SITE.diner.locatie });
+    if (isDinerGast) items.push({ titel: t("diner"), uur: SITE.diner.uur, plaats: SITE.diner.locatie, link: SITE.diner.kaartLink });
     items.push({ titel: t("feest"), uur: SITE.feest.uur, plaats: SITE.feest.locatie, link: SITE.feest.kaartLink });
 
     const ol = $("#tijdlijn");

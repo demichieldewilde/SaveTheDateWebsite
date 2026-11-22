@@ -606,10 +606,12 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 /* op een liggend scherm: liggende brief met de tekening links en de tekst rechts, zo kan alles groot */
 @media (min-aspect-ratio: 1 / 1) and (min-width: 700px) {
   .intro-scene, .vraag-scene { --verhouding: 1.33; --env-h: calc(var(--env-b) * .5); --diep: calc(var(--env-b) * .3); }
+  /* de tekening is groot, dus de brief is iets hoger */
+  .intro-scene { --verhouding: 1.43; }
   .vraag-brief { padding: 14px 8px calc(var(--diep) + 10px); }
   .uitnodiging {
     display: grid;
-    grid-template-columns: 50% 1fr;
+    grid-template-columns: 60% 1fr;
     grid-template-rows: auto 1fr auto auto 1fr;
     grid-template-areas: "kop kop" "tek ." "tek titel" "tek onder" "tek .";
     column-gap: 4%;
@@ -637,7 +639,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 }
 .sticker {
   display: block;
-  width: 60%;
+  width: 74%;
   margin: 6px auto 2px;
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .22));
   transform: rotate(-2deg);
@@ -787,6 +789,8 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 #toon-antwoord, .uitgevouwen #toon-antwoord { position: fixed; z-index: 30; bottom: 16px; left: 50%; margin: 0; transform: translateX(-50%); box-shadow: 0 10px 24px -6px rgba(0, 0, 0, .7); }
 #toon-antwoord:disabled { opacity: 0; pointer-events: none; }
 #quiz.actief { padding-bottom: 90px; }
+/* de zwevende knop zit in de envelop: die moet boven de antwoordbriefjes liggen */
+.vraag-scene { z-index: 6; }
 /* op een groot scherm rechts onderaan, zodat de knop het zegel niet bedekt */
 @media (min-width: 1000px) {
   #toon-antwoord, .uitgevouwen #toon-antwoord { left: auto; right: 28px; bottom: 24px; transform: none; }
@@ -798,7 +802,7 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .feedback-tekst { margin: 0 0 20px; color: var(--brief-zacht); }
 .feedback-tekst:empty { display: none; }
 .feedback-foto { margin: 0 0 20px; }
-.feedback-foto img { width: auto; max-width: 100%; max-height: 70svh; border-radius: 3px; box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .35); }
+.feedback-foto :is(img, video) { display: block; margin: 0 auto; width: auto; max-width: 100%; max-height: 70svh; border-radius: 3px; box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .35); }
 .feedback-foto figcaption { margin-top: 6px; font-size: .85em; color: var(--brief-zacht); }
 .feedback-foto figcaption:empty { display: none; }
 
@@ -966,7 +970,8 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
   gap: 10px;
   margin-top: 14px;
 }
-.pin-fotos img {
+.pin-fotos img,
+.pin-fotos video {
   width: 100%;
   height: auto;
   max-height: 60vh;

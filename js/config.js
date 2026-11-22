@@ -26,6 +26,7 @@ window.SITE = {
   diner: {
     uur: "",
     locatie: "Hof te Vitseroel",
+    kaartLink: "https://www.google.com/maps/search/?api=1&query=Hof+te+Vitseroel+Ternat",
   },
   feest: {
     uur: "",
@@ -188,6 +189,10 @@ window.QUIZ = [
       fr: "Amélie était en Erasmus à Genève.",
       en: "Amélie was on Erasmus in Geneva.",
     },
+    fotoNa: {
+      foto: "fotos/video-disco-geneve.mp4",
+      alt: { nl: "Disco dansen in Genève", fr: "Danser en discothèque à Genève", en: "Disco dancing in Geneva" },
+    },
   },
   {
     vraag: {
@@ -222,7 +227,7 @@ window.QUIZ = [
       fr: "Pourquoi habitons-nous maintenant en Autriche ?",
       en: "Why do we live in Austria now?",
     },
-    fotos: ["fotos/paleis-cascade-fontein.jpg", "fotos/uitzicht-rivier-knuffel.jpg", "fotos/kerstboom-plein.jpg"],
+    fotos: ["fotos/oostenrijk-deur.jpg", "fotos/paleis-cascade-fontein.jpg", "fotos/uitzicht-rivier-knuffel.jpg"],
     antwoorden: [
       { nl: "Amélie wil ergens wonen met minstens 14 kerstmarkten per jaar", fr: "Amélie veut vivre quelque part avec au moins 14 marchés de Noël par an", en: "Amélie wants to live somewhere with at least 14 Christmas markets a year" },
       { nl: "Michiel doet er zijn doctoraat", fr: "Michiel y fait son doctorat", en: "Michiel is doing his PhD there" },
@@ -234,6 +239,10 @@ window.QUIZ = [
       nl: "We zijn naar Oostenrijk vertrokken zodat Michiel een doctoraat kon maken aan het Institute of Science and Technology Austria.",
       fr: "Nous sommes partis en Autriche pour que Michiel puisse faire un doctorat à l'Institute of Science and Technology Austria.",
       en: "We moved to Austria so that Michiel could do a PhD at the Institute of Science and Technology Austria.",
+    },
+    fotoNa: {
+      foto: "fotos/schneeberg-top.jpg",
+      alt: { nl: "Wij met vrienden op de top van de Schneeberg", fr: "Nous avec des amis au sommet du Schneeberg", en: "Us with friends on top of the Schneeberg" },
     },
   },
   {
@@ -532,7 +541,7 @@ window.QUIZ = [
             fr: "En mai 2026, nous y sommes allés en kayak depuis Vienne, en une seule journée.",
             en: "In May 2026 we kayaked here from Vienna in a single day.",
           },
-          fotos: ["fotos/grindbank-zwemvest.jpg"],
+          fotos: ["fotos/video-kajak-donau.mp4"],
         },
         {
           naam: { nl: "Nederland", fr: "Pays-Bas", en: "Netherlands" },
@@ -542,7 +551,7 @@ window.QUIZ = [
             fr: "Nous aimons y venir faire de la voile.",
             en: "We love coming here to sail.",
           },
-          fotos: ["fotos/zeilboot-mast-hond.jpg", "fotos/zeilen-op-het-meer.jpg"],
+          fotos: ["fotos/zeilboot-mast-hond.jpg", "fotos/zeilen-op-het-meer.jpg", "fotos/video-zeilboot-meer.mp4", "fotos/video-zeilen-oever.mp4"],
         },
         {
           naam: { nl: "Tsjechië", fr: "Tchéquie", en: "Czechia" },
@@ -579,6 +588,13 @@ window.QUIZ = [
             fr: "Nous avons rendu visite à Marine pendant son Erasmus.",
             en: "We visited Marine during her Erasmus.",
           },
+          fotos: [
+            "fotos/zweden-stockholm-uitzicht.jpg",
+            "fotos/zweden-stockholm-kade.jpg",
+            "fotos/zweden-heuvel-zonsondergang.jpg",
+            "fotos/zweden-stockholm-uitzicht-knuffel.jpg",
+            "fotos/zweden-fiets-herstellen.jpg",
+          ],
         },
         // landen waar we (nog) niet samen waren
         { naam: { nl: "Italië", fr: "Italie", en: "Italy" }, lat: 42.8, lon: 12.5 },

@@ -663,9 +663,10 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 /* ---------- Quiz: vraag in de envelop, antwoorden errond ---------- */
 #quiz.actief { min-height: 100svh; padding: 76px 16px 56px; }
 .vraag-scene {
-  --beeld-h: clamp(210px, 46svh, 440px);
-  /* de quiz heeft 16px marge aan elke kant: de envelop mag daar niet over */
-  --env-b: clamp(300px, min(100vw - 32px, (100svh - 128px) / var(--verhouding)), 820px);
+  --beeld-h: clamp(220px, 52svh, 480px);
+  /* de vraagenvelop is iets groter dan de startenvelop (de pagina mag hier scrollen),
+     maar blijft binnen de 16px marge van de quiz */
+  --env-b: clamp(300px, min(100vw - 32px, (100svh - 40px) / var(--verhouding)), 880px);
 }
 .vraag-brief .label { margin: 0; font: 500 20px/1.2 var(--hand); letter-spacing: .02em; text-transform: none; font-variant: normal; color: #063DA2; }
 .vraag {
@@ -693,6 +694,12 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .beeld-duo, .beeld-trio { gap: 8px; }
 .beeld-duo figure { max-width: calc(50% - 4px); }
 .beeld-trio figure { max-width: calc((100% - 16px) / 3); }
+/* op een gsm zijn drie foto's naast elkaar te klein: twee boven, een eronder */
+@media (max-width: 600px) {
+  .vraag-beeld.beeld-trio { flex-wrap: wrap; max-height: none; }
+  .beeld-trio figure { max-width: calc(50% - 4px); }
+  .beeld-trio img { max-height: calc(var(--beeld-h) * .6); }
+}
 .beeld-duo figure:first-child, .beeld-trio figure:first-child { transform: rotate(-1.5deg); }
 .beeld-duo figure:last-child, .beeld-trio figure:last-child { transform: rotate(1.8deg); }
 /* vragen zonder foto: een klein boeketje, de vraag blijft het belangrijkst */
@@ -796,7 +803,11 @@ button.zegel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4
 .feedback-foto figcaption:empty { display: none; }
 
 @media (min-width: 1000px) {
-  .vraag-scene { --beeld-h: clamp(260px, calc(100svh - 450px), 580px); }
+  .vraag-scene {
+    --beeld-h: clamp(260px, calc(100svh - 360px), 640px);
+    /* links en rechts moet er nog plaats zijn voor de antwoorden */
+    --env-b: clamp(300px, min(46vw + 60px, (100svh - 40px) / var(--verhouding)), 880px);
+  }
   #quiz.actief { padding-top: 68px; }
   /* de antwoorden liggen links en rechts van de envelop */
   .podium {

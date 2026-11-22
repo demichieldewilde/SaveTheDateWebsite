@@ -218,6 +218,26 @@ window.QUIZ = [
   },
   {
     vraag: {
+      nl: "Waarom wonen we nu in Oostenrijk?",
+      fr: "Pourquoi habitons-nous maintenant en Autriche ?",
+      en: "Why do we live in Austria now?",
+    },
+    fotos: ["fotos/paleis-cascade-fontein.jpg", "fotos/uitzicht-rivier-knuffel.jpg", "fotos/kerstboom-plein.jpg"],
+    antwoorden: [
+      { nl: "Amélie wil ergens wonen met minstens 14 kerstmarkten per jaar", fr: "Amélie veut vivre quelque part avec au moins 14 marchés de Noël par an", en: "Amélie wants to live somewhere with at least 14 Christmas markets a year" },
+      { nl: "Michiel doet er zijn doctoraat", fr: "Michiel y fait son doctorat", en: "Michiel is doing his PhD there" },
+      { nl: "We willen de hele Donau afkajakken en affietsen", fr: "Nous voulons descendre tout le Danube en kayak et à vélo", en: "We want to kayak and cycle the whole Danube" },
+      { nl: "We komen hier gewoon even de lokale keuken uitproberen", fr: "Nous sommes juste venus goûter la cuisine locale", en: "We just came to try out the local cuisine" },
+    ],
+    juist: 1,
+    uitleg: {
+      nl: "We zijn naar Oostenrijk vertrokken zodat Michiel een doctoraat kon maken aan het Institute of Science and Technology Austria.",
+      fr: "Nous sommes partis en Autriche pour que Michiel puisse faire un doctorat à l'Institute of Science and Technology Austria.",
+      en: "We moved to Austria so that Michiel could do a PhD at the Institute of Science and Technology Austria.",
+    },
+  },
+  {
+    vraag: {
       nl: "In welk district van Wenen wonen we?",
       fr: "Dans quel arrondissement de Vienne habitons-nous ?",
       en: "In which district of Vienna do we live?",
@@ -405,9 +425,9 @@ window.QUIZ = [
     ],
     juist: 2,
     uitleg: {
-      nl: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw en Pagadderke.",
-      fr: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw et Pagadderke.",
-      en: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw and Pagadderke.",
+      nl: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw en Pagadderke. Het zijn alle vier jeugdwerkorganisaties: de laatste drie geven kampen, en de laatste twee richten zich op jongeren in maatschappelijk kwetsbare situaties.",
+      fr: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw et Pagadderke. Ce sont quatre organisations de jeunesse : les trois dernières organisent des camps, et les deux dernières s'adressent aux jeunes en situation de vulnérabilité sociale.",
+      en: "Kringwerking Tegenstroom, Ontmoetingsdagen, Bizon vzw and Pagadderke. All four are youth work organisations: the last three run camps, and the last two work with young people in socially vulnerable situations.",
     },
   },
   {

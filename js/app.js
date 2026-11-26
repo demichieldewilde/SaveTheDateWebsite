@@ -117,8 +117,48 @@
     if (id !== "quiz") document.querySelectorAll(".vraag-beeld video").forEach((v) => v.pause());
     $("#voortgang").hidden = id !== "quiz";
     window.scrollTo({ top: 0, behavior: "instant" });
-    if (id === "intro") speelEnvelop($("#intro-scene"));
+    if (id === "intro") {
+      sluitUitnodiging();
+      speelEnvelop($("#intro-scene"));
+    }
   }
+
+  /* ---------- startenvelop: eerst dicht, open bij een klik ---------- */
+  const introScene = $("#intro-scene");
+
+  // hoe hoog de brief boven de envelop uitsteekt: zolang de envelop dicht is, schuift die ruimte weg
+  function meetZak() {
+    const schacht = introScene.querySelector(".schacht");
+    const zak = schacht.offsetHeight + parseFloat(getComputedStyle(schacht).marginBottom);
+    introScene.style.setProperty("--zak", `${Math.max(0, zak)}px`);
+  }
+  function zetVoetTekst() {
+    const voet = $("#intro-voet");
+    voet.dataset.t = introScene.classList.contains("dicht") ? "introOpen" : "introVoet";
+    voet.textContent = t(voet.dataset.t);
+  }
+  function sluitUitnodiging() {
+    introScene.classList.add("dicht");
+    introScene.classList.remove("open");
+    meetZak();
+    zetVoetTekst();
+  }
+  function openUitnodiging() {
+    if (!introScene.classList.contains("dicht")) return;
+    introScene.classList.remove("dicht");
+    introScene.classList.add("open");
+    zetVoetTekst();
+  }
+  // zolang de envelop dicht is, opent een klik (ook op het zegel) de envelop in plaats van de quiz te starten
+  introScene.addEventListener("click", (e) => {
+    if (!introScene.classList.contains("dicht")) return;
+    e.stopPropagation();
+    openUitnodiging();
+  }, true);
+  window.addEventListener("resize", () => { if (introScene.classList.contains("dicht")) meetZak(); });
+  // de hoogte van de brief hangt af van de tekening en het lettertype: opnieuw meten zodra die er zijn
+  introScene.querySelector(".sticker").addEventListener("load", () => { if (introScene.classList.contains("dicht")) meetZak(); });
+  document.fonts?.ready.then(() => { if (introScene.classList.contains("dicht")) meetZak(); });
 
   // envelop schuift binnen, daarna schuift de brief eruit (zie .scene.binnen in de CSS)
   function speelEnvelop(scene) {
@@ -178,6 +218,8 @@
     $("#vraag-hint").textContent = getoond ? "" : hint;
 
     $("#vraag-zegel").textContent = huidige + 1;
+    $("#naar-vorige").disabled = huidige === 0;
+    $("#naar-volgende").querySelector("[data-t]").textContent = t(huidige === QUIZ.length - 1 ? "laatste" : "volgende");
 
     if (nieuw) {
       selectie = new Set();
@@ -571,6 +613,18 @@
     pinnen.forEach((m, j) => m.getElement()?.classList.toggle("open", j === i));
   }
 
+  // vorige en volgende vraag, ook zonder te antwoorden
+  function gaNaarVraag(i) {
+    document.querySelectorAll("#feedback video, #pin-info video").forEach((v) => v.pause());
+    if (i < 0) return;
+    if (i >= QUIZ.length) return onthul();
+    huidige = i;
+    window.scrollTo({ top: 0, behavior: "instant" });
+    toonVraag(true);
+  }
+  $("#naar-vorige").addEventListener("click", () => gaNaarVraag(huidige - 1));
+  $("#naar-volgende").addEventListener("click", () => gaNaarVraag(huidige + 1));
+
   $("#volgende").addEventListener("click", () => {
     document.querySelectorAll("#feedback video, #pin-info video").forEach((v) => v.pause());
     if (huidige < QUIZ.length - 1) {
@@ -809,5 +863,6 @@
   $("#overslaan").addEventListener("click", () => onthul());
   $("#opnieuw").addEventListener("click", () => toonScherm("intro"));
   $("#overslaan").hidden = !opslag.lees().klaar;
+  sluitUitnodiging();
   speelEnvelop($("#intro-scene"));
 })();

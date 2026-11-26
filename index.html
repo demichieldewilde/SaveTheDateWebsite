@@ -39,7 +39,7 @@
     <!-- ============ INTRO: een uitnodiging schuift uit de envelop ============ -->
     <section id="intro" class="scherm actief" aria-labelledby="intro-titel">
       <div class="hoekbloemen" data-bot="hoekbloemen:1" aria-hidden="true"></div>
-      <div class="scene intro-scene" id="intro-scene">
+      <div class="scene intro-scene dicht" id="intro-scene">
         <div class="schacht">
           <article class="brief uitnodiging">
             <div class="krant">
@@ -57,12 +57,17 @@
         </div>
         <button class="zegel" id="start" type="button" data-t-aria="introStart"><span>quiz</span></button>
       </div>
-      <p class="intro-voet" data-t="introVoet"></p>
+      <p class="intro-voet" id="intro-voet" data-t="introOpen"></p>
       <button class="link-knop" id="overslaan" data-t="introOverslaan" hidden></button>
     </section>
 
     <!-- ============ QUIZ: elke vraag zit in een envelop, de antwoorden liggen errond ============ -->
     <section id="quiz" class="scherm" aria-live="polite">
+      <!-- vrij door de vragen bladeren -->
+      <nav class="vraag-nav" aria-label="Vragen">
+        <button type="button" class="nav-knop" id="naar-vorige"><span aria-hidden="true">‹</span> <span data-t="vorige"></span></button>
+        <button type="button" class="nav-knop" id="naar-volgende"><span data-t="volgende"></span> <span aria-hidden="true">›</span></button>
+      </nav>
       <div class="podium" id="podium">
         <div class="scene vraag-scene" id="vraag-scene">
           <div class="schacht">

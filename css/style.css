@@ -515,6 +515,9 @@ button, input, textarea { font: inherit; color: inherit; }
 .dicht .env-klep { z-index: 4; transform: scaleY(-1); filter: drop-shadow(0 -2px 2px rgba(0, 10, 50, .3)); }
 .dicht .env-klep::after { opacity: 1; transition-delay: 0s; }
 .dicht .zegel { z-index: 5; }
+/* zolang de envelop dicht is, is het zegel gewoon een zegel: het woord "quiz" verschijnt pas na het openen */
+#intro-scene .zegel span { transition: opacity .5s ease 1.2s; }
+#intro-scene.dicht .zegel span { opacity: 0; transition: none; }
 .intro-scene .envelop { cursor: default; }
 .intro-scene.dicht .envelop { cursor: pointer; }
 /* zolang ze dicht is, zit de brief verstopt en staat de envelop mooi in het midden */

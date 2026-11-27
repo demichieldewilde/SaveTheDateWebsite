@@ -136,6 +136,10 @@
     const voet = $("#intro-voet");
     voet.dataset.t = introScene.classList.contains("dicht") ? "introOpen" : "introVoet";
     voet.textContent = t(voet.dataset.t);
+    // het zegel zegt wat het doet: eerst de envelop openen, daarna de quiz starten
+    const zegel = $("#start");
+    zegel.dataset.tAria = introScene.classList.contains("dicht") ? "introOpen" : "introStart";
+    zegel.setAttribute("aria-label", t(zegel.dataset.tAria));
   }
   function sluitUitnodiging() {
     introScene.classList.add("dicht");

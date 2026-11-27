@@ -415,7 +415,7 @@ window.QUIZ = [
       { nl: "Kringwerking Tegenstroom, Ontmoetingsdagen en Pagadderke", fr: "Kringwerking Tegenstroom, Ontmoetingsdagen et Pagadderke", en: "Kringwerking Tegenstroom, Ontmoetingsdagen and Pagadderke" },
       { nl: "Bizon vzw, Théâtre Universitaire de Louvain en IncluKap", fr: "Bizon vzw, Théâtre Universitaire de Louvain et IncluKap", en: "Bizon vzw, Théâtre Universitaire de Louvain and IncluKap" },
       { nl: "Chiro, Rode Kruis en IncluKap", fr: "Chiro, Croix-Rouge et IncluKap", en: "Chiro, Red Cross and IncluKap" },
-      { nl: "Scouts, Théâtre Universitaire de Louvain en Oxfam", fr: "Scouts, Théâtre Universitaire de Louvain et Oxfam", en: "Scouts, Théâtre Universitaire de Louvain and Oxfam" },
+      { nl: "KSA, Théâtre Universitaire de Louvain en Oxfam", fr: "KSA, Théâtre Universitaire de Louvain et Oxfam", en: "KSA, Théâtre Universitaire de Louvain and Oxfam" },
     ],
     juist: 1,
     uitleg: {

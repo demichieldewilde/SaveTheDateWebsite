@@ -70,8 +70,9 @@ window.SITE = {
 /*
  * QUIZ
  * - fotos:      0 tot 3 foto's bij de vraag (geen foto = een illustratie)
+ * - indeling:   (optioneel) "mozaiek" bij drie foto's: de eerste (staande) foto groot links, de andere twee rechts boven elkaar
  * - video:      (optioneel) een filmpje in plaats van foto's
- * - fotoNa:     (optioneel) foto of kaartje dat pas na het antwoorden verschijnt
+ * - fotoNa:     (optioneel) foto, filmpje of kaartje dat pas na het antwoorden verschijnt (foto mag ook een lijst zijn)
  * - kaart:      (optioneel) een kaart met pinnen in plaats van antwoorden.
  *               Elke pin: naam, lat, lon, juist: true (anders fout), tekst en fotos die na het tonen verschijnen.
  *               direct: true  -> een pin toont meteen of hij juist is (en de info) zodra je hem aantikt.
@@ -340,7 +341,8 @@ window.QUIZ = [
       fr: "Comment s'appellent nos frères et sœurs ?",
       en: "What are the names of our brothers and sisters?",
     },
-    fotos: [],
+    fotos: ["fotos/nacht-dragen.jpg", "fotos/hangbrug-helmen.jpg", "fotos/oude-foto-voorlezen.jpg"],
+    indeling: "mozaiek",
     antwoorden: [
       { nl: "Julie, Simon, Quentin en Marie", fr: "Julie, Simon, Quentin et Marie", en: "Julie, Simon, Quentin and Marie" },
       { nl: "Jolien, Simon, Corentin en Marine", fr: "Jolien, Simon, Corentin et Marine", en: "Jolien, Simon, Corentin and Marine" },
@@ -368,6 +370,10 @@ window.QUIZ = [
       fr: "Michiel a 6 cousins et cousines de chaque côté, donc 12 en tout.",
       en: "Michiel has 6 cousins on each side, so 12 in total.",
     },
+    fotoNa: {
+      foto: ["fotos/familie-hond-weg.jpg", "fotos/keuken-familie-selfie.jpg"],
+      alt: { nl: "Familiefoto van Michiel met zijn neven en nichten", fr: "Photo de famille de Michiel avec ses cousins et cousines", en: "Family photo of Michiel with his cousins" },
+    },
   },
   {
     vraag: {
@@ -382,6 +388,10 @@ window.QUIZ = [
       nl: "Amélie heeft 6 neven en nichten. Ze heeft 2 nichten langs papa's kant en 6 neven en nichten langs mama's kant. (Ja hoor, je berekening klopt. Maar hoe kan het dan dat het juiste antwoord toch 6 is?)",
       fr: "Amélie a 6 cousins et cousines. Elle a 2 cousines du côté de son papa et 6 cousins et cousines du côté de sa maman. (Oui, oui, ton calcul est juste. Mais alors, comment se fait-il que la bonne réponse soit quand même 6 ?)",
       en: "Amélie has 6 cousins. She has 2 cousins on her dad's side and 6 cousins on her mum's side. (Yes, your maths is right. So how can the right answer still be 6?)",
+    },
+    fotoNa: {
+      foto: ["fotos/familie-binnen-oma.jpg", "fotos/familie-tuinbank.jpg"],
+      alt: { nl: "Familiefoto van Amélie met haar oma", fr: "Photo de famille d'Amélie avec sa grand-mère", en: "Family photo of Amélie with her grandmother" },
     },
   },
   {

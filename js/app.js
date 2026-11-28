@@ -317,6 +317,7 @@
       return;
     }
     beeld.classList.add(["beeld-een", "beeld-duo", "beeld-trio"][Math.min(fotos.length, 3) - 1]);
+    if (q.indeling === "mozaiek" && fotos.length === 3) beeld.classList.replace("beeld-trio", "beeld-mozaiek");
     // een foto is een pad, of { foto, bijschrift } als er een kort onderschrift onder moet
     fotos.slice(0, 3).forEach((f) => {
       const fig = document.createElement("figure");
@@ -521,10 +522,11 @@
     const fbFoto = $("#feedback-foto");
     fbFoto.hidden = !q.fotoNa;
     // oude foto of filmpje weg, zodat een filmpje niet verder speelt bij de volgende vraag
-    fbFoto.querySelector("img, video")?.remove();
+    fbFoto.querySelectorAll("img, video").forEach((m) => m.remove());
     if (q.fotoNa) {
       const bijschrift = fbFoto.querySelector("figcaption");
-      bijschrift.before(maakMedia(q.fotoNa.foto, vt(q.fotoNa.alt)));
+      // foto mag ook een lijst zijn: dan komen ze onder elkaar
+      [].concat(q.fotoNa.foto).forEach((src) => bijschrift.before(maakMedia(src, vt(q.fotoNa.alt))));
       bijschrift.textContent = vt(q.fotoNa.bijschrift);
     }
 

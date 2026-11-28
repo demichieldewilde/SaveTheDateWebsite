@@ -355,6 +355,10 @@ window.QUIZ = [
       fr: "Jolien et Simon sont la sœur et le frère de Michiel, Corentin et Marine le frère et la sœur d'Amélie.",
       en: "Jolien and Simon are Michiel's sister and brother, Corentin and Marine are Amélie's brother and sister.",
     },
+    fotoNa: {
+      foto: ["fotos/kinderen-fotograaf.jpg", "fotos/kinderen-bloemen-zwaaien.jpg", "fotos/kinderen-kasteel-armen.jpg", "fotos/familie-hond-groep.jpg"],
+      alt: { nl: "Foto's van ons met onze broers en zussen", fr: "Photos de nous avec nos frères et sœurs", en: "Photos of us with our brothers and sisters" },
+    },
   },
   {
     vraag: {
